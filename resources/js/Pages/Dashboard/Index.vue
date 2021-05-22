@@ -1,20 +1,286 @@
 <template>
   <div>
-    <h1 class="mb-8 font-bold text-3xl">Dashboard</h1>
-    <p class="mb-8 leading-normal">Hey there! Welcome to Ping CRM, a demo app designed to help illustrate how <a class="text-indigo-500 underline hover:text-orange-600" href="https://inertiajs.com">Inertia.js</a> works.</p>
-    <div class="mb-8 flex">
-      <inertia-link class="btn-indigo" href="/500">500 error</inertia-link>
-      <inertia-link class="btn-indigo ml-1" href="/404">404 error</inertia-link>
+    <div class="flex flex-row justify-between">
+      <h1 class="mb-8 font-bold text-2xl">Добрый день,  <span>{{ $page.props.auth.user.first_name}}</span>
+                    <span class="hidden md:inline">{{ $page.props.auth.user.last_name }}</span>!</h1>
+      <img class="h-10" src="img/message.png">
     </div>
-    <p class="leading-normal">👆 These links are intended to be broken to illustrate how error handling works with Inertia.js.</p>
+    <div class="flex flex-row justify-between">
+   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4  px-6 py-4 mx-4">
+    <div class="flex justify-between">
+      <p class="mt-3">Задачи</p> 
+      <div class="relative inline-flex">
+        <svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
+        <select v-on:change="changeItem($event)" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+          <option>сегодня</option>
+          <option>месяц</option>
+          <option>год</option>
+          <option>все время</option>
+        </select>
+      </div>
+      <p class="task-button rounded-full text-white w-10 flex justify-center  items-center">{{taskCounter}}</p>
+    </div>
+    <hr class="my-2">
+    <div class="h-96 overflow-y-auto">
+      <div v-for="task in mytasks">
+        <div>
+          <inertia-link class="py-4 flex items-center w-full justify-between focus:text-indigo-500" :href="route('tasks.show', task.id)"  >
+              <div class="flex flex-col">{{task.title}}<p class="text-sm font-normal text-gray-300">2 дня до дедлайна</p></div><p class="task-button-working rounded-full text-white  flex p-3 items-center">{{task.status}}</p>
+            <icon v-if="task.deleted_at" name="trash" class="flex-shrink-0 w-3 h-3 fill-gray-400 ml-2" />
+
+            
+          </inertia-link>
+          <div v-if="task.status == 'ожидание'" class="w-full bg-yellow-500 rounded-full h-1"></div>
+          <div v-else-if="task.status = 'в работе'" class="w-full bg-yellow-800 rounded-full h-1"></div>
+          <div v-else-if="task.status = 'завершено'" class="w-full bg-green-500 rounded-full h-1"></div>
+          <div v-else-if="new Date(task.deadline) < Date.now()" class="w-full bg-red-500 rounded-full h-1"></div>
+          <div v-else class="w-full bg-indigo-500 rounded-full h-1"></div>
+        </div>
+      </div>
+    </div>
+   </div>
+   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4 px-6 py-4 mx-4">
+    <div class="flex justify-between">
+      <p class="mt-3">Дела</p> 
+      <div class="relative inline-flex">
+        <svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
+        <select  v-on:change="changeItem1($event)" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+          <option>сегодня</option>
+          <option>месяц</option>
+          <option>год</option>
+          <option selected>все время</option>
+        </select>
+      </div>
+      <p class="task-button rounded-full text-white w-10 flex justify-center  items-center">{{workCounter}}</p>
+    </div>
+    <hr class="my-2">
+      <div class="h-96 overflow-y-auto">
+      <div v-for="project in myworks" class="flex justify-start gap-2">
+        <div class="rounded-full w-5 h-5 mb-3 border-2 bg-green-500"></div>{{project.title}}
+      </div>
+      <div class="flex flex-row"><div class="rounded-full w-5 h-5 mb-3 border-2 bg-white-500"></div><button v-on:click="create" class="mb-3 ml-2">Добавить</button></div>
+     </div>
+   </div>
+   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4 px-6 py-4 mx-4">
+    <div class="flex justify-between">
+      <p class="mt-3">Встречи</p> 
+      <div class="relative inline-flex">
+        <svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
+        <select  v-on:change="changeItem2($event)" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+          <option>сегодня</option>
+          <option >месяц</option>
+          <option>год</option>
+          <option selected>все время</option>
+        </select>
+      </div>
+      <p class="task-button rounded-full text-white w-10 flex justify-center  items-center">{{meetCounter}}</p>
+    </div>
+    <hr class="my-2">
+    <div class="h-96 overflow-y-auto">
+      <div v-for="meeting in mymeet">
+      <p class="notification">{{meeting.description}}</p>
+       </div>
+      <div class="flex flex-row"><button  v-on:click="create" class="mt-3 ml-2">Добавить</button></div>
+     
+     </div>
+   </div>
+   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4 px-6 py-4 mx-4">
+    <div class="flex justify-start">
+      События 
+      
+    </div><br>
+    <hr class="my-2">
+    <div class="h-96 overflow-y-auto">
+    <div v-for="event in orderedEvents">
+    <div class="border-2 rounded-lg p-1 flex flex-col">
+      <div class="flex flex-row"><img class="h-8" src="img/user1.webp"><div class="flex flex-col  ml-2"><p>{{event.user.first_name}}</p><p class="text-sm text-gray-300">Сотрудник</p></div></div>
+      <p class="mt-3">{{event.description}}</p>
+      <div class="flex flex-row justify-between mt-3">
+        <inertia-link :href="route('tasks.show',event.task.id)" class="hover:underline rounded-full  p-3 bg-gray-100 text-gray-400">Перейти к задаче
+        </inertia-link>
+      </div>
+    </div>
+    <br>
+  </div>
+   </div>
+ </div>
+   </div>
   </div>
 </template>
 
 <script>
 import Layout from '@/Shared/Layout'
+import RadialProgressBar from 'vue-radial-progress'
+import _ from 'lodash'
 
 export default {
   metaInfo: { title: 'Dashboard' },
   layout: Layout,
+  data () {
+    return {
+      mytasks: [],
+      myworks:[],
+      mymeet: [],
+      taskCounter:0,
+      workCounter: 0,
+      meetCounter: 0,
+      date : Date.now(),
+      timestamp : "",
+      completedSteps: 0,
+      totalSteps: 10,
+      projects:
+      [
+        'Озеленение','Гостиница','Ресторан','Ресторан',
+
+      ]
+    }
+  },
+  props: {
+    tasks: Array,
+    events:Array,
+  },
+  created(){
+    var month = this.tasks;
+    for (var i = month.length - 1; i >= 0; i--) {
+      this.mytasks.push(month[i]);
+      this.taskCounter++;
+    }
+    var work = this.tasks.filter(x => x.type == 'дела');
+    for (var i = work.length - 1; i >= 0; i--) {
+      this.myworks.push(work[i]);
+      this.workCounter++;
+    }
+    var meet = this.tasks.filter(x => x.type == 'встреча');
+    for (var i = meet.length - 1; i >= 0; i--) {
+      this.mymeet.push(meet[i]);
+      this.meetCounter++;
+    }
+  },
+  components:{
+    RadialProgressBar
+  },
+  computed: {
+  orderedEvents: function () {
+    return _.orderBy(this.events, 'created_at','desc')
+  }
+  },
+  methods:{
+    create(){
+      this.$inertia.get(this.route('tasks.create'))
+    },
+    checkDeadline(date)
+    {
+        if(date > this.date){
+
+          return true;
+        }
+        else{
+          this.index -= 1;
+          return false;
+        }
+    },
+    changeItem1: function changeItem1(event) {
+      var today = new Date(Date.now());
+      switch (String(event.target.value)) {
+        case "сегодня":
+          this.myworks = this.tasks.filter(x => x.type== "дела" && new Date(x.deadline) > today && new Date(x.created_at) < today );
+        break;
+        case "месяц":
+          this.myworks = this.tasks.filter(x => x.type== "дела" && new Date(x.deadline).getMonth() == today.getMonth() && new Date(x.created_at).getMonth() == today.getMonth() );
+        break;
+        case "год":
+          this.myworks = this.tasks.filter(x => x.type== "дела" && new Date(x.deadline).getFullYear() == today.getFullYear() && new Date(x.created_at).getFullYear() == today.getFullYear() );
+        break;
+        default:
+          this.myworks = this.tasks.filter(x => x.type == 'дела');
+        break;
+      }
+    },
+    changeItem2: function changeItem2(event) {
+      var today = new Date(Date.now());
+      switch (String(event.target.value)) {
+        case "сегодня":
+          this.mymeet = this.tasks.filter(x => x.type== "встреча" && new Date(x.deadline) > today && new Date(x.created_at) < today );
+        break;
+        case "месяц":
+          this.mymeet = this.tasks.filter(x => x.type== "встреча" && new Date(x.deadline).getMonth() == today.getMonth() && new Date(x.created_at).getMonth() == today.getMonth() );
+        break;
+        case "год":
+          this.mymeet = this.tasks.filter(x => x.type== "встреча" && new Date(x.deadline).getFullYear() == today.getFullYear() && new Date(x.created_at).getFullYear() == today.getFullYear() );
+        break;
+        default:
+          this.mymeet = this.tasks.filter(x => x.type == 'встреча');
+        break;
+      }
+    },
+    changeItem: function changeItem(event) {
+     
+      switch (String(event.target.value)) {
+        case "месяц":
+        this.taskCounter = 0;
+          this.mytasks.splice(0);
+          var date = new Date();
+          date.setDate(date.getDate()+30);
+          //this.mytasks.pop(0);
+          //console.log(this.mytasks.filter(x => new Date(x.deadline) < Date.now()))
+          var month = this.tasks.filter(x => new Date(x.deadline) < date);
+          
+          for (var i = month.length - 1; i >= 0; i--) {
+            this.mytasks.push(month[i]);
+
+            this.taskCounter++;
+          }
+          console.log(this.mytasks);
+          
+          
+          break;
+        case "год":
+          this.taskCounter = 0;
+          this.mytasks.splice(0);
+          var date = new Date();
+          date.setDate(date.getDate()+300);
+          //this.mytasks.pop(0);
+          //console.log(this.mytasks.filter(x => new Date(x.deadline) < Date.now()))
+          var month = this.tasks;
+          
+          for (var i = month.length - 1; i >= 0; i--) {
+            this.mytasks.push(month[i]);
+            this.taskCounter++;
+          }
+          console.log(this.mytasks);
+          
+          break;
+        case "сегодня":
+          this.taskCounter = 0;
+          this.mytasks.splice(0);
+          var date = Date.now();
+          //this.mytasks.pop(0);
+          //console.log(this.mytasks.filter(x => new Date(x.deadline) < Date.now()))
+          var month = this.tasks.filter(x => new Date(x.deadline) > date);
+          
+          for (var i = month.length - 1; i >= 0; i--) {
+            this.mytasks.push(month[i]);
+            this.taskCounter++;
+          }
+          console.log(this.mytasks);
+          
+          break;
+        default:
+          this.taskCounter = 0;
+          this.mytasks.splice(0);
+          
+          //this.mytasks.pop(0);
+          //console.log(this.mytasks.filter(x => new Date(x.deadline) < Date.now()))
+          var month = this.tasks;
+          
+          for (var i = month.length - 1; i >= 0; i--) {
+            this.mytasks.push(month[i]);
+            this.taskCounter++;
+          }
+          console.log(this.mytasks);
+          
+      }
+    }
+  }
 }
 </script>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -26,6 +28,10 @@ class OrganizationsController extends Controller
                         'phone' => $organization->phone,
                         'city' => $organization->city,
                         'deleted_at' => $organization->deleted_at,
+                        'status'=> $organization->status,
+                        'stage' => $organization->stage,
+                        'agreement' => $organization->agreement,
+                        'responsible' => $organization->responsible()->get(),
                     ];
                 }),
         ]);
@@ -51,7 +57,7 @@ class OrganizationsController extends Controller
             ])
         );
 
-        return Redirect::route('organizations')->with('success', 'Organization created.');
+        return Redirect::route('organizations')->with('успешно', 'Клиент создан.');
     }
 
     public function edit(Organization $organization)
@@ -70,6 +76,8 @@ class OrganizationsController extends Controller
                 'deleted_at' => $organization->deleted_at,
                 'contacts' => $organization->contacts()->orderByName()->get()->map->only('id', 'name', 'city', 'phone'),
             ],
+            'comments' => Comment::select('user_id','comment')->with('user')->where('client_id',$organization->id)->get(),
+
         ]);
     }
 
@@ -88,20 +96,30 @@ class OrganizationsController extends Controller
             ])
         );
 
-        return Redirect::back()->with('success', 'Organization updated.');
+        return Redirect::back()->with('успешно', 'Данные обновлены.');
     }
 
     public function destroy(Organization $organization)
     {
         $organization->delete();
 
-        return Redirect::back()->with('success', 'Organization deleted.');
+        return Redirect::back()->with('успешно', 'Клиент удален.');
     }
 
     public function restore(Organization $organization)
     {
         $organization->restore();
 
-        return Redirect::back()->with('success', 'Organization restored.');
+        return Redirect::back()->with('успешно', 'клиент восстановлен.');
+    }
+
+    public function comment(String $message,$id){
+        
+        Comment::insert([
+            'client_id' => $id,
+            'user_id' => Auth::user()->id,
+            'comment' => $message,
+        ]);
+        return Redirect::route('organizations')->with('успешно', 'Комментарий добавлен.');
     }
 }

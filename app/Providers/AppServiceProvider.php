@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Facades\Sessions;
 use League\Glide\Server;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +35,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Inertia::share([
+            'errors' => function(){
+                return Session::get('errors')
+                ? Session::get('errors')->getBag('default')->getMessage()
+                :(object)[];
+            },
+        ]);
+
+        Inertia::share('flash',function(){
+            return [
+                'message' => Session::get('message'),
+            ];
+        });
     }
 }

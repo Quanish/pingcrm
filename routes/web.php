@@ -1,12 +1,23 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\FlatsController;
+use App\Http\Controllers\ListController;
+use App\Http\Controllers\TasksController;
+use App\Http\Controllers\AgreementsController;
+use App\Http\Controllers\MeetingsController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\GroupsController;
+use App\Http\Controllers\MailController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +30,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Groups
+
+Route::get('groups',[GroupsController::class,'index'])
+->name('groups')
+->middleware('auth');
+
+Route::post('groups',[GroupsController::class,'store'])
+->name('groups.store')
+->middleware('auth');
+
 
 // Auth
 
@@ -99,6 +121,10 @@ Route::put('organizations/{organization}/restore', [OrganizationsController::cla
     ->name('organizations.restore')
     ->middleware('auth');
 
+Route::post('organizations/{message}/{id}', [OrganizationsController::class, 'comment'])
+    ->name('organizations.comment')
+    ->middleware('auth');
+
 // Contacts
 
 Route::get('contacts', [ContactsController::class, 'index'])
@@ -128,6 +154,77 @@ Route::delete('contacts/{contact}', [ContactsController::class, 'destroy'])
 Route::put('contacts/{contact}/restore', [ContactsController::class, 'restore'])
     ->name('contacts.restore')
     ->middleware('auth');
+// Flats
+
+Route::get('flats', [FlatsController::class, 'index'])
+    ->name('flats')
+    ->middleware('auth');
+//List
+
+Route::get('list', [ListController::class, 'index'])
+    ->name('list')
+    ->middleware('auth');
+
+//Tasks
+
+
+Route::get('tasks', [TasksController::class, 'index'])
+    ->name('tasks')
+    ->middleware('auth');
+
+Route::get('tasks/create', [TasksController::class, 'create'])
+    ->name('tasks.create')
+    ->middleware('auth');
+
+Route::post('tasks', [TasksController::class, 'store'])
+    ->name('tasks.store')
+    ->middleware('auth');
+
+Route::get('tasks/{task}/edit', [TasksController::class, 'edit'])
+    ->name('tasks.edit')
+    ->middleware('auth');
+
+Route::put('tasks/{task}', [TasksController::class, 'update'])
+    ->name('tasks.update')
+    ->middleware('auth');
+
+Route::delete('tasks/{task}', [TasksController::class, 'destroy'])
+    ->name('tasks.destroy')
+    ->middleware('auth');
+
+Route::get('tasks/{task}', [TasksController::class, 'show'])
+    ->name('tasks.show')
+    ->middleware('auth');
+
+Route::get('calendar', [CalendarController::class, 'calendar'])
+    ->name('calendar')
+    ->middleware('auth');
+
+Route::put('tasks/{task}',[TasksController::class, 'accept'])
+->name('tasks.accept')
+->middleware('auth');
+
+Route::post('tasks/{message}/{id}',[TasksController::class, 'message'])
+->name('tasks.message')
+->middleware('auth');
+
+//Agreements
+
+Route::get('agreements', [AgreementsController::class, 'index'])
+    ->name('agreements')
+    ->middleware('auth');
+
+//Meetings
+
+Route::get('meetings', [MeetingsController::class, 'index'])
+    ->name('meetings')
+    ->middleware('auth');
+
+//Products
+
+Route::get('products',[ProductsController::class,'index'])
+    ->name('products')
+    ->middleware('auth');
 
 // Reports
 
@@ -135,9 +232,27 @@ Route::get('reports', [ReportsController::class, 'index'])
     ->name('reports')
     ->middleware('auth');
 
+
+//Post
+
+Route::get('post',[PostController::class,'index'])
+->name('post')
+->middleware('auth');
 // Images
 
 Route::get('/img/{path}', [ImagesController::class, 'show'])->where('path', '.*');
+
+// Mail
+
+Route::get('mail/{driver?}/{folder?}/{page?}', [MailController::class, 'index'])
+    ->name('mail')  
+    ->middleware('auth');
+
+Route::get('axios/mail/{driver}/{folder?}/{page?}', [MailController::class, 'axiosIndex'])
+    ->middleware('auth');
+
+Route::post('axios/send-mail', [MailController::class, 'send_mail'])->name('mail.send')->middleware('auth');
+
 
 // 500 error
 
@@ -149,3 +264,7 @@ Route::get('500', function () {
 
     echo $fail;
 });
+
+Route::resource('categories',CategoryController::class);
+
+Route::get('getUsers', 'TasksController@getUsers');
