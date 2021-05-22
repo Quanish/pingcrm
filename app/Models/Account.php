@@ -18,4 +18,16 @@ class Account extends Model
     {
         return $this->hasMany(Contact::class);
     }
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    public function event()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

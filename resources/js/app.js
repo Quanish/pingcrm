@@ -4,11 +4,15 @@ import PortalVue from 'portal-vue'
 import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress/src'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 Vue.config.productionTip = false
 Vue.mixin({ methods: { route: window.route } })
 Vue.use(plugin)
 Vue.use(PortalVue)
 Vue.use(VueMeta)
+Vue.use(VueAxios,axios)
 
 InertiaProgress.init()
 
@@ -16,7 +20,7 @@ const el = document.getElementById('app')
 
 new Vue({
   metaInfo: {
-    titleTemplate: title => (title ? `${title} - Ping CRM` : 'Ping CRM'),
+    titleTemplate: title => (title ? `${title} - Oazis CRM` : 'Oazis CRM'),
   },
   render: h =>
     h(App, {

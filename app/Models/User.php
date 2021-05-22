@@ -19,6 +19,21 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $casts = [
         'owner' => 'boolean',
     ];
+    public function event(){
+        return $this->hasMany(Events::class);
+    }
+
+    public function organization(){
+        return $this->hasMany(Organization::class);
+    }
+
+    public function task(){
+        return $this->hasMany(Task::class);
+    }
+
+    public function audtion(){
+        return $this->hasMany(Task::class);
+    }
 
     public function account()
     {

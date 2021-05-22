@@ -26,7 +26,9 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3",
         "reinink/remember-query-strings": "^0.1.0",
-        "tightenco/ziggy": "^0.8.0"
+        "tightenco/ziggy": "^0.8.0",
+        "webklex/laravel-imap": "^2.4",
+        "webklex/php-imap": "^2.5"
     },
     "config": {
         "optimize-autoloader": true,
