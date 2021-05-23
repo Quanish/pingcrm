@@ -1,9 +1,9 @@
 <template>
   <div>
   	<!-- верхняя панель-->
-  	<div class="mb-8 flex justify-between items-center">
-    	<h1 class="font-bold text-2xl">Отчеты</h1>
-    	<button class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый отчет</button>
+  	<div class=" relative flex justify-between place-items-center mb-10">
+    	<h1 class="font-bold text-3xl">Документы</h1>
+    	<button class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</button>
     	
     	<div class="w-64 flex justify-start">
     </div>
@@ -28,20 +28,16 @@
 		  </div>
 		</div>
 
-		<div class="mt-12 ml-10">
-
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">По клиентам</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">По сделкам</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">По проектам</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">По сотрудникам</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">По отделу</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">Избранные</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><img class="w-4 h-7 -ml-8 pt-3"src="img/icons/Star.png" /><p class="pt-3">Все</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">Аналитика</p></div>
-			
-
+		<div class="mt-20">
+			<div class="flex h-8 justify-start gap-4 mt-3"><img class="y-3"src="img/icons/Word.png" /><p class="pt-3">Текстовые</p></div>
+			<div class="flex h-8 justify-start gap-4 mt-3"><img class="y-3"src="img/icons/PPT.png" /><p class="pt-3">Презентации</p></div>
+			<div class="flex h-8 justify-start gap-4 mt-3"><img class="y-3"src="img/icons/PDF.png" /><p class="pt-3">PDF файлы</p></div>
+			<div class="flex h-8 justify-start gap-4 mt-3"><img class="y-3"src="img/icons/Excel.png" /><p class="pt-3">Таблицы</p></div>
+			<div class="flex h-8 justify-start gap-4 mt-3"><img class="y-3"src="img/icons/PIC.png" /><p class="pt-3">Изображения</p></div>
+			<div class="flex h-8 justify-start gap-4 mt-3"><img class="y-3"src="img/icons/Star.png" /><p class="pt-3">Избранные</p></div>
+			<div class="flex h-8 justify-start gap-4 mt-3">Все</div>
+			<div class="flex h-8 justify-start gap-4 mt-3"><input type="text" class="text-white w-full bg-gray-100 shadow rounded-full border-0 p-2" name=""></div>
 		</div>
-		<button type="text" class="rounded-full  w-full mt-20 flex justify-center items-center text-white h-8" v-bind:style="{ backgroundImage: gradient}" name="">Шаблоны</button>
 	</div>
 	<!-- список документов-->
 	<div class="w-10/12 bg-white rounded-md shadow h-auto p-6">
@@ -51,46 +47,38 @@
 	            <th class="px-6 pt-6 pb-4 flex">
 	            	<p class="font-strong">Название</p>
 	            </th>
-	           
+	            <th class="px-6 pt-6 pb-4">
+	            	<p class="font-strong">Проект или сделка</p>
+	            </th>
 	             <th class="px-6 pt-6 pb-4">
 	            	<p class="font-strong">Дата</p>
 	            </th>
 	            <th class="px-6 pt-6 pb-4">
-	            	<p class="font-strong">Создатель</p>
-	            </th>
-	            <th class="px-6 pt-6 pb-4">
 	            	<p class="font-strong">Примечания</p>
 	            </th>
-	             <th class="px-6 pt-6 pb-4">
+	            <th class="px-6 pt-6 pb-4">
 	            	<p class="font-strong"></p>
 	            </th>
 
 	          
 	        </tr>
-	        <tr class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
-	        	<td class=" flex justify-start items-center">
-	       	   		<img class="w-4 h-4 mr-2"src="img/icons/Star.png" />
-	       	   		<div>
-		       	   		<p>Название отчета</p>
-		       	   		<p class="text-xs">Краткое описание отчета/ какие показатели </p>
-		       	   	</div>
+	        <tr class="text-center hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
+	        	<td class="pl-5 flex">
+	       	   		<img class="w-4 mr-2"src="img/icons/Star.png" /><p>Название документа</p>
                </td>  
-               <td>
-               		<p>10 / 05 / 2021</p>
-               </td> 
-	       	   <td>
-	       	   		<div class="bg-gray-100 w-full rounded-full h-8 flex"><img class="h-8" src="img/user1.webp"><div><p>Имя Фамилия</p><p class="text-xs">должность</p>
-	       	   		</div>
-	       	   		</div>
+	       	   <td class="pl-5 w-8">
+	       	   		<p>Презентация для клиента</p>
 	       	   		
                </td>      
               
-               
-               <td class="text-center">
+               <td class="pl-5">
+               		<p>10 / 05 / 2021</p>
+               </td> 
+               <td class="pl-5">
                		<p>Комментарии</p>
                </td> 
-               <td>
-               		<button class="rounded-full text-white h-8 pl-3 pr-3 flex" v-bind:style="{ backgroundColor: color1}">
+               <td class="pl-5">
+               		<button class="rounded-full text-white h-8 pl-3 pr-3 flex" v-bind:style="{ backgroundColor: color}">
                			<icon name="download" class="w-6 pt-1" />
                			<p class="mt-2 ml-2">скачать</p>
                			

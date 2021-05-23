@@ -17,6 +17,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\DocumentsController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Documents
+
+Route::get('documents',[DocumentsController::class,'index'])
+->name('documents')
+->middleware('auth');
 
 //Groups
 
