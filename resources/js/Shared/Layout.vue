@@ -53,15 +53,15 @@
                 </inertia-link>
               </div>
               <div class="ml-8">
-                <inertia-link class="flex items-center group py-3" :href="route('groups')">
+                <inertia-link class="flex items-center group py-3" :href="route('documents')">
                  
-                  <div :class="isUrl('groups') ? 'text-white' : 'text-white group-hover:text-white font-bold'">Документы</div>
+                  <div :class="isUrl('documents') ? 'text-white' : 'text-white group-hover:text-white font-bold'">Документы</div>
                 </inertia-link>
               </div>
               <div class="ml-8">
-                <inertia-link class="flex items-center group py-3" :href="route('groups')">
+                <inertia-link class="flex items-center group py-3" :href="route('reports')">
                  
-                  <div :class="isUrl('groups') ? 'text-white' : 'text-white group-hover:text-white font-bold'">Отчеты</div>
+                  <div :class="isUrl('reports') ? 'text-white' : 'text-white group-hover:text-white font-bold'">Отчеты</div>
                 </inertia-link>
               </div>
             <div class="ml-8">

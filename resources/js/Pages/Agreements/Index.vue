@@ -1,18 +1,29 @@
 <template>
   <div>
   	<!-- верхняя панель-->
-  	<div class="flex justify-between place-items-center mb-8">
+  	<div class=" relative flex justify-between place-items-center mb-10">
     	<h1 class="font-bold text-3xl">Сделки</h1>
-    	<button class="rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новая сделка</button>
-    	<select class="rounded-full text-white h-8 pl-2 pr-2 " v-bind:style="{ backgroundColor: color}">
+    	<button class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новая сделка</button>
+    	<select class="  rounded-full text-white h-8 pl-2 pr-2 " v-bind:style="{ backgroundColor: color}">
     		<option>цель на квартал</option>
     		<option>цель на неделю</option>
     		<option>цель на месяц</option>
     	</select>
-    	<div>
-    		<div class="absolute bg-green-500 h-8 pl-24 pr-24 rounded-full"></div>
+    	<div class="w-64 flex justify-start">
+
+    	<div class="absolute -top-6">
+    		<div class="absolute top-7 left-0 bg-gray-300 w-64 h-8 rounded-full">
+    			
+    		</div>
+    		<div class="absolute top-7 left-0 bg-green-500 w-24 rounded-full flex justify-end">
+    			<img class="h-8" src="img/user1.webp">
+    			
+    		</div>
+    		<p class="absolute top-0 left-52 w-24   bg-gray-300 text-xs rounded-full p-1">5 000 000</p>
+    		<p class="absolute top-16 left-12 w-24  bg-green-500 text-white text-xs rounded-full p-1">3 400 000</p>
     	</div>
-    	<div>чат</div>
+    </div>
+    	<div ><img class="h-10" src="img/message.png"></div>
 	</div>
 	<!-- список сделок-->
 	<div class="bg-white rounded-md shadow overflow-x-auto">
@@ -43,21 +54,44 @@
 
 	          
 	        </tr>
-	        <tr v-for="task in mytasks" class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
+	        <tr class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 
-	       	   <td class="pl-5" v-if="task.title">
+	       	   <td class="pl-5 w-8">
+	       	   		<p>MT-0125748</p>
+	       	   		<p class="text-xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
                </td>      
-               <td class="pl-5" v-if="task.title">
+               <td class="pl-5">
+               		<p>700 000 tg</p>
                </td>   
-               <td class="pl-5" v-if="task.title">
+               <td class="pl-5">
+               		<p>Имя Фамилия, Компания</p>
                </td> 
-               <td class="pl-5" v-if="task.title">
+               <td class="pl-5">
+               		<p>+7 777 77 77</p>
                </td> 
-               <td class="pl-5" v-if="task.title">
+               <td class="pl-5">
+               		<select>
+               			<option>новый</option>
+               			<option>текущий</option>
+               			<option>вероятный</option>
+               			<option>постоянный</option>
+               		</select>
                </td> 
-               <td class="pl-5" v-if="task.title">
+               <td class="pl-5">
+               		<select>
+               			<option>
+               				переговоры
+               			</option>
+               			<option>
+               				подписание
+               			</option>
+               			<option>
+               				закрыто
+               			</option>
+               		</select>
                </td> 
-               <td class="pl-5" v-if="task.title">
+               <td class="pl-5">
+               		<p>Комментарии по сделке</p>
                </td>       
              
 	       	</tr>

@@ -44,6 +44,10 @@
       <path d="M16,16 L20,16 L20,6 L0,6 L0,16 L4,16 L4,10 L16,10 L16,16 Z M4,10 L16,10 L16,20 L4,20 L4,10 Z M6,12 L14,12 L14,18 L6,18 L6,12 Z M4,0 L16,0 L16,5 L4,5 L4,0 Z M2,8 L4,8 L4,10 L2,10 L2,8 Z M6,8 L8,8 L8,10 L6,10 L6,8 Z" id="Combined-Shape"></path>           
     </g>
   </svg>
+  <svg v-else-if="name === 'download'" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;fill:white;" xml:space="preserve">
+  <path d="M17 12v5H3v-5H1v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5z"/>
+  <path d="M10 15l5-6h-4V1H9v8H5l5 6z"/>
+</svg>
 </template>
 
 <script>
