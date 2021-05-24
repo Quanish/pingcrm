@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="py-4 px-4 shadow overflow-y-auto overflow-x-hidden h-full">
     <h1 class="mb-8 font-bold text-3xl">
       <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="route('tasks')">Новая задача</inertia-link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
-    <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl max-h-4x4">
+    <div class="bg-white rounded-md   max-w-3xl max-h-4x4">
       <form @submit.prevent="store">
         <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
           <text-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.title"  label="Название" />
@@ -68,6 +68,7 @@ export default {
     return {
       format: "yyyy-MM-dd",
       disabledDates: {},
+      date: null,
       disabledFn: {
         customPredictor(date) {
           if (date.getDate() % 3 === 0) {
