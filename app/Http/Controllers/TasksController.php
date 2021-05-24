@@ -21,12 +21,25 @@ class TasksController extends Controller
             return Inertia::render('Tasks/Index', [
                 'filters' => Request::all('search', 'trashed'),
                 'tasks' => Task::with('user','audition')->get(),
+                'users' => Auth::user()->account
+                    ->tasks()
+                    ->orderBy('user')
+                    ->get()
+                    ->map
+                    ->only('id', 'user','deadline','description'),
+                'select' => User::all(),
             ]);
         }else{
     		return Inertia::render('Tasks/Index', [
     			'filters' => Request::all('search', 'trashed'),
                 'tasks' => Task::where('user',Auth::user()->id)->get(),
-                'users' => User::pluck('first_name'),//['John','Percival','Lemuel'],
+                'users' => Auth::user()->account
+                    ->tasks()
+                    ->orderBy('user')
+                    ->get()
+                    ->map
+                    ->only('id', 'user','deadline','description'),
+                'select' => User::all(),
             ]);
         }
 	}

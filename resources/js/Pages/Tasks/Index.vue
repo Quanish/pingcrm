@@ -1,11 +1,12 @@
 <template>
   <div>
+
     <div class="flex flex-row justify-between">
       <h1 class="mb-8 font-bold text-2xl">Мои задачи</h1>
-      <inertia-link class="login_button rounded-full text-white h-8 w-1/5 flex justify-center items-center" :href="route('tasks.create')">
+      <button class="login_button rounded-full text-white h-8 w-1/5 flex justify-center items-center" @click="openCreateModal">
         <span>Новая</span>
-        <span class="hidden md:inline">Задача</span>
-      </inertia-link>
+        <span class="hidden md:inline">&nbsp;задача</span>
+      </button>
       <div class="flex flex-row gap-2">
         <select v-on:change="changeDate($event)" class="task-button rounded-full text-white h-8 w-auto pr-2 pl-2 flex justify-center items-center">
             <option>сегодня</option>
@@ -79,6 +80,11 @@
 	       	</tr>
     	</table>
     </div>
+
+    <modal name="example" adaptive="true" maxWidth="80%" :maxHeight="'90%'" height="auto" scrollable="true">
+      <create-task :users="users" :select="select"></create-task>
+    </modal>
+
   </div>
 </template>
 
@@ -91,6 +97,7 @@ import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination'
 import SearchFilter from '@/Shared/SearchFilter'
+import createTask from './Create.vue'
 import _ from 'lodash'
 
 export default {
@@ -99,11 +106,14 @@ export default {
     Icon,
     Pagination,
     SearchFilter,
+    createTask
   },
   layout: Layout,
   props: {
     tasks: Array,
     filters: Object,
+    users: Array,
+    select: Array,
   },
   data() {
     return {
@@ -180,6 +190,9 @@ export default {
       }else{
         this.desort()
       }
+    },
+    openCreateModal() {
+      this.$modal.show('example')
     },
     desort(){
       this.mytasks = _.orderBy(this.mytasks, 'created_at')
