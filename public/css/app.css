@@ -28059,6 +28059,14 @@ input:focus, input:active, select:focus, select:active, textarea:focus, textarea
           animation: bounce 1s infinite;
 }
 
+.group:hover .group-hover\:block {
+  display: block;
+}
+
+.group:hover .group-hover\:text-blue {
+  color: rgb(167, 214, 255)
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -164323,4 +164331,3 @@ input:focus, input:active, select:focus, select:active, textarea:focus, textarea
             animation: bounce 1s infinite;
   }
 }
-
