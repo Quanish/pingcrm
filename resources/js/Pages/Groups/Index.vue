@@ -3,16 +3,15 @@
 	<div class="flex justify-between">
 	<div class="flex flex-row gap-10">
 		<h1 class="mb-8 font-bold text-2xl">Группы</h1>
-	      <button @click="open" class="login_button rounded-full text-white h-8 w-auto pl-2 pr-2 flex justify-center items-center">
-	        <span>Новая &nbsp</span>
-	        <span class="hidden md:inline">Группа</span>
+	      <button @click="open" class="text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">
+	        <span>Новая &nbsp;группа</span>
 	      </button>
 
 	      <div v-if="modal" class="bg-black bg-opacity-25 absolute pin-t pin-l h-screen w-11/12 flex items-center justify-center">
 	      	<form @submit.prevent="create" class="bg-white p-4 rounded w-2/3">
 	      		<div>
-	      			<p>Новая группа</p>
-	      		</div>
+	      			<p class="text-sm leading-8 px-8">Новая группа</p>
+	      		</div> 
 	      		<br>
 	      		<div >
 	      			<div class="flex justify-between">
@@ -33,18 +32,23 @@
 
 	      <img class="h-10" src="img/message.png">
 	 </div>
-     <div class="rounded-lg bg-white w-full flex flex-row gap-5">
-     	<div class="row w-1/2" v-for="chunk in chunked">
-		  <div class="col-4 p-5" v-for="article in chunk">
-		  <div class="border-2 rounded-md p-4">
-		    <div class="flex justify-start gap-3"><img src="img/default-user.png" class="w-8 h-8"><div class="flex flex-col">{{ article.group_name }}<p class="texxt-sm text-gray-300" v-if="article.access==1">закрытая группа</p>
-		    <p class="texxt-sm text-gray-300" v-if="article.access==2">открытая группа</p>
-		    </div>
-		    	<p v-if="article.id==1" class="text-sm text-gray-300">admin</p>
+     <div class="rounded-2xl bg-white w-full flex flex-row flex-wrap py-4">
+     	<div class="w-1/3 pl-4 pr-4 last:pr-0" v-for="chunk in chunked">
+		  <div class="mb-4" v-for="article in chunk">
+		  <div class="border rounded-2xl p-5">
+		    <div class="flex justify-between">
+				<div class="flex justify-start  gap-3">
+					<img src="img/default-user.png" class="w-12 h-12">
+					<div class="flex flex-col text-sm font-medium text-black">{{ article.group_name }}
+						<p class="text-sm text-black text-2xs font-normal" v-if="article.access==1">закрытая группа</p>
+						<p class="text-sm text-black text-2xs font-normal" v-if="article.access==2">открытая группа</p>
+		    		</div>
+				</div>
+		    	<p v-if="article.id==1" class="text-sm text-gray-300 text-2xs">admin</p>
 		    </div>
 		    <div class="mt-5 flex justify-between">
-		    	<p class="task-button text-white items-center rounded-full h-6 pl-2 pr-2">добавить участника</p>
-		    	<p class="bg-gray-200 text-gray-700 items-center rounded-full h-6 pl-2 pr-2">выйти из группы</p>
+		    	<button class="task-button text-white items-center rounded-full h-6 px-7 text-2xs leading-6">добавить участника</button>
+		    	<button class="bg-gray-200 text-gray-700 items-center rounded-full h-6 px-7 text-2xs leading-6">выйти из группы</button>
 		    </div>
 		    </div>
 		  </div>
