@@ -41,13 +41,31 @@
 }
 
 .auth {
-    background-image: url("/img/Auth_background.jpg");
+    position: relative;
+    background-image: url("/img/bg_lines.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-position: bottom center;
+    background-size: 100%;
+}
+
+.auth:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f1f1f1;
 }
 
 .login_button {
     background-image: linear-gradient(to right, #4A32E3, #875FDA);
+}
+
+.login_button:hover {
+    background-image: linear-gradient(to right, #875FDA, #4A32E3);
 }
 
 .menu_bar {
