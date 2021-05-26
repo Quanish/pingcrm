@@ -16,7 +16,6 @@ module.exports = {
             black: colors.black,
             white: colors.white,
             red: colors.red,
-            blue: colors.blue,
             orange: colors.orange,
             yellow: colors.yellow,
             green: colors.green,
@@ -30,6 +29,10 @@ module.exports = {
                 800: '#2f365f',
                 900: '#191e38',
             },
+            blue: {
+                400: '#4A32E3',
+                500: '#4F58DB',
+            }
         },
         extend: {
             borderColor: theme => ({

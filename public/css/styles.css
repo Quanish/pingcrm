@@ -118,5 +118,13 @@
 /***/
 
 .h-screen-2 {
-    max-height: 65vh;
+    max-height: 10я0vh;
+}
+
+select.bg-blue-500 {
+    background: #4F58DB;
+}
+
+select {
+    cursor: pointer
 }
