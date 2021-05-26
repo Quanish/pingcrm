@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="flex flex-row justify-between">
-      <h1 class="mb-8 font-bold text-2xl">Добрый день,  <span>{{ $page.props.auth.user.first_name}}</span>
+      <h1 class="pl-4 mb-8 font-bold text-2xl">Добрый день,  <span>{{ $page.props.auth.user.first_name}}</span>
                     <span class="hidden md:inline">{{ $page.props.auth.user.last_name }}</span>!</h1>
       <img class="h-10" src="img/message.png">
     </div>
     <div class="flex flex-row justify-between">
-   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4  px-6 py-4 mx-4">
-    <div class="flex justify-between">
-      <p class="mt-3">Задачи</p> 
+   <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  px-6 py-4 mx-4">
+    <div class="flex justify-between items-center">
+      <p class="font-medium">Задачи</p> 
       <div class="relative inline-flex">
         <svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
         <select v-on:change="changeItem($event)" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
@@ -18,14 +18,15 @@
           <option>все время</option>
         </select>
       </div>
-      <p class="task-button rounded-full text-white w-10 flex justify-center  items-center">{{taskCounter}}</p>
+      <p class="task-button rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{taskCounter}}</p>
     </div>
     <hr class="my-2">
     <div class="h-96 overflow-y-auto">
       <div v-for="task in mytasks">
         <div>
           <inertia-link class="py-4 flex items-center w-full justify-between focus:text-indigo-500" :href="route('tasks.show', task.id)"  >
-              <div class="flex flex-col">{{task.title}}<p class="text-sm font-normal text-gray-300">2 дня до дедлайна</p></div><p class="task-button-working rounded-full text-white  flex p-3 items-center">{{task.status}}</p>
+              <div class="flex flex-col">{{task.title}}<p class="text-xs font-normal text-gray-300">2 дня до дедлайна</p></div>
+              <p class="task-button-working rounded-full text-white text-xs flex px-2 py-1 items-center whitespace-nowrap">{{task.status}}</p>
             <icon v-if="task.deleted_at" name="trash" class="flex-shrink-0 w-3 h-3 fill-gray-400 ml-2" />
 
             
@@ -39,9 +40,9 @@
       </div>
     </div>
    </div>
-   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4 px-6 py-4 mx-4">
-    <div class="flex justify-between">
-      <p class="mt-3">Дела</p> 
+   <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 px-6 py-4 mx-4">
+    <div class="flex justify-between items-center">
+      <p class="font-medium">Дела</p> 
       <div class="relative inline-flex">
         <svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
         <select  v-on:change="changeItem1($event)" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
@@ -51,7 +52,7 @@
           <option selected>все время</option>
         </select>
       </div>
-      <p class="task-button rounded-full text-white w-10 flex justify-center  items-center">{{workCounter}}</p>
+      <p class="task-button rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{workCounter}}</p>
     </div>
     <hr class="my-2">
       <div class="h-96 overflow-y-auto">
@@ -61,9 +62,9 @@
       <div class="flex flex-row"><div class="rounded-full w-5 h-5 mb-3 border-2 bg-white-500"></div><button v-on:click="create" class="mb-3 ml-2">Добавить</button></div>
      </div>
    </div>
-   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4 px-6 py-4 mx-4">
-    <div class="flex justify-between">
-      <p class="mt-3">Встречи</p> 
+   <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 px-6 py-4 mx-4">
+    <div class="flex justify-between items-center">
+      <p class="font-medium">Встречи</p> 
       <div class="relative inline-flex">
         <svg class="w-2 h-2 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fill-rule="nonzero"/></svg>
         <select  v-on:change="changeItem2($event)" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
@@ -73,7 +74,7 @@
           <option selected>все время</option>
         </select>
       </div>
-      <p class="task-button rounded-full text-white w-10 flex justify-center  items-center">{{meetCounter}}</p>
+      <p class="task-button rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{meetCounter}}</p>
     </div>
     <hr class="my-2">
     <div class="h-96 overflow-y-auto">
@@ -84,7 +85,7 @@
      
      </div>
    </div>
-   <div class="bg-white rounded-md shadow overflow-x-auto w-1/4 px-6 py-4 mx-4">
+   <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 px-6 py-4 mx-4">
     <div class="flex justify-start">
       События 
       
@@ -93,11 +94,16 @@
     <div class="h-96 overflow-y-auto">
     <div v-for="event in orderedEvents">
     <div class="border-2 rounded-lg p-1 flex flex-col">
-      <div class="flex flex-row"><img class="h-8" src="img/user1.webp"><div class="flex flex-col  ml-2"><p>{{event.user.first_name}}</p><p class="text-sm text-gray-300">Сотрудник</p></div></div>
-      <p class="mt-3">{{event.description}}</p>
+      <div class="flex flex-row"><img class="h-8" src="img/user1.webp"><div class="flex flex-col  ml-2"><p>{{event.user.first_name}}</p><p class="text-xs text-gray-300">Сотрудник</p></div></div>
+      <p class="font-medium">{{event.description}}</p>
       <div class="flex flex-row justify-between mt-3">
-        <inertia-link :href="route('tasks.show',event.task.id)" class="hover:underline rounded-full  p-3 bg-gray-100 text-gray-400">Перейти к задаче
-        </inertia-link>
+        <template>
+          <inertia-link v-if="event.task !== null" :href="route('tasks.show',event.task.id)" class="hover:underline rounded-full  p-3 bg-gray-100 text-gray-400">Перейти к задаче
+          </inertia-link>
+          <inertia-link v-else href="#" class="hover:underline rounded-full  p-3 bg-gray-100 text-gray-400">Перейти к задаче
+          </inertia-link>
+        </template>
+        
       </div>
     </div>
     <br>

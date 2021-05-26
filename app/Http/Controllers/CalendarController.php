@@ -22,7 +22,7 @@ class CalendarController extends Controller
                     'description' => 'Lecture'
                 ];
         return Inertia::render('Calendar/Index', [
-            'event' => Task::select('title', 'created_at as start', 'deadline as end', 'audition as department', 'description')->get(),
+            'event' => Task::select('title', 'created_at as start', 'created_at as end', 'audition as department', 'description')->get(),
         	/*'event' => [$array, $array],
 	        'task' => Task::first()->get(),*/
         ]);
