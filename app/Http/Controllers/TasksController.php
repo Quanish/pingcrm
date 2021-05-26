@@ -15,6 +15,8 @@ use Inertia\Inertia;
 class TasksController extends Controller
 {
     //
+
+
 	public function index(){
         if (Auth::user()->owner) {
             # code...
@@ -178,6 +180,9 @@ class TasksController extends Controller
 
     public function calendar(){
         return Inertia::render('Tasks/Calendar');
+    }
+    public function dela(){
+        return Inertia::render('Tasks/Dela');
     }
 
 }

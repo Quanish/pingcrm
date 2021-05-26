@@ -214,6 +214,10 @@ Route::post('tasks/{message}/{id}',[TasksController::class, 'message'])
 ->name('tasks.message')
 ->middleware('auth');
 
+Route::get('dela',[TasksController::class,'dela'])
+->name('tasks.dela')
+->middleware('auth');
+
 //Agreements
 
 Route::get('agreements', [AgreementsController::class, 'index'])

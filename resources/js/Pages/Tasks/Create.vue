@@ -14,8 +14,9 @@
           </select-input><br>
           
 
-            <datepicker :value="date" :format="customFormatter" @selected="CallDateFunction" class="pr-6 pb-8 w-full lg:w-1/2" placeholder="Дедлайн"></datepicker>
-            
+            <div class="rounded-md border-solid border-2 border-gray-200 pb-4 mb-8 mr-10 lg:w-1/2"><datepicker :value="date" :format="customFormatter" @selected="CallDateFunction"  placeholder="Дедлайн"></datepicker></div>
+
+             
           
           <text-input class="pr-6 pb-8 w-full lg:w-2/2" v-model="form.description"  label="Описание" />
           <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.audition" :error="form.errors.user" label="Аудитор" >
