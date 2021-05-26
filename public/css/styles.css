@@ -85,6 +85,30 @@
     background-color: #875FDA;
 }
 
+<<<<<<< HEAD
 .mydatepicker{
     border-style: solid;
 }
+=======
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #fafafa;
+	border-radius: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar
+{
+	width: 5px;
+    height: 5px;
+	background-color: #fafafa;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 5px;
+    height: 5px;
+	background-color: rgb(122,153,217);
+}
+>>>>>>> c204617031c03f5d82745adbad52e3c818726d8f
