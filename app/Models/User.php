@@ -16,14 +16,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use SoftDeletes, Authenticatable, Authorizable;
 
-
     protected $casts = [
         'owner' => 'boolean',
     ];
-    public function deal()
-    {
-        return $this->hasMany(Deal::class);
-    }
     public function event(){
         return $this->hasMany(Events::class);
     }

@@ -30,10 +30,14 @@ props:{
 data() {
     return {
        calendarOptions: {
+
           plugins: [ dayGridPlugin, interactionPlugin ],
           initialView: 'dayGridMonth',
           selectable:true,
-          events: this.event
+          events: this.event,
+          select: (event) => {
+            this.handleSelect()
+          },
         },
       }
   },
@@ -41,6 +45,11 @@ data() {
   layout: Layout,
   components:{
     Fullcalendar
+  },
+  methods:{
+    handleSelect(){
+      alert('test');
+    }
   },
   created() {
     let arr = []

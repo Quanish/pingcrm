@@ -28067,6 +28067,14 @@ input:focus, input:active, select:focus, select:active, textarea:focus, textarea
   color: rgb(167, 214, 255)
 }
 
+a {
+  cursor: pointer;
+}
+
+.bg-gray-100 {
+  background-color: #f1f1f1;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

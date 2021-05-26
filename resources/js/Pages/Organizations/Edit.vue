@@ -16,10 +16,13 @@
           <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" label="ФИО" />
 
           <text-input v-model="form.postal_code" :error="form.errors.postal_code" class="pr-6 pb-8 w-full lg:w-1/2" label="Должность" />
-          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Email" />
-          <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full lg:w-1/2" label="Phone" />
-          <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" label="Address" />
+          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Почта" />
+          <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full lg:w-1/2" label="Контакты" />
+          <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" label="Адрес" />
           <text-input v-model="form.city" :error="form.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" label="City" />
+          <select v-model="form.responsible" :error="form.errors.responsible" class="pr-6 pb-8 w-full lg:w-1/2" label="Ответственный">
+            <
+          </select>
         </div>
         <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center">
           <button v-if="!organization.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить организацию</button>
@@ -86,6 +89,7 @@ export default {
         region: this.organization.region,
         country: this.organization.country,
         postal_code: this.organization.postal_code,
+        responsible: this.organization.responsible,
       }),
     }
   },

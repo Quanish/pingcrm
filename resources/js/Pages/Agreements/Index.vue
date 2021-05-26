@@ -40,13 +40,13 @@
 	            	<p class="font-normal">Клиент</p>
 	            </th>
 	            <th class="px-6 pt-6 pb-4">
-	            	<p class="font-normal">Контакты</p>
-	            </th>
-	            <th class="px-6 pt-6 pb-4">
 	            	<p class="font-normal">Статус</p>
 	            </th>
 	            <th class="px-6 pt-6 pb-4">
 	            	<p class="font-normal">Стадия</p>
+	            </th>
+	            <th class="px-6 pt-6 pb-4">
+	            	<p class="font-normal">Ответственный</p>
 	            </th>
 	            <th class="px-6 pt-6 pb-4">
 	            	<p class="font-normal">Примечания</p>
@@ -57,26 +57,41 @@
 	        <tr class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 
 	       	   <td class="pl-5 w-8">
-	       	   		<p>{{agreements.deal_number}}</p>
+	       	   		<p>MT-0125748</p>
 	       	   		<p class="text-xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
                </td>      
                <td class="pl-5">
-               		<p>{{agreements.price}} tg</p>
+               		<p>700 000 tg</p>
                </td>   
                <td class="pl-5">
-               		<p>{{agreements.client}}</p>
+               		<p>Имя Фамилия, Компания</p>
                </td> 
                <td class="pl-5">
-               		<p>{{agreements.client}}</p>
+               		<p>+7 777 77 77</p>
                </td> 
                <td class="pl-5">
-               		{{agreements.status}}
+               		<select>
+               			<option>новый</option>
+               			<option>текущий</option>
+               			<option>вероятный</option>
+               			<option>постоянный</option>
+               		</select>
                </td> 
                <td class="pl-5">
-               		{{agreements.stage}}
+               		<select>
+               			<option>
+               				переговоры
+               			</option>
+               			<option>
+               				подписание
+               			</option>
+               			<option>
+               				закрыто
+               			</option>
+               		</select>
                </td> 
                <td class="pl-5">
-               		<p>{{agreements.comment}}</p>
+               		<p>Комментарии по сделке</p>
                </td>       
              
 	       	</tr>
@@ -92,9 +107,7 @@ import Layout from '@/Shared/Layout'
 export default {
 	metaInfo: { title: 'Договоры' },
 	layout: Layout,
-  props:{
-    agreements: Array,
-  },
+
 	data () {
     	return {      	
 			color: "#875FDA",
