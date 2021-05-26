@@ -228,10 +228,6 @@
                             </inertia-link>
                         </div>
 
-
-                        <inertia-link class="flex items-center group py-3" :href="route('tasks.dela')" title="проверка">ntcn</inertia-link>
-
-                        
                     </div>
 
 
