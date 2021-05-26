@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Organization extends Model
 {
     use SoftDeletes;
+
+    public function deal()
+    {
+        return $this->hasMany(Deal::class);
+    }
     public function responsible(){
         return $this->belongsTo(User::class,'responsible','id');
     }

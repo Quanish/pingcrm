@@ -44,6 +44,7 @@
           <div class="flex justify-between mt-5">
           <form @submit.prevent="accept">
               <button class="rounded-full p-2 task-button text-white" @click="download">скачать</button><button type="submit" class="rounded-full bg-green-300 p-2">принять</button><button  @click="decline" class="rounded-full bg-gray-300 p-2">отклонить</button>
+              <button  @click="decline" class="rounded-full bg-gray-300 p-2">завершить</button>
               <input type="hidden" v-model="form.status" value="в работе" />
             </form>
           </div>
@@ -129,11 +130,13 @@ export default {
   },
   methods: {
     addMessage(){
-      this.message = "";
-      this.form.post(this.route('tasks.message',{
-        message:this.message,
-        id: this.task.id,
-      }));
+      axios.post('/tasks/'+this.message+'/'+this.task.id, {
+        task_id: this.task.id,
+        text: this.message
+      }).then(response => {
+          this.messages = response.data.status
+          message = ""
+        })
     },
     download(){
       alert("В работе");

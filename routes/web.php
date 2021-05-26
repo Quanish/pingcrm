@@ -11,7 +11,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\FlatsController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\TasksController;
-use App\Http\Controllers\AgreementsController;
+use App\Http\Controllers\DealsController;
 use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PostController;
@@ -214,10 +214,10 @@ Route::post('tasks/{message}/{id}',[TasksController::class, 'message'])
 ->name('tasks.message')
 ->middleware('auth');
 
-//Agreements
+//Deals
 
-Route::get('agreements', [AgreementsController::class, 'index'])
-    ->name('agreements')
+Route::get('deals', [DealsController::class, 'index'])
+    ->name('deals')
     ->middleware('auth');
 
 //Meetings

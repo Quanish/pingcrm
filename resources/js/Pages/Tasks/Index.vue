@@ -19,12 +19,12 @@
         </select>
         <p class="task-button rounded-full text-white w-8 h-8 flex pl-2 items-center">{{mytasks.length}}</p>
       </div>  
-      <button class="bg-gray-300 rounded-full p-3 h-8 flex justify-between gap-3 items-center">
-        <input type="checkbox" label="срочно"
+      <div class="bg-gray-300 rounded-full p-3 h-8 flex justify-between gap-3 items-center">
+        срочно
+        <input class="rounded-full" type="checkbox"
         v-model="checked"
        @change="check($event)">
-        <div class="w-6 h-6 border-2 rounded-full"></div>
-      </button>
+      </div>
       <img class="h-10" src="img/message.png">
     </div>
     <div class="flex flex-row justify-start gap-5">

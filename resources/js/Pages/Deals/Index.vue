@@ -54,29 +54,29 @@
 
 	          
 	        </tr>
-	        <tr class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
+	        <tr v-for="deal in test" class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 
 	       	   <td class="pl-5 w-8">
-	       	   		<p>{{agreements.deal_number}}</p>
+	       	   		<p>{{deal.deal_number}}</p>
 	       	   		<p class="text-xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
                </td>      
                <td class="pl-5">
-               		<p>{{agreements.price}} tg</p>
+               		<p>{{deal.price}} tg</p>
                </td>   
                <td class="pl-5">
-               		<p>{{agreements.client}}</p>
+               		<p>{{deal.client}}</p>
                </td> 
                <td class="pl-5">
-               		<p>{{agreements.client}}</p>
+               		<p>{{deal.client}}</p>
                </td> 
                <td class="pl-5">
-               		{{agreements.status}}
+               	{{deal.status}}
                </td> 
                <td class="pl-5">
-               		{{agreements.stage}}
+               		{{deal.stage}}
                </td> 
                <td class="pl-5">
-               		<p>{{agreements.comment}}</p>
+               		<p>{{deal.comment}}</p>
                </td>       
              
 	       	</tr>
@@ -93,13 +93,14 @@ export default {
 	metaInfo: { title: 'Договоры' },
 	layout: Layout,
   props:{
-    agreements: Array,
+    test: String,
   },
 	data () {
     	return {      	
 			color: "#875FDA",
 			color1: "#4A32E3",
 			angle: '50',
+      mytest: 'fuck',
 		}
   	},
   	computed:{
