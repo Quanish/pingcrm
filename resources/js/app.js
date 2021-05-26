@@ -4,10 +4,16 @@ import PortalVue from 'portal-vue'
 import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress/src'
 
+/* Axios */
 import axios from 'axios'
-import VueAxios from 'vue-axios'
+import VueAxios from 'vue-axios' 
 
+/* Modal */
 import vmodal from 'vue-js-modal'
+
+/* Checkbox */
+
+
 
 Vue.config.productionTip = false
 Vue.mixin({ methods: { route: window.route } })
@@ -16,6 +22,7 @@ Vue.use(PortalVue)
 Vue.use(VueMeta)
 Vue.use(VueAxios, axios)
 Vue.use(vmodal)
+
 
 InertiaProgress.init()
 

@@ -1,5 +1,5 @@
 <template>
-  <button type="button" @click="show = true">
+  <button type="button" @click="show = true" class="flex justify-end items-center">
     <slot />
     <portal v-if="show" to="dropdown">
       <div>

@@ -55,7 +55,7 @@ class UsersController extends Controller
             'email' => Request::get('email'),
             'password' => Request::get('password'),
             'owner' => Request::get('owner'),
-            'photo_path' => Request::file('photo') ? Request::file('photo')->store('storage/users') : null,
+            'photo_path' => Request::file('photo') ? Request::file('photo')->store('users', 'public') : null,
         ]);
 
         return Redirect::route('users')->with('успешно', 'Пользователь добавлен.');
@@ -94,7 +94,7 @@ class UsersController extends Controller
         $user->update(Request::only('first_name', 'last_name', 'email', 'owner'));
 
         if (Request::file('photo')) {
-            $user->update(['photo_path' => Request::file('photo')->store('users')]);
+            $user->update(['photo_path' => Request::file('photo')->store('users', 'public')]);
         }
 
         if (Request::get('password')) {

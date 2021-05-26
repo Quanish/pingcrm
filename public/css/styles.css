@@ -84,3 +84,25 @@
 .task-button-working {
     background-color: #875FDA;
 }
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #fafafa;
+	border-radius: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar
+{
+	width: 5px;
+    height: 5px;
+	background-color: #fafafa;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 5px;
+    height: 5px;
+	background-color: rgb(122,153,217);
+}
