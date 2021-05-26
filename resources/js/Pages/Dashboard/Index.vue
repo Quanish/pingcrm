@@ -6,23 +6,26 @@
         <img class="h-10" src="img/message.png">
     </div>
     <div class="flex flex-row justify-between">
+
+
+
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
-            <div class="flex justify-between items-center px-6">
+            <div class="flex justify-between items-center px-6 gap-2">
                 <p class="font-medium text">Задачи</p>
                 <div class="relative inline-flex">
-                    <svg class="w-2 h-2 absolute  right-0 m-3  pointer-events-none fill-current text-white fill-current text-white -top-px"  viewBox="0 0 412 232">
+                    <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white"  viewBox="0 0 412 232">
                         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" />
                     </svg>
-                    <select v-on:change="changeItem($event)" style="background-color: rgb(135, 95, 218);" class="text-white text-sm gradient-indigo border border-gray-300 rounded-full text-gray-100 h-7 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <select v-on:change="changeItem($event)" class="text-white text-xs bg-blue-500 border border-gray-300 rounded-full text-gray-100 h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                         <option>сегодня</option> 
                         <option>месяц</option>
                         <option>год</option>
                         <option>все время</option>
                     </select>
                 </div>
-                <p class="task-button rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{taskCounter}}</p>
+                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{taskCounter}}</p>
             </div>
-            <hr class="my-2 mx-6 mb-0">
+            <hr class="my-5 mx-6 mb-0">
             <div class="h-screen-2 overflow-y-auto px-6">
                 <div v-for="task in mytasks">
                     <div>
@@ -41,51 +44,58 @@
                     </div>
                 </div>
             </div>
+            <div class="flex">
+                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Новая задача</button>
+            </div> 
+           
         </div>
 
+
+
+
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
-            <div class="flex justify-between items-center px-6">
+            <div class="flex justify-between items-center px-6 gap-2 ">
                 <p class="font-medium text">Дела</p>
                 <div class="relative inline-flex">
-                    <svg class="w-2 h-2 absolute  right-0 m-3  pointer-events-none fill-current text-white -top-px" viewBox="0 0 412 232">
+                    <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white" viewBox="0 0 412 232">
                         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"  fill-rule="nonzero" />
                     </svg>
-                    <select v-on:change="changeItem1($event)" style="background-color: rgb(135, 95, 218);" class="text-white gradient-indigo border border-gray-300 rounded-full text-sm h-7 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <select v-on:change="changeItem1($event)"  class="text-white bg-blue-500 border border-gray-300 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                         <option>сегодня</option>
                         <option>месяц</option>
                         <option>год</option>
                         <option selected>все время</option>
                     </select>
                 </div>
-                <p class="task-button rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{workCounter}}</p>
+                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{workCounter}}</p>
             </div>
-            <hr class="my-3 mx-6 mb-0">
+            <hr class="my-5 mx-6 mb-0">
             <div class="h-screen-2 overflow-y-auto px-6">
                 <div v-for="project in myworks" class="flex justify-start gap-2">
                   <checkbox :label="project.title" :value="project.title" v-model="project.checked" />
                 </div>
-                <div class="flex flex-row mt-2">
-                    <div class="rounded-full w-5 h-5 mb-3 btn-check"></div><button v-on:click="create" class="mb-3  ml-3.5 leading-normal">Добавить</button>
-                </div>
             </div>
+            <div class="flex">
+                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
+            </div> 
         </div>
 
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
-            <div class="flex justify-between items-center px-6">
+            <div class="flex justify-between items-center px-6 gap-2 ">
                 <p class="font-medium text">Встречи</p>
                 <div class="relative inline-flex">
-                    <svg class="w-2 h-2 absolute  right-0 m-3  pointer-events-none fill-current text-white" viewBox="0 0 412 232">
+                    <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white" viewBox="0 0 412 232">
                         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"  fill-rule="nonzero" /></svg>
-                    <select v-on:change="changeItem2($event)" style="background-color: rgb(135, 95, 218);" class="text-white gradient-indigo border border-gray-300 rounded-full text-sm h-7 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <select v-on:change="changeItem2($event)" class="text-white bg-blue-500 border border-gray-300 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                         <option>сегодня</option>
                         <option>месяц</option>
                         <option>год</option>
                         <option selected>все время</option>
                     </select>
                 </div>
-                <p class="task-button rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{meetCounter}}</p>
+                <p class="bg-blue-500  rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{meetCounter}}</p>
             </div>
-            <hr class="my-3 mx-6 mb-0">
+            <hr class="my-5 mx-6 mb-0">
             <div class="h-screen-2 overflow-y-auto px-6">
                 <div v-for="meeting in mymeet">
                     <!-- <p class="notification">{{meeting.description}}</p> -->
@@ -98,7 +108,7 @@
             <div class="flex justify-start px-6">
                 <p class="font-medium text h-7 leading-loose">События</p>  
             </div>
-            <hr class="my-3 mx-6 mb-0">
+            <hr class="my-5 mx-6 mb-0">
             <div class="h-screen-2 overflow-y-auto px-6 pb-4">
                 <div v-for="event in orderedEvents" class="mt-3">
                     <div class="border rounded-2xl px-5 py-4 flex flex-col">
