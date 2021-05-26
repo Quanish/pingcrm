@@ -67,7 +67,7 @@ class TasksController extends Controller
             ],
             'audition' => User::select('first_name')->where('id',$task->audition)->get(),
             'user' => User::select('first_name')->where('id',$task->user)->get(),
-            'messages' => Comment::where('task_id',$task->id)->get(),
+            'messages' => Comment::select('comment')->where('task_id',$task->id)->get(),
         ]);
     }
     public function message(String $message,$id){
@@ -76,20 +76,8 @@ class TasksController extends Controller
             'user_id' => Auth::user()->id,
             'comment' => $message,
         ]);
-        return Inertia::render('Tasks/Show',[
-            'task' => [
-                'id' => $task->id,
-                'title' => $task->title,
-                'description' => $task->description,
-                'deadline' => $task->deadline,
-                'progress' => $task->progress,
-                'date_created' => $task->date_created,
-                'status' => $task->status,
-            ],
-            'audition' => User::select('first_name')->where('id',$task->audition)->get(),
-            'user' => User::select('first_name')->where('id',$task->user)->get(),
-            'messages' => Comment::where('task_id',$task->id)->get(),
-        ]);
+        return  ['success' => true,
+        'status' => $message];
         
     }
 
