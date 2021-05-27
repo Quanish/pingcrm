@@ -131,7 +131,7 @@
                             <template>
                                 <inertia-link v-if="event.task !== null" :href="route('tasks.show',event.task.id)" class="hover:bg-gray-200 rounded-full px-3  py-1 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Перейти к задаче
                                 </inertia-link>
-                                <inertia-link v-else href="#" class="hover:bg-gray-200 rounded-full  px-3  py-1 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Перейти к задаче
+                                <inertia-link v-else href="#" class="hover:bg-gray-200 rounded-full  px-3  py-1 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Перейти
                                 </inertia-link>
                             </template>
                             
