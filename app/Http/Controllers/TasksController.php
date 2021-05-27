@@ -8,18 +8,18 @@ use App\Models\Event;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-//use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Request as StaticRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class TasksController extends Controller
 {
-	public function index(){
+	public function index(Request $request){
         if (Auth::user()->owner) {
             # code...
             return Inertia::render('Tasks/Index', [
-                'filters' => Request::all('search', 'trashed'),
+                'filters' => StaticRequest::all('search', 'trashed'),
                 'tasks' => Task::with('user','audition')->get(),
                 'users' => Auth::user()->account
                     ->tasks()
@@ -30,7 +30,7 @@ class TasksController extends Controller
             ]);
         }else{
     		return Inertia::render('Tasks/Index', [
-    			'filters' => Request::all('search', 'trashed'),
+    			'filters' => StaticRequest::all('search', 'trashed'),
                 'tasks' => Task::where('user',Auth::user()->id)->get(),
             ]);
         }
@@ -38,7 +38,7 @@ class TasksController extends Controller
 
     public function accept(Task $task){
         $task->update(
-            Request::validate([
+            StaticRequest::validate([
                 'status' => ['required', 'max:50'],
             ])
         );
@@ -141,7 +141,7 @@ class TasksController extends Controller
     public function update(Task $task)
     {
         $task->update(
-            Request::validate([
+            StaticRequest::validate([
                 'user' => ['required', 'max:50'],
                 'deadline' => ['required', 'max:50'],
                 'description' => ['required', 'max:50'],
