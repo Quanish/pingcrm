@@ -73,7 +73,7 @@
     </div>
 
     <modal name="create">
-      <create-task :users="users" :select="select"></create-task>
+      <create-task></create-task>
     </modal>
   </div>
 </template>
@@ -106,8 +106,6 @@ export default {
   props: {
     tasks: Array,
     filters: Object,
-    users: Array,
-    select: Array,
   },
   data() {
     return {

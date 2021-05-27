@@ -93,7 +93,9 @@
                 <div v-for="meeting in mymeet">
                     <!-- <p class="notification">{{meeting.description}}</p> -->
                 </div>
-                <div class="flex flex-row"><button v-on:click="create" class="mt-2  leading-normal">Добавить</button></div>
+                <div class="flex">
+                    <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal('встреча')">Добавить</button>
+                </div> 
             </div>
         </div>
 
@@ -122,7 +124,7 @@
                             <inertia-link href="#" class="hover:bg-gray-200 rounded-full  px-3  py-1  mr-2 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Связаться
                             </inertia-link>
                             <template>
-                                <inertia-link v-if="event.task !== null" :href="route('tasks.show',event.task.id)" class="hover:bg-gray-200 rounded-full px-3  py-1 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Перейти к задаче
+                                <inertia-link v-if="event.task !== null" :href="route('tasks.show',event.task.id)" class="hover:bg-gray-200 rounded-full px-3  py-1 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Перейти
                                 </inertia-link>
                                 <inertia-link v-else href="#" class="hover:bg-gray-200 rounded-full  px-3  py-1 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Перейти
                                 </inertia-link>
@@ -137,7 +139,7 @@
 
 
     <modal name="create_tasks">
-      <create-task :users="null" :select="null" :type="type"></create-task>
+      <create-task :type="type"></create-task>
     </modal>
 
 

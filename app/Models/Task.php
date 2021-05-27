@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Task extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['user','deadline','description','title','audition','status','type'];
+    protected $fillable = ['user','deadline','description','title','audition','status','type', 'account_id'];
     public function user()
     {
         return $this->belongsTo(User::class,'user','id');

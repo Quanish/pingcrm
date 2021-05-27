@@ -150,3 +150,7 @@ a,
 button {
     font-weight: 300;
 }
+
+.vdp-datepicker__calendar {
+    position: fixed !important;
+}
