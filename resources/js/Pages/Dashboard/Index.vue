@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="flex flex-row justify-between">
-        <h1 class="mb-8 font-bold text-xl">Добрый день, <span>{{ $page.props.auth.user.first_name}}</span>
+        <h1 class="mb-8 font-bold text-2xl">Добрый день, <span>{{ $page.props.auth.user.first_name}}</span>
             <span class="hidden md:inline">{{ $page.props.auth.user.last_name }}</span>!</h1>
         <img class="h-10" src="img/message.png">
     </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="flex">
-                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Новая задача</button>
+                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal">Новая задача</button>
             </div> 
            
         </div>
@@ -141,6 +141,14 @@
             </div>
         </div>
     </div>
+
+
+    <modal name="create_tasks">
+      <create-task :users="null" :select="null"></create-task>
+    </modal>
+
+
+
 </div>
 </template>
 
@@ -148,6 +156,7 @@
 import Layout from '@/Shared/Layout'
 import Checkbox from '@/Shared/Checkbox'
 import RadialProgressBar from 'vue-radial-progress'
+import CreateTask from '../Tasks/Create.vue'
 import _ from 'lodash'
 
 export default {
@@ -193,7 +202,8 @@ export default {
     },
     components: {
         RadialProgressBar,
-        Checkbox
+        Checkbox,
+        CreateTask
     },
     computed: {
         orderedEvents: function () {
@@ -312,7 +322,10 @@ export default {
                     console.log(this.mytasks);
 
             }
-        }
+        },
+        showCreateTaskModal() {
+            this.$modal.show('create_tasks')
+        },
     }
 }
 </script>

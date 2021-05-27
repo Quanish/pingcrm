@@ -118,7 +118,8 @@
 /***/
 
 .h-screen-2 {
-    max-height: 10я0vh;
+    height: 60vh;
+    height: calc(100vh - 350px);
 }
 
 select.bg-blue-500 {
@@ -143,4 +144,9 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+a,
+button {
+    font-weight: 300;
 }
