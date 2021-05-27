@@ -10,7 +10,7 @@
             <div class="flex justify-between items-center px-6 gap-2">
                 <p class="font-medium text">Задачи</p>
                 <div class="relative inline-flex">
-                    <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white"  viewBox="0 0 412 232">
+                    <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white" viewBox="0 0 412 232">
                         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" />
                     </svg>
                     <select v-on:change="changeItem($event)" class="text-white text-xs bg-blue-500 border border-gray-300 rounded-full text-gray-100 h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
@@ -27,7 +27,7 @@
                 <div v-for="task in mytasks">
                     <div>
                         <inertia-link class="py-4 flex items-center w-full justify-between focus:text-indigo-500" :href="route('tasks.show', task.id)">
-                            <div class="flex flex-col text-sm">{{task.title}}
+                            <div class="flex flex-col text-sm font-medium">{{task.title}}
                                 <p class="text-xs font-normal text-gray-300" style="font-size: 0.6rem">2 дня до дедлайна</p>
                             </div>
                             <p class="task-button-working rounded-full text-white text-xs flex px-2 py-1 items-center whitespace-nowrap font-light">{{task.status}}</p>
@@ -53,7 +53,7 @@
                     <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white" viewBox="0 0 412 232">
                         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"  fill-rule="nonzero" />
                     </svg>
-                    <select v-on:change="changeItem1($event)"  class="text-white bg-blue-500 border border-gray-300 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <select v-on:change="changeItem1($event)" class="text-white bg-blue-500 border border-gray-300 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                         <option>сегодня</option>
                         <option>месяц</option>
                         <option>год</option>
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="flex">
-                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
+                <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
             </div> 
         </div>
 

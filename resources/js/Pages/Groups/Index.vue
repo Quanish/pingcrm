@@ -1,35 +1,17 @@
 <template>
-<div >
+<div>
+
+	<modal name="create">
+      <create-group></create-group>
+    </modal>
+
 	<div class="flex justify-between">
-	<div class="flex flex-row gap-10">
-		<h1 class="mb-8 font-bold text-2xl">Группы</h1>
-	      <button @click="open" class="text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">
+		<div class="flex flex-row gap-10">
+		<h1 class="mb-8 font-bold text-2xl  ">Группы</h1>
+	      <button @click="openCreateModal" class="text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">
 	        <span>Новая &nbsp;группа</span>
 	      </button>
-
-	      <div v-if="modal" class="bg-black bg-opacity-25 absolute pin-t pin-l h-screen w-11/12 flex items-center justify-center">
-	      	<form @submit.prevent="create" class="bg-white p-4 rounded w-2/3">
-	      		<div>
-	      			<p class="text-sm leading-8 px-8">Новая группа</p>
-	      		</div> 
-	      		<br>
-	      		<div >
-	      			<div class="flex justify-between">
-	      			<p>Название &nbsp;&nbsp;</p> <text-input v-model="form.name" name="name" class="pr-6 pb-8 w-full lg:w-2/2"   />
-	      				</div>
-	      			<div class="flex justify-between">
-	      				<p>Описание&nbsp;&nbsp;</p> <text-input v-model="form.description" class="pr-6 pb-8 w-full lg:w-2/2"    />
-	      			</div>
-	      			
-	      		</div>
-	      		<div class="flex justify-end gap-10">
-	      			<p>Заполните поле</p><button @click="close" v-model="modal" class="bg-indigo-500 rounded p-2 text-white"> отмена </button><button class="bg-indigo-500 rounded p-2 text-white" type="submit"> создать </button>
-	      		</div>
-	      	</form>
-	      </div>
-
-     </div>
-
+    	 </div>
 	      <img class="h-10" src="img/message.png">
 	 </div>
      <div class="rounded-2xl bg-white w-full flex flex-row flex-wrap py-4">
@@ -60,6 +42,7 @@
 <script>
 import Layout from '@/Shared/Layout'
 import TextInput from '@/Shared/TextInput'
+import createGroup from './Create.vue'
 
 function chunk (arr, len) {
   const chunks = [];
@@ -76,6 +59,7 @@ function chunk (arr, len) {
 export default {
 	components:{
 		 TextInput,
+		 createGroup
 	},
   metaInfo: { title: 'Groups' },
   layout: Layout,
@@ -88,7 +72,7 @@ export default {
     	form: this.$inertia.form({
 	        name: null,
 	        description: null,
-      }),
+		}),
     }
   },
   computed: {
@@ -101,7 +85,9 @@ export default {
 			this.modal = false;
 			this.form.post(this.route('groups.store'));
 		},
-
+		openCreateModal() {
+			this.$modal.show('create')
+		},
 		close(){
 			this.modal = false;
 		},

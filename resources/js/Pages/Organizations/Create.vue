@@ -1,11 +1,11 @@
 <template>
   <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full">
     <h1 class="mb-8 font-medium text-xl">
-      <inertia-link class="text-black hover:text-indigo-600 " :href="route('tasks')">Новый клиент</inertia-link>
+      <inertia-link class="text-black hover:text-indigo-600 font-medium" :href="route('tasks')">Новый клиент</inertia-link>
     </h1>
-    <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl">
+    <div class="bg-white rounded-xl overflow-hidden">
       <form @submit.prevent="store">
-        <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
+        <div class="px-0 py-0  flex flex-wrap">
 
           <div class="w-full flex mb-8">
             <div class="lg:w-1/4">
@@ -16,7 +16,7 @@
             <div class="lg:w-3/4">
               <input type="text" v-model="form.name" :error="form.errors.name" class="border-b-2 w-full pb-1">
             </div> 
-            </div>
+          </div>
           
           <div class="w-full flex mb-8">
           <div class="lg:w-1/4">

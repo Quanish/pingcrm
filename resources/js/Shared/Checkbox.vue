@@ -1,5 +1,5 @@
 <template>
-  <label class="wrapper flex items-center my-2 mt-3 text-sm">
+  <label class="wrapper flex items-center my-2 mt-3 text-xs">
     {{label}}
     <input class="checkbox" type="checkbox" :checked="isChecked" :value="value" @change="updateInput"/>
     <span class="checkmark w-5 h-5"></span>

@@ -3,7 +3,7 @@
     <portal-target name="dropdown" slim />
     <div class="md:flex md:flex-col">
         <div class="md:h-screen md:flex md:flex-col">
-            <div class="menu_bar h-100 md:flex  px-3 md:px-10">
+            <div class="menu_bar md:flex  px-3 md:px-10">
                 <div class=" md:flex-shrink-0 pr-6 py-2 flex items-center justify-between md:justify-center">
                     <inertia-link class="mt-1" href="/">
                         <img class="w-32" src="/img/menu_logo.png">
@@ -71,7 +71,7 @@
                                     </g>
                                 </svg>
                             </inertia-link>
-                        </div>
+                        </div> 
 
                         <div class="ml-8">
                             <inertia-link class="flex items-center group py-3" :href="route('organizations')" title="Клиенты">
@@ -234,7 +234,7 @@
                 </div>
                 <dropdown class="mt-1 w-48" placement="bottom-end">
                     <div class="text-gray-700 group-hover:text-indigo-600 focus:text-indigo-600  whitespace-nowrap">
-                        <img :src="$page.props.auth.user.photo_path" class="h-10 w-10 rounded-full" />
+                        <img :src="'/' + $page.props.auth.user.photo_path" class="h-10 w-10 rounded-full" />
                     </div>
                     <div slot="dropdown" class="mt-2 py-2 shadow-xl bg-white rounded text-sm">
                         <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="route('users.edit', $page.props.auth.user.id)">Профиль</inertia-link>
@@ -245,10 +245,10 @@
             </div>
             <div class="md:flex md:flex-grow md:overflow-hidden">
 
-                <div class="md:flex-1 px-4 py-8 md:px-10 md:overflow-y-auto" scroll-region>
+                <div class="md:flex-1 px-4 py-8 md:px-10 md:overflow-y-auto bg-cover auth" scroll-region>
                     <flash-messages />
                     <slot />
-                </div>
+                </div> 
 
             </div>
 
