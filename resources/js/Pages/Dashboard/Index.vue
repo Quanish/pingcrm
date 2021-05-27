@@ -130,7 +130,7 @@
                                 </inertia-link>
                             </template>
                             
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -316,7 +316,7 @@ export default {
                         this.taskCounter++;
                     }
                     console.log(this.mytasks);
-
+ 
             }
         },
         showCreateTaskModal(type) {
