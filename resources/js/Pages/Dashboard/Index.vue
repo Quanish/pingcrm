@@ -3,7 +3,7 @@
     <div class="flex flex-row justify-between">
         <h1 class="mb-8 font-bold text-2xl">Добрый день, <span>{{ $page.props.auth.user.first_name}}</span>
             <span class="hidden md:inline">{{ $page.props.auth.user.last_name }}</span>!</h1>
-        <img class="h-10" src="img/message.png">
+        <button v-on:click="test"><img class="h-10" src="img/message.png"></button>
     </div>
     <div class="flex flex-row justify-between">
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4 ml-0">
@@ -142,7 +142,9 @@
       <create-task :type="type"></create-task>
     </modal>
 
-
+    <modal name="chat">
+      <Chat>Hello!</Chat>
+    </modal>
 
 </div>
 </template>
@@ -150,6 +152,7 @@
 <script>
 import Layout from '@/Shared/Layout'
 import Checkbox from '@/Shared/Checkbox'
+import Chat from '@/Shared/Chat'
 import RadialProgressBar from 'vue-radial-progress'
 import CreateTask from '../Tasks/Create.vue'
 import _ from 'lodash'
@@ -199,7 +202,8 @@ export default {
     components: {
         RadialProgressBar,
         Checkbox,
-        CreateTask
+        CreateTask,
+        Chat
     },
     computed: {
         orderedEvents: function () {
@@ -207,6 +211,10 @@ export default {
         }
     },
     methods: {
+      test(){
+        
+        this.$modal.show('chat')
+      },
         create() {
             this.$inertia.get(this.route('tasks.create'))
         },

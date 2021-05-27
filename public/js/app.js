@@ -579,6 +579,14 @@ var map = {
 		"./resources/js/Pages/Dashboard/Index.vue",
 		"resources_js_Pages_Dashboard_Index_vue"
 	],
+	"./Deals/Create": [
+		"./resources/js/Pages/Deals/Create.vue",
+		"resources_js_Pages_Deals_Create_vue"
+	],
+	"./Deals/Create.vue": [
+		"./resources/js/Pages/Deals/Create.vue",
+		"resources_js_Pages_Deals_Create_vue"
+	],
 	"./Deals/Index": [
 		"./resources/js/Pages/Deals/Index.vue",
 		"resources_js_Pages_Deals_Index_vue"
@@ -586,6 +594,14 @@ var map = {
 	"./Deals/Index.vue": [
 		"./resources/js/Pages/Deals/Index.vue",
 		"resources_js_Pages_Deals_Index_vue"
+	],
+	"./Documents/Create": [
+		"./resources/js/Pages/Documents/Create.vue",
+		"resources_js_Pages_Documents_Create_vue"
+	],
+	"./Documents/Create.vue": [
+		"./resources/js/Pages/Documents/Create.vue",
+		"resources_js_Pages_Documents_Create_vue"
 	],
 	"./Documents/Index": [
 		"./resources/js/Pages/Documents/Index.vue",
@@ -882,7 +898,7 @@ module.exports = webpackAsyncContext;
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Agreements_Index_vue":"6779deacd958f2901d65","resources_js_Pages_Auth_Login_vue":"55ae5e179aedec084fac","resources_js_Pages_Calendar_Index_vue":"a6ab6c133767535aa16a","resources_js_Pages_Categories_categories_vue":"99c34004d5358ab7b2ac","resources_js_Pages_Contacts_Create_vue":"8aa26ad2eee7560bf699","resources_js_Pages_Contacts_Edit_vue":"3944a118e16f99eafd91","resources_js_Pages_Contacts_Index_vue":"6470b33a6cbe4393ca79","resources_js_Pages_Dashboard_Index_vue":"20d8bf24a82f5d83dfb1","resources_js_Pages_Deals_Index_vue":"d79b6e444c5466f85814","resources_js_Pages_Documents_Index_vue":"505b8496da6ae609c814","resources_js_Pages_Flats_Index_vue":"c958f9f601d393d60f24","resources_js_Pages_Groups_Index_vue":"7a5057c440d9aab4457c","resources_js_Pages_List_Index_vue":"552b7d82b8ba7978f129","resources_js_Pages_Mail_Index_vue":"66b86fb7e92ad52d02ef","resources_js_Pages_Meetings_Index_vue":"78e6e48acf771b7047e8","resources_js_Pages_Organizations_Create_vue":"6e2c83d93f09a19f9760","resources_js_Pages_Organizations_Edit_vue":"bbd9f6fc44f151806420","resources_js_Pages_Organizations_Index_vue":"2353b84c1a74343bb944","resources_js_Pages_Post_Index_vue":"6ad5757b8eb479042eda","resources_js_Pages_Products_Index_vue":"7b10cdc533196d05581e","resources_js_Pages_Reports_Index_vue":"1e2fceba1cf795c0af7e","resources_js_Pages_Tasks_Calendar_vue":"7b6142f36e068c17cc96","resources_js_Pages_Tasks_Create_vue":"3667e1d7b2d7be50a187","resources_js_Pages_Tasks_Dela_vue":"d0d164837a7ab7bb82fc","resources_js_Pages_Tasks_Edit_vue":"b075f8f9d27b5d50f07a","resources_js_Pages_Tasks_Index_vue":"92aa7e3ba1c6d160a50d","resources_js_Pages_Tasks_Show_vue":"f4d74a5a1074a1cb7bb5","resources_js_Pages_Users_Create_vue":"d05036109889866e3db1","resources_js_Pages_Users_Edit_vue":"3ee446ec103f75eea0ae","resources_js_Pages_Users_Index_vue":"a1a006adf44cd24c217f"}[chunkId] + "";
+/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Agreements_Index_vue":"17dc4b873c00848ce887","resources_js_Pages_Auth_Login_vue":"4797e1bf7b1435e14ae1","resources_js_Pages_Calendar_Index_vue":"096d7c69e40980248d0c","resources_js_Pages_Categories_categories_vue":"99c34004d5358ab7b2ac","resources_js_Pages_Contacts_Create_vue":"9132d7aed5b563e8b976","resources_js_Pages_Contacts_Edit_vue":"1c15c3eabfa853c3244f","resources_js_Pages_Contacts_Index_vue":"1d710b7e41196350c6bc","resources_js_Pages_Dashboard_Index_vue":"c8e71360147a576c3733","resources_js_Pages_Deals_Create_vue":"6a8cc06fb696c8fd193f","resources_js_Pages_Deals_Index_vue":"427d27bd4b541a06a6ff","resources_js_Pages_Documents_Create_vue":"4677f4516d7c2f06acbd","resources_js_Pages_Documents_Index_vue":"31d40288f4d656f0b26f","resources_js_Pages_Flats_Index_vue":"361051c0d7059b1aca8e","resources_js_Pages_Groups_Index_vue":"987bac6bf9a41a2f15cd","resources_js_Pages_List_Index_vue":"4bc98b90869e57ccadae","resources_js_Pages_Mail_Index_vue":"70c1743c8fda47b5536a","resources_js_Pages_Meetings_Index_vue":"1123960ef4c085aa44e4","resources_js_Pages_Organizations_Create_vue":"43fae5d9135376a30db6","resources_js_Pages_Organizations_Edit_vue":"8ca2d0ad821494b03c98","resources_js_Pages_Organizations_Index_vue":"31d4a013232ea7c0349d","resources_js_Pages_Post_Index_vue":"d6bce52f85dc53f4c9ab","resources_js_Pages_Products_Index_vue":"16792f7c7c0abf7e24f7","resources_js_Pages_Reports_Index_vue":"1b1ea148a011f7106895","resources_js_Pages_Tasks_Calendar_vue":"84b86fd94566fd707982","resources_js_Pages_Tasks_Create_vue":"fd6593c36ba832d69f1c","resources_js_Pages_Tasks_Dela_vue":"b97ec0700a43fd31a18e","resources_js_Pages_Tasks_Edit_vue":"dc2d71c1453e3a75c3e4","resources_js_Pages_Tasks_Index_vue":"d63c8552a81dd9b17ad5","resources_js_Pages_Tasks_Show_vue":"410e63fc0aba1867b669","resources_js_Pages_Users_Create_vue":"f3d07734b7e2fb5fa9a6","resources_js_Pages_Users_Edit_vue":"7ab1406fca2f4dcb52d1","resources_js_Pages_Users_Index_vue":"1a5165d75cd9b99af69c"}[chunkId] + "";
 /******/ 		};
 /******/ 	})();
 /******/ 	

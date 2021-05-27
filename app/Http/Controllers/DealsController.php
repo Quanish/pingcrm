@@ -14,5 +14,10 @@ class DealsController extends Controller
     	$deal = Deal::all();
         return Inertia::render('Deals/Index',['test' => $deal]);
     }
+    
+    public function create()
+    {
+    	return Inertia::render('Deals/Create');
+    }
  
 }

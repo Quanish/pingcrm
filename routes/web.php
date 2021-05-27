@@ -11,7 +11,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\FlatsController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\TasksController;
-use App\Http\Controllers\AgreementsController;
+use App\Http\Controllers\DealsController;
 use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PostController;
@@ -35,6 +35,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('documents',[DocumentsController::class,'index'])
 ->name('documents')
+->middleware('auth');
+
+Route::get('documents/create',[DocumentsController::class,'create'])
+->name('documents.create')
 ->middleware('auth');
 
 //Groups
@@ -218,11 +222,15 @@ Route::get('dela',[TasksController::class,'dela'])
 ->name('tasks.dela')
 ->middleware('auth');
 
-//Agreements
+//Deals
 
-Route::get('agreements', [AgreementsController::class, 'index'])
-    ->name('agreements')
+Route::get('deals', [DealsController::class, 'index'])
+    ->name('deals')
     ->middleware('auth');
+
+Route::get('deals/create', [DealsController::class,'create'])
+->name('deals.create')
+->middleware('auth');
 
 //Meetings
 

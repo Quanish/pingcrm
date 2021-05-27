@@ -3,7 +3,7 @@
   	<!-- верхняя панель-->
   	<div class=" relative flex justify-between place-items-center mb-10">
     	<h1 class="font-bold text-3xl">Документы</h1>
-    	<button class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</button>
+    	<a :href="route('documents.create')" class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</a>
     	
     	<div class="w-64 flex justify-start">
     </div>
@@ -62,28 +62,28 @@
 
 	          
 	        </tr>
-	        <tr class="text-center hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
+	        <tr v-for="document in documents" class="text-center hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 	        	<td class="pl-5 flex">
-	       	   		<img class="w-4 mr-2"src="img/icons/Star.png" /><p>Название документа</p>
+	       	   		<img class="w-4 mr-2"src="img/icons/Star.png" /><p>{{document.name}}</p>
                </td>  
 	       	   <td class="pl-5 w-8">
-	       	   		<p>Презентация для клиента</p>
+	       	   		<p>{{document.type}}</p>
 	       	   		
                </td>      
               
                <td class="pl-5">
-               		<p>10 / 05 / 2021</p>
+               		<p>{{document.date}}</p>
                </td> 
                <td class="pl-5">
-               		<p>Комментарии</p>
+               		<p>{{document.comment}}</p>
                </td> 
                <td class="pl-5">
-               		<button class="rounded-full text-white h-8 pl-3 pr-3 flex" v-bind:style="{ backgroundColor: color}">
+               		<a :href="'storage/'+document.file" download class="rounded-full text-white w-28 h-8 pl-3 pr-3 flex" v-bind:style="{ backgroundColor: color}">
                			<icon name="download" class="w-6 pt-1" />
                			<p class="mt-2 ml-2">скачать</p>
                			
 
-               		</button>
+               		</a>
                		
                </td> 
                
@@ -106,6 +106,9 @@ export default {
 	layout: Layout,
 	components: {
 	    Icon,
+	  },
+	  props:{
+	  	documents: Array,
 	  },
 	data () {
     	return {      	
