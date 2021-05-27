@@ -38,12 +38,16 @@
           <div class="flex flex-row">
             <img class="h-8 w-8 mr-3" src="/img/default-user.png"/><div class="flex flex-col"><p>John Doe</p><p class="text-sm text-gray-400">менеджер</p></div>
           </div>
+
+          <person-card></person-card>
         </div>
         <div class="border-2 rounded-md mt-5 p-5">
           <p>{{task.description}}</p>
           <div class="flex justify-between mt-5">
-          <form @submit.prevent="accept">
-              <button class="rounded-full p-2 task-button text-white" @click="download">скачать</button><button type="submit" class="rounded-full bg-green-300 p-2">принять</button><button  @click="decline" class="rounded-full bg-gray-300 p-2">отклонить</button>
+            <form @submit.prevent="accept">
+              <button class="rounded-full  task-button text-white h-6 px-7 text-xs leading-6" @click="download">скачать</button>
+              <button class="rounded-full bg-green-300 text-white h-6 px-7 text-xs leading-6 " type="submit">принять</button>
+              <button  @click="decline" class="rounded-full bg-gray-300 h-6 px-7 text-xs leading-6 text-white ">отклонить</button>
               <input type="hidden" v-model="form.status" value="в работе" />
             </form>
           </div>
@@ -96,6 +100,7 @@ import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
+import PersonCard from '@/Shared/PersonCard.vue'
 import axios from "axios";
 
 export default {
@@ -109,6 +114,7 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    PersonCard
   },
   layout: Layout,
 
