@@ -67,19 +67,19 @@
 
 	          
 	        </tr>
-	        <tr class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
+	        <tr v-for="report in reports" class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 	        	<td class=" flex justify-start items-center">
 	       	   		<img class="w-4 h-4 mr-2"src="img/icons/Star.png" />
 	       	   		<div>
-		       	   		<p>Название отчета</p>
+		       	   		<p>{{report.name}}</p>
 		       	   		<p class="text-xs">Краткое описание отчета/ какие показатели </p>
 		       	   	</div>
                </td>  
                <td>
-               		<p>10 / 05 / 2021</p>
+               		<p>{{report.date}}</p>
                </td> 
 	       	   <td>
-	       	   		<div class="bg-gray-100 w-full rounded-full h-8 flex"><img class="h-8" src="img/user1.webp"><div><p>Имя Фамилия</p><p class="text-xs">должность</p>
+	       	   		<div class="bg-gray-100 w-full rounded-full h-8 flex"><img class="h-8 pr-3" :src="'storage/'+report.user.photo_path"><div><p>{{report.user.first_name}}</p><p class="text-xs">должность</p>
 	       	   		</div>
 	       	   		</div>
 	       	   		
@@ -87,12 +87,12 @@
               
                
                <td class="text-center">
-               		<p>Комментарии</p>
+               		<p>{{report.comment}}</p>
                </td> 
                <td>
                		<button class="rounded-full text-white h-8 pl-3 pr-3 flex" v-bind:style="{ backgroundColor: color1}">
                			<icon name="download" class="w-6 pt-1" />
-               			<p class="mt-2 ml-2">скачать</p>
+               			<a :href="'storage/'+report.file" download class="mt-2 ml-2">скачать</a>
                			
 
                		</button>
@@ -119,12 +119,16 @@ export default {
 	components: {
 	    Icon,
 	  },
+	 props:{
+	 	reports: Array,
+	 },
 	data () {
     	return {      	
 			color: "#875FDA",
 			color1: "#4A32E3",
 			angle: '50',
 			icon: "download",
+
 		}
   	},
   	computed:{

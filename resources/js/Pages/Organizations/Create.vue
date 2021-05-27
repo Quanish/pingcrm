@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full">
+  <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full w-full">
     <h1 class="mb-8 font-medium text-xl">
       <inertia-link class="text-black hover:text-indigo-600 " :href="route('tasks')">Новый клиент</inertia-link>
     </h1>
@@ -114,6 +114,7 @@ export default {
         region: null,
         country: null,
         postal_code: null,
+        responsible: $page.props.auth.user.id,
       }),
     }
   },

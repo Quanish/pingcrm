@@ -3,7 +3,7 @@
   	<!-- верхняя панель-->
   	<div class=" relative flex justify-between place-items-center mb-10">
     	<h1 class="font-bold text-3xl">Сделки</h1>
-    	<button class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новая сделка</button>
+    	<a class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}" :href="route('deals.create')">новая сделка</a>
     	<select class="  rounded-full text-white h-8 pl-2 pr-2 " v-bind:style="{ backgroundColor: color}">
     		<option>цель на квартал</option>
     		<option>цель на неделю</option>
@@ -93,7 +93,7 @@ export default {
 	metaInfo: { title: 'Договоры' },
 	layout: Layout,
   props:{
-    test: String,
+    test: Array,
   },
 	data () {
     	return {      	

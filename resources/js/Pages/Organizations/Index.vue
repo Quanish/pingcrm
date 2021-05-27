@@ -75,7 +75,7 @@
     </div>
     <pagination class="mt-6" :links="organizations.links" />
 
-    <modal name="create">
+    <modal name="create" class="w-full">
       <create-client></create-client>
     </modal>
   </div>

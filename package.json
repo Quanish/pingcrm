@@ -38,6 +38,7 @@
         "vue-js-modal": "^2.0.0-rc.6",
         "vue-loader": "^15.9.6",
         "vue-meta": "^2.3.1",
+        "vue-quick-chat": "^1.2.8",
         "vue-radial-progress": "^0.3.2",
         "vue-simple-calendar": "^6.0.1",
         "vue-template-compiler": "^2.6.12",
