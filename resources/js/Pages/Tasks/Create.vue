@@ -34,13 +34,13 @@
           <div class="w-full flex mb-8">
            
             <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Дедлайн
+              <p class="font-medium leading-6">Дедлайн
                 <span class="text-red-400">*</span> 
               </p>  
             </div>
             <div class="lg:w-3/4">
               <div class="border-b-2 w-full pb-1">
-                <datepicker v-model="form.date" :format="customFormatter" @selected="CallDateFunction" placeholder="27/05/2021"></datepicker>
+                <datepicker v-model="form.deadline" :format="customFormatter" @selected="CallDateFunction" placeholder="27/05/2021"></datepicker>
               </div>
             </div>  
           </div>
@@ -54,7 +54,7 @@
             <div class="lg:w-3/4">
               <select class="border-b-2 w-full pb-1" v-model="form.user">
                 <option :value="null" />
-                <option v-for="data in select" :key="data.id" :value="data.id"></option>
+                <option v-for="data in users" :key="data.id" :value="data.id">{{ data.last_name }} {{ data.first_name }}</option>
               </select>
             </div>  
           </div>
@@ -73,7 +73,7 @@
               <checkbox label="срочно" v-model="form.urgent" />
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
-          </div>
+          </div> 
           <input type="hidden" name="type" :value="type">
         </div>
       </form>
@@ -89,6 +89,7 @@ import LoadingButton from '@/Shared/LoadingButton'
 import Checkbox from '@/Shared/Checkbox2'
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
+import axios from "axios";
 
 export default {
   computedDate() {
@@ -105,8 +106,6 @@ export default {
   },
   layout: Layout,
   props: {
-    users: Array,
-    select: Array,
     type: String,
   },
   remember: 'form',
@@ -122,15 +121,23 @@ export default {
           }
         },
       },
+      users: [],
       form: this.$inertia.form({
-        user: null,
+        user: 1,
         deadline: null,
         description: null,
         title: null,
-        audition: null,
+        audition: 1,
         type: null,
+        urgent: false,
       }),
     }
+  },
+  created() {
+    axios.get('/tasks/create')
+      .then(response => {
+        this.users = response.data.users 
+    })
   },
   methods: {
     CallDateFunction(date) {
@@ -144,10 +151,12 @@ export default {
       }
     },
     store() {
+     this.form.type = this.type
+     this.form.deadline = moment(this.form.deadline).format('YYYY-MM-DD hh:mm:ss')
       this.form.post(this.route('tasks.store'))
     },
     customFormatter(date) {
-      return moment(date).format('YYYY-MM-DD, h:mm:ss')
+      return moment(date).format('YYYY-MM-DD hh:mm:ss')
     },
   },
 }

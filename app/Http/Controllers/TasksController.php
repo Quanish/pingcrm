@@ -15,9 +15,6 @@ use Inertia\Inertia;
 
 class TasksController extends Controller
 {
-    //
-
-
 	public function index(){
         if (Auth::user()->owner) {
             # code...
@@ -30,19 +27,11 @@ class TasksController extends Controller
                     ->get()
                     ->map
                     ->only('id', 'user','deadline','description'),
-                'select' => User::all(),
             ]);
         }else{
     		return Inertia::render('Tasks/Index', [
     			'filters' => Request::all('search', 'trashed'),
                 'tasks' => Task::where('user',Auth::user()->id)->get(),
-                'users' => Auth::user()->account
-                    ->tasks()
-                    ->orderBy('user')
-                    ->get()
-                    ->map
-                    ->only('id', 'user','deadline','description'),
-                'select' => User::all(),
             ]);
         }
 	}
@@ -69,7 +58,7 @@ class TasksController extends Controller
                 'status' => $task->status,
             ],
             'audition' => User::select('first_name')->where('id',$task->audition)->get(),
-            'user' => User::select('first_name')->where('id',$task->user)->get(),
+            'user' => User::select('first_name')->where('id', $task->user)->get(),
             'messages' => Comment::where('task_id',$task->id)->get(),
         ]);
     }
@@ -98,15 +87,9 @@ class TasksController extends Controller
 
     public function create()
     {
-        return Inertia::render('Tasks/Create', [
-            'users' => Auth::user()->account
-                ->tasks()
-                ->orderBy('user')
-                ->get()
-                ->map
-                ->only('id', 'user','deadline','description'),
-            'select' => User::all(),
-        ]);
+        return [
+            'users' => User::where('account_id', Auth::user()->account_id)->get()
+        ];
     }
 
     public function getUsers(){
@@ -116,39 +99,26 @@ class TasksController extends Controller
 
 	public function store(Request $request)
     {
-        dd($request->all());
-        $task = Task::create(
-            Request::validate([
-                'user' => ['required', 'max:50'],
-                'deadline' => ['required', 'max:50'],
-                'description' => ['nullable', 'max:500'],
-                'title' => ['required', 'max:200'],
-                'audition' => ['required','max:100'],
-                'type' => ['required','max:100'],
-            ])
-        );
+        
+        $task = Task::create([
+            'user' => $request->user,
+            'deadline' => $request->deadline,
+            'description' => $request->description,
+            'title' => $request->title,
+            'audition' => $request->audition,
+            'progress' => 1,
+            'type' => $request->type, 
+            'status' => 'ожидание', 
+            'account_id' => Auth::user()->account_id
+        ]);
 
         $event = new Event();
-        $event->user = Request::input('user');
-        $event->description = "Назначил вас ответственным по задаче : ".Request::input('title');
+        $event->user = $request->user;
+        $event->description = "Назначил вас ответственным по задаче : ". $request->title;
         $event->responsible = Auth::user()->id;
         $event->save();
 
-
-        return Inertia::render('Tasks/Edit', [
-            'task' => [
-                'id' => $task->id,
-                'user' => $task->user,
-                'date_created' => $task->date_created,
-                'deadline' => $task->deadline,
-                'description' => $task->description,
-                'deleted_at' => $task->deleted_at,
-                'title' => $task->title,
-                'audition' => $task->audition,
-            ],
-            'current_user' => User::find($task->user),
-            'users' => User::all(),
-        ]);
+        return $this->show($task);    
     }
 
     public function edit(Task $task){ 
