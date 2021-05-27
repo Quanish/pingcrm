@@ -8,7 +8,8 @@ use App\Models\Event;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
+//use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -113,9 +114,10 @@ class TasksController extends Controller
         return $response()->json($data);
     }
 
-	public function store()
+	public function store(Request $request)
     {
-        Auth::user()->account->tasks()->create(
+        dd($request->all());
+        $task = Task::create(
             Request::validate([
                 'user' => ['required', 'max:50'],
                 'deadline' => ['required', 'max:50'],
@@ -125,13 +127,28 @@ class TasksController extends Controller
                 'type' => ['required','max:100'],
             ])
         );
-        
+
         $event = new Event();
         $event->user = Request::input('user');
         $event->description = "Назначил вас ответственным по задаче : ".Request::input('title');
         $event->responsible = Auth::user()->id;
         $event->save();
-        return Redirect::route('tasks')->with('success', 'Task created.');
+
+
+        return Inertia::render('Tasks/Edit', [
+            'task' => [
+                'id' => $task->id,
+                'user' => $task->user,
+                'date_created' => $task->date_created,
+                'deadline' => $task->deadline,
+                'description' => $task->description,
+                'deleted_at' => $task->deleted_at,
+                'title' => $task->title,
+                'audition' => $task->audition,
+            ],
+            'current_user' => User::find($task->user),
+            'users' => User::all(),
+        ]);
     }
 
     public function edit(Task $task){ 
@@ -181,6 +198,7 @@ class TasksController extends Controller
     public function calendar(){
         return Inertia::render('Tasks/Calendar');
     }
+
     public function dela(){
         return Inertia::render('Tasks/Dela');
     }
