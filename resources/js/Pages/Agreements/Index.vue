@@ -19,7 +19,7 @@
     			<img class="h-8" src="img/user1.webp">
     			
     		</div>
-    		<p class="absolute top-0 left-52 w-24   bg-gray-300 text-xs rounded-full p-1">5 000 000</p>
+    		<p class="absolute top-0 left-52 w-20   bg-gray-300 text-xs rounded-full p-1">5 000 000</p>
     		<p class="absolute top-16 left-12 w-24  bg-green-500 text-white text-xs rounded-full p-1">3 400 000</p>
     	</div>
     </div>
@@ -57,17 +57,17 @@
 	        <tr class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 
 	       	   <td class="pl-5 w-8">
-	       	   		<p>MT-0125748</p>
-	       	   		<p class="text-xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
+	       	   		<p class="text-sm">MT-0125748</p>
+	       	   		<p class="text-2xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
                </td>      
                <td class="pl-5">
-               		<p>700 000 tg</p>
+               		<p class="text-sm">700 000 tg</p>
                </td>   
                <td class="pl-5">
-               		<p>Имя Фамилия, Компания</p>
+               		<p class="text-sm">Имя Фамилия, Компания</p>
                </td> 
                <td class="pl-5">
-               		<p>+7 777 77 77</p>
+               		<p class="text-sm">+7 777 77 77</p>
                </td> 
                <td class="pl-5">
                		<select>
@@ -91,7 +91,7 @@
                		</select>
                </td> 
                <td class="pl-5">
-               		<p>Комментарии по сделке</p>
+               		<p class="text-sm">Комментарии по сделке</p>
                </td>       
              
 	       	</tr>

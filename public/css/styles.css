@@ -71,7 +71,6 @@
 
 .menu_bar {
     background-image: linear-gradient(to right, #4A32E3, #875FDA);
-    height: 80px;
 }
 
 .search {
@@ -153,4 +152,14 @@ button {
 
 .vdp-datepicker__calendar {
     position: fixed !important;
+}
+
+body .fc .fc-scrollgrid-liquid {
+    height: 100%;
+    border-radius: 20px;
+    border: 0;
+    background: #fff;
+}
+body .fc-theme-standard td, .fc-theme-standard th {
+    border: 1px solid rgba(81,55,226,.05);
 }

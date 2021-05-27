@@ -73,7 +73,7 @@
     </div>
 
     <modal name="create">
-      <create-task></create-task>
+      <create-task type="задача"></create-task>
     </modal>
   </div>
 </template>
