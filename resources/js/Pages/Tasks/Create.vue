@@ -74,7 +74,7 @@
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
           </div>
-
+          <input type="hidden" name="type" :value="type">
         </div>
       </form>
     </div>
@@ -107,6 +107,7 @@ export default {
   props: {
     users: Array,
     select: Array,
+    type: String,
   },
   remember: 'form',
   data() {
