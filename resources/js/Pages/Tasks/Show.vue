@@ -29,19 +29,28 @@
     <div class="flex flex-row gap-5">
     <div class="w-2/5 bg-white rounded-lg p-5 mt-5">
       <div>
-        <div class="flex flex-row justify-center gap-40">  <p>Поставщик</p><p>Ответственный</p></div>
-        <hr class="mt-5 h-2">
-        <div class="flex justify-center gap-40 mt-5">
-          <div class="flex flex-row">
-            <img class="h-8 w-8 mr-3" src="/img/user1.webp"/><div class="flex flex-col"><p>Kuanish Aitimov</p><p class="text-sm text-gray-400">сотрудник</p></div>
-          </div>
-          <div class="flex flex-row">
-            <img class="h-8 w-8 mr-3" src="/img/default-user.png"/><div class="flex flex-col"><p>John Doe</p><p class="text-sm text-gray-400">менеджер</p></div>
-          </div>
 
-          <person-card></person-card>
+        <div class="flex gap-4 mt-5 justify-center">
+            <div class="w-1/2">
+              <p class="font-medium">Постановщик</p>
+            </div>   
+            <div class="w-1/2">
+              <p class="font-medium">Ответственный</p>
+            </div>   
         </div>
-        <div class="border-2 rounded-md mt-5 p-5">
+
+        <hr class="mt-5 h-2 border-gray-200">
+
+        <div class="flex gap-4 mt-5">
+            <div class="w-1/2">
+              <person-card src="/img/user1.webp" name="Kuanish Aitimov" job="сотрудник" ></person-card>
+            </div>   
+            <div class="w-1/2">
+              <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>   
+        </div>
+
+        <div class="border rounded-xl border-gray-200 mt-5 p-5">
           <p>{{task.description}}</p>
           <div class="flex justify-between mt-5">
             <form @submit.prevent="accept">
