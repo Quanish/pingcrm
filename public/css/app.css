@@ -9748,6 +9748,18 @@ input:focus, input:active, select:focus, select:active, textarea:focus, textarea
   font-size: 0.65rem;
 }
 
+.text-3xs {
+  font-size: 0.6rem;
+}
+
+.text-4xs {
+  font-size: 0.55rem;
+}
+
+.text-5xs {
+  font-size: 0.5rem;
+}
+
 .leading-3 {
   line-height: .75rem;
 }
@@ -37475,6 +37487,18 @@ a {
     font-size: 0.65rem;
   }
 
+  .sm\:text-3xs {
+    font-size: 0.6rem;
+  }
+
+  .sm\:text-4xs {
+    font-size: 0.55rem;
+  }
+
+  .sm\:text-5xs {
+    font-size: 0.5rem;
+  }
+
   .sm\:leading-3 {
     line-height: .75rem;
   }
@@ -65106,6 +65130,18 @@ a {
 
   .md\:text-2xs {
     font-size: 0.65rem;
+  }
+
+  .md\:text-3xs {
+    font-size: 0.6rem;
+  }
+
+  .md\:text-4xs {
+    font-size: 0.55rem;
+  }
+
+  .md\:text-5xs {
+    font-size: 0.5rem;
   }
 
   .md\:leading-3 {
@@ -92741,6 +92777,18 @@ a {
     font-size: 0.65rem;
   }
 
+  .lg\:text-3xs {
+    font-size: 0.6rem;
+  }
+
+  .lg\:text-4xs {
+    font-size: 0.55rem;
+  }
+
+  .lg\:text-5xs {
+    font-size: 0.5rem;
+  }
+
   .lg\:leading-3 {
     line-height: .75rem;
   }
@@ -120374,6 +120422,18 @@ a {
     font-size: 0.65rem;
   }
 
+  .xl\:text-3xs {
+    font-size: 0.6rem;
+  }
+
+  .xl\:text-4xs {
+    font-size: 0.55rem;
+  }
+
+  .xl\:text-5xs {
+    font-size: 0.5rem;
+  }
+
   .xl\:leading-3 {
     line-height: .75rem;
   }
@@ -148005,6 +148065,18 @@ a {
 
   .\32xl\:text-2xs {
     font-size: 0.65rem;
+  }
+
+  .\32xl\:text-3xs {
+    font-size: 0.6rem;
+  }
+
+  .\32xl\:text-4xs {
+    font-size: 0.55rem;
+  }
+
+  .\32xl\:text-5xs {
+    font-size: 0.5rem;
   }
 
   .\32xl\:leading-3 {

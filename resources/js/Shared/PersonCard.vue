@@ -4,8 +4,8 @@
       <img :src="src" alt="" class="w-8 h-8 rounded-full border">
     </div>
     <div class="pl-3">
-      <p class="text-black font-normal mt-1 text-base">{{ fullname }}</p>
-      <p class="text-2xs font-light text-gray-300">{{ job }}</p>
+      <p class="text-black font-normal  text-sm">{{ fullname }}</p>
+      <p class="text-3xs font-light text-gray-400">{{ job }}</p>
     </div>
   </div>
 </template>
