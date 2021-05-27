@@ -47,6 +47,9 @@ module.exports = {
             fill: theme => theme('colors'),
             fontSize: {
                 '2xs': '0.65rem',
+                '3xs': '0.6rem',
+                '4xs': '0.55rem',
+                '5xs': '0.5rem',
             },
         },
     },

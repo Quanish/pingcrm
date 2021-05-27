@@ -40,7 +40,6 @@
             </div>
             <div class="lg:w-3/4">
               <div class="border-b-2 w-full pb-1">
-
                 <datepicker v-model="form.deadline" :format="customFormatter" @selected="CallDateFunction" placeholder="27/05/2021"></datepicker>
               </div>
             </div>  
@@ -125,7 +124,7 @@ export default {
       users: [],
       form: this.$inertia.form({
         user: 1,
-        deadline: null,
+        deadline: moment().format('YYYY-MM-DD hh:mm:ss'),
         description: null,
         title: null,
         audition: 1,

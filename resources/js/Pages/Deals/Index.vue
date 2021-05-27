@@ -30,25 +30,25 @@
     	<table class="w-full whitespace-nowrap">
     		<tr class="text-left font-bold">
 
-	            <th class="px-6 pt-6 pb-4 flex">
+	            <th class="pb-4 flex">
 	            	<p class="font-bold">№</p>&nbsp;<p class="font-normal">сделки</p>
 	            </th>
-	            <th class="px-6 pt-6 pb-4">
+	            <th class="pb-4">
 	            	<p class="font-normal">Сумма</p>
 	            </th>
-	             <th class="px-6 pt-6 pb-4">
+	             <th class="pb-4">
 	            	<p class="font-normal">Клиент</p>
 	            </th>
-	            <th class="px-6 pt-6 pb-4">
+	            <th class="pb-4">
 	            	<p class="font-normal">Контакты</p>
 	            </th>
-	            <th class="px-6 pt-6 pb-4">
+	            <th class="pb-4">
 	            	<p class="font-normal">Статус</p>
 	            </th>
-	            <th class="px-6 pt-6 pb-4">
+	            <th class="pb-4">
 	            	<p class="font-normal">Стадия</p>
 	            </th>
-	            <th class="px-6 pt-6 pb-4">
+	            <th class="pb-4">
 	            	<p class="font-normal">Примечания</p>
 	            </th>
 
@@ -57,26 +57,26 @@
 	        <tr v-for="deal in test" class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 
 	       	   <td class="pl-5 w-8">
-	       	   		<p>{{deal.deal_number}}</p>
-	       	   		<p class="text-xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
+	       	   		<p class="text-sm">{{deal.deal_number}}</p>
+	       	   		<p class="text-2xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
                </td>      
                <td class="pl-5">
-               		<p>{{deal.price}} tg</p>
+               		<p class="text-sm">{{deal.price}} tg</p>
                </td>   
                <td class="pl-5">
-               		<p>{{deal.client}}</p>
+               		<p class="text-sm">{{deal.client}}</p>
                </td> 
                <td class="pl-5">
-               		<p>{{deal.client}}</p>
+               		<p class="text-sm">{{deal.client}}</p>
                </td> 
                <td class="pl-5">
-               	{{deal.status}}
+               	 <p class="text-sm">{{deal.status}}</p>
                </td> 
                <td class="pl-5">
-               		{{deal.stage}}
+               		<p class="text-sm">{{deal.stage}}</p>
                </td> 
                <td class="pl-5">
-               		<p>{{deal.comment}}</p>
+               		<p class="text-sm">{{deal.comment}}</p>
                </td>       
              
 	       	</tr>
