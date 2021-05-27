@@ -53,8 +53,9 @@ class OrganizationsController extends Controller
                 'city' => ['nullable', 'max:50'],
                 'region' => ['nullable', 'max:50'],
                 'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
+                'postal_code' => ['nullable', 'max:25'],             
             ])
+
         );
 
         return Redirect::route('organizations')->with('успешно', 'Клиент создан.');

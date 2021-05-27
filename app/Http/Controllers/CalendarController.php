@@ -8,21 +8,20 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use App\Models\Task;
+use Carbon\Carbon;
 
 class CalendarController extends Controller
 {
     public function calendar()
     {
-    	
-    	$array = [
-                    'title' => 'test',
-                    'start' => '2021-05-10',
-                    'end' => '2021-05-19',
-                    'department' => 'BioChemistry',
-                    'description' => 'Lecture'
-                ];
+        $events = Task::select('title', 'created_at', 'created_at as end', 'audition as department', 'description')->get();
+
+        foreach($events as $event) {
+            $event->start = $event->created_at->format('Y-m-d\TH:i:s');
+        }
+        
         return Inertia::render('Calendar/Index', [
-            'event' => Task::select('title', 'created_at as start', 'created_at as end', 'audition as department', 'description')->get(),
+            'event' => $events
         	/*'event' => [$array, $array],
 	        'task' => Task::first()->get(),*/
         ]);

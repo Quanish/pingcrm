@@ -1,16 +1,16 @@
 <template>
   <div>
-      <div class="flex justify-between">
-  <div class="flex flex-row gap-10">
-    <h1 class="mb-8 font-bold text-2xl">Клиенты</h1>
-        <inertia-link class="login_button rounded-full text-white h-8 w-auto pl-2 pr-2 flex justify-center items-center" :href="route('organizations.create')">
-          <span>Добавить клиента</span>
-        </inertia-link>
-     </div>
+    <div class="flex justify-between">
+      <div class="flex flex-row gap-10">
+        <h1 class="mb-8 font-bold text-2xl">Клиенты</h1>
+        <button class="login_button rounded-full text-white h-8 px-12 flex justify-center items-center" @click="openCreateModal">
+          <span>Добавить&nbsp;клиента</span>
+        </button>
+      </div>
 
-        <img class="h-10" src="img/message.png">
-   </div>
-    
+      <img class="h-10" src="img/message.png" />
+    </div>
+
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
@@ -27,7 +27,6 @@
           <th class="px-6 pt-6 pb-4">Договор</th>
 
           <th class="px-6 pt-6 pb-4">Примечания</th>
-
         </tr>
         <tr v-for="organization in organizations.data" :key="organization.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
@@ -44,34 +43,29 @@
           <td class="border-t items-center">
             <inertia-link class="px-6 py-4 flex items-center bg-gray-300 rounded-full h-10" :href="route('organizations.edit', organization.id)" tabindex="-1">
               {{ status[organization.status] }}
-
             </inertia-link>
-            
           </td>
           <td class="border-t w-px">
-          <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              <div v-for="user in organization.responsible"><div class="flex justify-between gap-2"><img class="h-8" src="img/user1.webp" v-if="user.photo_path">
-              <img class="h-8" src="img/default-user.png" v-else>{{user.first_name}}</div></div>
+            <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+              <div v-for="user in organization.responsible">
+                <div class="flex justify-between gap-2"><img class="h-8" src="img/user1.webp" v-if="user.photo_path" /> <img class="h-8" src="img/default-user.png" v-else />{{ user.first_name }}</div>
+              </div>
             </inertia-link>
-            
           </td>
           <td class="border-t w-px">
-          <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              <div>{{stage[organization.stage]}}</div>
+            <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+              <div>{{ stage[organization.stage] }}</div>
             </inertia-link>
-            
           </td>
           <td class="border-t w-px">
-          <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              <div>{{agreement[organization.agreement]}}</div>
+            <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+              <div>{{ agreement[organization.agreement] }}</div>
             </inertia-link>
-            
           </td>
           <td class="border-t w-px">
-          <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+            <inertia-link class="px-6 py-4 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div>нет комментариев</div>
             </inertia-link>
-            
           </td>
         </tr>
         <tr v-if="organizations.data.length === 0">
@@ -80,6 +74,10 @@
       </table>
     </div>
     <pagination class="mt-6" :links="organizations.links" />
+
+    <modal name="create">
+      <create-client></create-client>
+    </modal>
   </div>
 </template>
 
@@ -91,6 +89,7 @@ import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination'
 import SearchFilter from '@/Shared/SearchFilter'
+import CreateClient from './Create.vue'
 
 export default {
   metaInfo: { title: 'Organizations' },
@@ -98,6 +97,7 @@ export default {
     Icon,
     Pagination,
     SearchFilter,
+    CreateClient,
   },
   layout: Layout,
   props: {
@@ -106,9 +106,9 @@ export default {
   },
   data() {
     return {
-      agreement:['не подписан','подписан'],
-      stage:['переговоры','подписание','закрыта'],
-      status:['новый','текущий','вероятный','постоянный'],
+      agreement: ['не подписан', 'подписан'],
+      stage: ['переговоры', 'подписание', 'закрыта'],
+      status: ['новый', 'текущий', 'вероятный', 'постоянный'],
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
@@ -119,6 +119,9 @@ export default {
   methods: {
     reset() {
       this.form = mapValues(this.form, () => null)
+    },
+    openCreateModal() {
+      this.$modal.show('create')
     },
   },
 }
