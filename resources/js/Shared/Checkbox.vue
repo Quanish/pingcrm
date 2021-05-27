@@ -1,5 +1,5 @@
 <template>
-  <label class="wrapper flex items-center my-2">
+  <label class="wrapper flex items-center my-2 mt-3 text-sm">
     {{label}}
     <input class="checkbox" type="checkbox" :checked="isChecked" :value="value" @change="updateInput"/>
     <span class="checkmark w-5 h-5"></span>
@@ -60,7 +60,6 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: 16px;
 }
 /* Hide the browser's default checkbox */
 .wrapper input {

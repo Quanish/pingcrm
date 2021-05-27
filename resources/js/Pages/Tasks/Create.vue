@@ -1,38 +1,80 @@
 <template>
-  <div class="py-4 px-4 shadow overflow-y-auto overflow-x-hidden h-full">
-    <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="route('tasks')">Новая задача</inertia-link>
-      <span class="text-indigo-400 font-medium">/</span> Создать
+  <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full">
+    <h1 class="mb-8 font-medium text-xl">
+      <inertia-link class="text-black hover:text-indigo-600 " :href="route('tasks')">Новая задача</inertia-link>
     </h1>
-    <div class="bg-white rounded-md   max-w-3xl max-h-4x4">
+    <div class="ma">
       <form @submit.prevent="store">
-        <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
-          <text-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.title"  label="Название" />
-          <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.user" :error="form.errors.user" label="Ответсвенный" >
-                              <option :value="null" />
-                              <option v-for='data in select' :key="data.id" :value="data.id">{{ data.first_name }}</option>
-          </select-input><br>
+        <div class="mt-4 flex flex-wrap">
+
+          <div class="w-full flex mb-8">
+           
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Название
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4">
+              <input type="text" v-model="form.title" class="border-b-2 w-full pb-1">
+            </div>  
+          </div>
           
+          <div class="w-full flex mb-8">
+           
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Описание
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4">
+              <input type="text" v-model="form.description" class="border-b-2 w-full pb-1">
+            </div>  
+          </div>
 
-            <div class="rounded-md border-solid border-2 border-gray-200 pb-4 mb-8 mr-10 lg:w-1/2"><datepicker :value="date" :format="customFormatter" @selected="CallDateFunction"  placeholder="Дедлайн"></datepicker></div>
+          <div class="w-full flex mb-8">
+           
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Дедлайн
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4">
+              <div class="border-b-2 w-full pb-1">
+                <datepicker class="top-0 left-0 z-50" v-model="form.date" :format="customFormatter" @selected="CallDateFunction" placeholder="28/05/2021"></datepicker>
+              </div>
+            </div>  
+          </div>
 
-             
-          
-          <text-input class="pr-6 pb-8 w-full lg:w-2/2" v-model="form.description"  label="Описание" />
-          <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.audition" :error="form.errors.user" label="Аудитор" >
-                              <option :value="null" />
-                              <option v-for='data in select' :key="data.id" :value="data.id">{{ data.first_name }}</option>
-          </select-input><br>
-          <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.type" label="Тип" >
-                              <option>задача</option>
-                              <option>встреча</option>
-                              <option>дела</option>
-                              <option>срочно</option>
-          </select-input><br>
-        </div>
-        <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex justify-end items-center">
+          <div class="w-full flex mb-8">
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Ответственный
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4">
+              <select class="border-b-2 w-full pb-1" v-model="form.user">
+                <option :value="null" />
+                <option v-for="data in select" :key="data.id" :value="data.id"></option>
+              </select>
+            </div>  
+          </div>
 
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать задачу</loading-button>
+          <!-- <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.audition" :error="form.errors.user" label="Аудитор">
+            <option :value="null" />
+            <option v-for="data in select" :key="data.id" :value="data.id">{{ data.first_name }}</option> </select-input
+          > -->
+          <div class="w-full flex">
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Заполните поле
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4 flex justify-end">
+              <checkbox label="срочно" v-model="form.urgent" />
+              <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
+            </div>  
+          </div>
+
         </div>
       </form>
     </div>
@@ -44,20 +86,22 @@ import Layout from '@/Shared/Layout'
 import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
-import Datepicker from 'vuejs-datepicker';
-import moment from 'moment';
-
+import Checkbox from '@/Shared/Checkbox2'
+import Datepicker from 'vuejs-datepicker'
+import moment from 'moment'
 
 export default {
-  computedDate () {
-    return date.toISOString().substring(0, 10);
+  computedDate() {
+    return date.toISOString().substring(0, 10)
   },
+  name: 'CreateTask',
   metaInfo: { title: 'Новая Задача' },
   components: {
     LoadingButton,
     SelectInput,
     TextInput,
     Datepicker,
+    Checkbox
   },
   layout: Layout,
   props: {
@@ -67,15 +111,15 @@ export default {
   remember: 'form',
   data() {
     return {
-      format: "yyyy-MM-dd",
+      format: 'yyyy-MM-dd',
       disabledDates: {},
       date: null,
       disabledFn: {
         customPredictor(date) {
           if (date.getDate() % 3 === 0) {
-            return true;
+            return true
           }
-        }
+        },
       },
       form: this.$inertia.form({
         user: null,
@@ -88,21 +132,21 @@ export default {
     }
   },
   methods: {
-    CallDateFunction(date){
+    CallDateFunction(date) {
       if (date) {
-        this.form.deadline = date.toISOString().substring(0, 10);
+        this.form.deadline = date.toISOString().substring(0, 10)
 
-        const dateString = date.toISOString().substring(0, 10);
-        console.log(dateString);
+        const dateString = date.toISOString().substring(0, 10)
+        console.log(dateString)
       } else {
-        console.log('null date');
+        console.log('null date')
       }
     },
     store() {
       this.form.post(this.route('tasks.store'))
     },
     customFormatter(date) {
-      return moment(date).format('YYYY-MM-DD, h:mm:ss');
+      return moment(date).format('YYYY-MM-DD, h:mm:ss')
     },
   },
 }
