@@ -6,9 +6,6 @@
         <img class="h-10" src="img/message.png">
     </div>
     <div class="flex flex-row justify-between">
-
-
-
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4 ml-0">
             <div class="flex justify-between items-center px-6 gap-2">
                 <p class="font-medium text">Задачи</p>
@@ -45,13 +42,9 @@
                 </div>
             </div>
             <div class="flex">
-                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal">Новая задача</button>
+                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal('задача')">Новая задача</button>
             </div> 
-           
         </div>
-
-
-
 
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
             <div class="flex justify-between items-center px-6 gap-2 ">
@@ -144,7 +137,7 @@
 
 
     <modal name="create_tasks">
-      <create-task :users="null" :select="null"></create-task>
+      <create-task :users="null" :select="null" :type="type"></create-task>
     </modal>
 
 
@@ -176,6 +169,7 @@ export default {
             timestamp: "",
             completedSteps: 0,
             totalSteps: 10,
+            type: 'задача',
             projects: ['Озеленение', 'Гостиница', 'Ресторан', 'Ресторан']
         }
     },
@@ -323,7 +317,8 @@ export default {
 
             }
         },
-        showCreateTaskModal() {
+        showCreateTaskModal(type) {
+            this.type = type
             this.$modal.show('create_tasks')
         },
     }

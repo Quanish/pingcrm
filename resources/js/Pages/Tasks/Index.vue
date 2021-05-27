@@ -72,7 +72,7 @@
       </table>
     </div>
 
-    <modal name="example">
+    <modal name="create">
       <create-task :users="users" :select="select"></create-task>
     </modal>
   </div>
@@ -184,7 +184,7 @@ export default {
       }
     },
     openCreateModal() {
-      this.$modal.show('example')
+      this.$modal.show('create')
     },
     desort() {
       this.mytasks = _.orderBy(this.mytasks, 'created_at')
