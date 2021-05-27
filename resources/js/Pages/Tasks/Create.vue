@@ -94,6 +94,7 @@ export default {
   computedDate() {
     return date.toISOString().substring(0, 10)
   },
+  name: 'CreateTask',
   metaInfo: { title: 'Новая Задача' },
   components: {
     LoadingButton,
