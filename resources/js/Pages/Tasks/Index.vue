@@ -4,11 +4,10 @@
     <div class="flex flex-row justify-between">
       <h1 class="mb-8 font-bold text-2xl">Мои задачи</h1>
       <button class="login_button rounded-full text-white h-8 w-1/5 flex justify-center items-center" @click="openCreateModal">
-        <span>Новая</span>
-        <span class="hidden md:inline">&nbsp;задача</span>
+        <span>Новая&nbsp;задача</span>
       </button>
       <div class="flex flex-row gap-2">
-        <select v-on:change="changeDate($event)" class="task-button rounded-full text-white h-8 w-auto pr-2 pl-2 flex justify-center items-center">
+        <select v-on:change="changeDate($event)" class="login_button  rounded-full text-sm text-white h-8 w-auto pr-2 pl-2 flex justify-center items-center">
             <option>сегодня</option>
             <option>месяц</option>
             <option>год</option>
@@ -17,14 +16,9 @@
             </svg>
           
         </select>
-        <p class="task-button rounded-full text-white w-8 h-8 flex pl-2 items-center">{{mytasks.length}}</p>
+        <p class="login_button  rounded-full text-white w-8 h-8 flex justify-center items-center text-sm leading-6">{{mytasks.length}}</p>
       </div>  
-      <button class="bg-gray-300 rounded-full p-3 h-8 flex justify-between gap-3 items-center">
-        <input type="checkbox" label="срочно"
-        v-model="checked"
-       @change="check($event)">
-        <div class="w-6 h-6 border-2 rounded-full"></div>
-      </button>
+        <checkbox label="срочно" v-model="checked" @change="check($event)"/>
       <img class="h-10" src="img/message.png">
     </div>
     <div class="flex flex-row justify-start gap-5">
@@ -81,7 +75,7 @@
     	</table>
     </div>
 
-    <modal name="example" adaptive="true" maxWidth="80%" :maxHeight="'90%'" height="auto" scrollable="true">
+    <modal name="example">
       <create-task :users="users" :select="select"></create-task>
     </modal>
 
@@ -98,6 +92,7 @@ import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination'
 import SearchFilter from '@/Shared/SearchFilter'
 import createTask from './Create.vue'
+import Checkbox from '@/Shared/Checkbox2'
 import _ from 'lodash'
 
 export default {
@@ -106,6 +101,7 @@ export default {
     Icon,
     Pagination,
     SearchFilter,
+    Checkbox,
     createTask
   },
   layout: Layout,

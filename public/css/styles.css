@@ -128,3 +128,19 @@ select.bg-blue-500 {
 select {
     cursor: pointer
 }
+
+.vm--modal {
+    border-radius: 20px !important;
+    min-width: 65vw;
+    max-width: 90vw;
+    height: unset !important;
+    max-height: 90vh;
+    left: unset !important;
+    top: unset !important;
+}
+
+.vm--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
