@@ -1,7 +1,7 @@
 <template>
 <div>
-    <div class="flex flex-row justify-between px-3">
-        <h1 class="pl-1 mb-8 font-bold text-xl">Добрый день, <span>{{ $page.props.auth.user.first_name}}</span>
+    <div class="flex flex-row justify-between">
+        <h1 class="mb-8 font-bold text-xl">Добрый день, <span>{{ $page.props.auth.user.first_name}}</span>
             <span class="hidden md:inline">{{ $page.props.auth.user.last_name }}</span>!</h1>
         <img class="h-10" src="img/message.png">
     </div>
@@ -9,7 +9,7 @@
 
 
 
-        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
+        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4 ml-0">
             <div class="flex justify-between items-center px-6 gap-2">
                 <p class="font-medium text">Задачи</p>
                 <div class="relative inline-flex">
@@ -104,7 +104,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
+        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4 mr-0">
             <div class="flex justify-start px-6">
                 <p class="font-medium text h-7 leading-loose">События</p>  
             </div>
