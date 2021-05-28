@@ -4,8 +4,8 @@
       Новый документ
     </div>
     <div class="space-y-4">
-      <div class="flex"><p class="w-1/6">Название</p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
-      <div class="flex"><p class="w-1/6">Тип</p>
+      <div class="flex"><p class="w-1/6">Название<span class="text-red-400">*</span></p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
+      <div class="flex"><p class="w-1/6">Тип<span class="text-red-400">*</span></p>
         <div class="flex w-full border-b-2 justify-between">
           <select class="bg-gray-100 rounded-full p-1 ">
             <option>
@@ -26,8 +26,8 @@
         </div>
 
       </div>
-      <div class="flex"><p class="w-1/6">Дата</p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
-      <div class="flex"><p class="w-1/6">Проект\Сделка</p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
+      <div class="flex"><p class="w-1/6">Дата<span class="text-red-400">*</span></p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
+      <div class="flex"><p class="w-1/6">Проект\Сделка<span class="text-red-400">*</span></p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
       <div>
         <div class="w-full flex">
             <div class="lg:w-1/4">

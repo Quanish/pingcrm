@@ -35,7 +35,7 @@
 			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">По отделу</p></div>
 			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">Избранные</p></div>
 			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">Все</p></div>
-			<div class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">Аналитика</p></div>
+			<a :href="route('reports.analytics')" class="flex h-4 justify-start gap-4 mt-3 text-sm"><p class="pt-3">Аналитика</p></a>
 			
 			<div class="flex justify-start gap-4 mt-8 mb-3 w-full">
 				<button class="w-full block text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Шаблоны</button>
@@ -111,6 +111,7 @@
    		</table>
    </div>
    </div>
+   <SalesChart />
   </div>
 </template>
 
@@ -118,13 +119,15 @@
 import Layout from '@/Shared/Layout'
 import Icon from '@/Shared/Icon'
 import PersonCard from '@/Shared/PersonCard.vue'
+import SalesChart from '@/Shared/SalesChart'
 
 export default {
 	metaInfo: { title: 'Отчеты' },
 	layout: Layout,
 	components: {
 	    Icon,
-		PersonCard
+		PersonCard,
+		SalesChart
 	  },
 	 props:{
 	 	reports: Array,
@@ -137,6 +140,11 @@ export default {
 			icon: "download",
 
 		}
+  	},
+  	created:{
+  		do(){
+  			alert(SalesChart);
+  		}
   	},
   	computed:{
 		gradient(){
