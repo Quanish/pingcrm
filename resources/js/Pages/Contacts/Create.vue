@@ -64,6 +64,7 @@ export default {
         region: null,
         country: null,
         postal_code: null,
+        
       }),
     }
   },

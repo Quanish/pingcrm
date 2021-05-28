@@ -2,27 +2,11 @@
 	<div>
     <div class="flex flex-row justify-between">
       <div class="w-5/12 mb-5">
-        <input type="text" class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" v-model="task.title">
+        <input type="text" disabled class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" value="Название группы">
       </div>
       
-      <div class="flex flex-row gap-8 w-7/12 justify-between">
-        <div class="flex flex-row gap-10"> 
-          <div class="flex flex-col items-center">
-            <p class="mb-3 font-medium">Статус</p>
-            <div class="bg-indigo-500 py-1 px-8 text-sm text-white rounded-full font-normal">новый</div>
-          </div>
-          <div class="flex flex-col items-center"><p class="mb-5 font-medium">Старт</p>
-            {{task.date_created}}
-          </div>
-          <div class="flex flex-col items-center"><p class="mb-5 font-medium">Дедлайн</p>
-            {{task.deadline}}
-          </div>
-          <div class="items-center bg-gray-300 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center">
-            <p class="mb-1 text">10 дней</p>
-            <p class="text-sm text-sm">до дедлайна</p>
-          </div>
-        </div>
-
+      <div class="flex flex-row gap-8 w-7/12 justify-end">
+        
         <div>
           <img class="h-10" src="/img/message.png" />
         </div>
@@ -35,68 +19,81 @@
     <div class="flex flex-row gap-5">
 
 
-    <div class="w-5/12 bg-white rounded-2xl p-5 mt-5  mh-calc">
-      <div class="flex flex-col justify-between h-full">
-        <div>
-            <div class="flex gap-4 justify-around">
-                <div class="w-1/2x">
-                  <p class="font-medium text-base">Постановщик</p>
-                </div>   
-                <div class="w-1/2x">
-                  <p class="font-medium text-base">Ответственный</p>
-                </div>   
-            </div>
+    <div class="w-5/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
+      <div>
+        <div class="flex gap-4 justify-start">
+            <div class="">
+              <p class="font-medium text-base">Участники группы (15)</p>
+            </div>   
+        </div>
 
-            <hr class="mt-3 h-2 border-gray-200">
+        <hr class="mt-3 h-2 border-gray-200">
 
-            <div class="flex gap-4 mt-4">
-                <div class="w-1/2">
-                  <person-card src="/img/user1.webp" name="Kuanish Aitimov" job="сотрудник" ></person-card>
-                </div>   
-                <div class="w-1/2">
-                  <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
-                </div>   
-            </div>
+        <div class="flex gap-4 mt-4 ">
+            <div class="w-5/12">
+              <div class="bg-gray-100 rounded-2xl relative w-full h-64"></div>
+            </div>   
+            <div class="w-7/12 overflow-auto mh-calc-2">
             
-            <div class="border rounded-xl border-gray-200 mt-5 p-5">
-              <p class="text-sm">{{task.description}}</p>
-              <div class="flex justify-between mt-5">
-                <form @submit.prevent="accept" class="flex flex-wrap w-full gap-3"> 
-                  <button class="rounded-full bg-green-500 hover:bg-green-600 text-white h-6 px-7 text-xs leading-6 " type="submit">принять</button>
-                  <button  @click="decline" class="rounded-full bg-gray-300 hover:bg-gray-200 h-6 px-7 text-xs leading-6 text-white ">отклонить</button>
-                  <button class="rounded-full text-white h-6 px-7 text-xs leading-6 bg-indigo-600 hover:bg-indigo-500" @click="download">скачать</button>
-                  <input type="hidden" v-model="form.status" value="в работе" />
-                </form>
-              </div>
-              <hr class="mt-5">
-              <div class="flex mt-6 mb-1">
-                <div class="bg-red-500 rounded-full w-4 h4"></div>
-                <p class="text-gray-600 font-normal ml-3 text-xs">срочно</p>
-              </div>
+              <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
             </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            <div class="my-2">
+                <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+            </div>
+            </div>   
         </div>
         
-
-          <div class="mt-10 flex flex-row leading-loose font-medium">Участники
-            <img class="h-8 w-8 mr-3 ml-3 border rounded-full" src="/img/user1.webp"/>
-            <img class="h-8 w-8 mr-3 border rounded-full relative -left-4" src="/img/default-user.png"/>
-          </div>
-      </div>
+       
 
 
     </div>
-    <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5  mh-calc">
-    <div class="relative h-full flex flex-col justify-between ">
+    </div>
+
+
+    
+    <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
+    <div class="relative h-full flex flex-col justify-between">
       <div class="flex flex-row justify-between">
-        <p class="font-medium">Комментарии (0)</p>
-        <p class="font-medium">Ссылки (0)</p>
-        <p class="font-medium">Файлы (0)</p>
+        <p class="font-medium">Групповой чат</p>
       </div>
       <hr class="mt-5">
       <div class="h-80">
-        <div v-for="mess in messages">
-          <div>{{mess.comment}}</div>
-        </div>
+        
       </div>
      
             <div class="relative w-full mt-auto">
@@ -109,8 +106,8 @@
     </form> 
         
 
-      <div class="w-3/12 bg-white rounded-2xl p-5 mt-5   mh-calc">
-        <div class="flex flex-row justify-between"><p class="font-medium">Дела</p>
+      <div class="w-3/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
+        <div class="flex flex-row justify-between"><p class="font-medium">Файлы</p>
           <div class="flex flex-row gap-2">
             <div class="relative inline-flex">
                 <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white"  viewBox="0 0 412 232">
@@ -127,7 +124,25 @@
           </div>
         </div>
         <hr class="mt-3">
-
+        <div class="mt-3">
+			<div class="flex h-6 justify-start gap-4 mb-3">
+        <img class="y-3" src="/img/icons/Word.png" />
+        <div class="flex flex-col align-start">
+          <p class="pt-1 text-sm">Отчет по сотрудникам.docx</p>
+          <p class="pt-1 text-2xs text-gray-200">Имя Фамилия</p>
+        </div>
+        <button class="rounded-full text-white h-6 pl-3 pr-3 flex" >
+          <icon name="download" class="w-4 pt-1" />
+        </button>
+      </div>
+			<div class="flex h-6 justify-start gap-4 mb-3">
+        <img class="y-3" src="/img/icons/PPT.png" />
+        <div class="flex flex-col align-start">
+          <p class="pt-1 text-sm">Презентация продукта.pptx</p>
+          <p class="pt-1 text-2xs text-gray-200">Имя Фамилия</p>
+        </div>
+      </div>
+      </div>
 
       
       </div>
@@ -142,12 +157,13 @@ import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
 import PersonCard from '@/Shared/PersonCard.vue'
+import Icon from '@/Shared/Icon'
 import axios from "axios";
 
 export default {
   metaInfo() {
     return {
-      title: `Задача`,
+      title: `Группа`,
     }
   },
   components: {
@@ -155,31 +171,28 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    Icon,
     PersonCard
   },
   layout: Layout,
   props: {
-    task: Object,
-    user: Array,
-    audition: Array,
-    messages: Array,
   },
   remember: 'form',
   data() {
     return {
       message: "",
       form: this.$inertia.form({  
-        status: this.task.status,
+        status: 1,
       }),
     }
   },
   methods: {
     addMessage(){
       this.message = "";
-      this.form.post(this.route('tasks.message',{
-        message:this.message,
-        id: this.task.id,
-      }));
+      // this.form.post(this.route('tasks.message',{
+      //   message:this.message,
+      //   id: this.task.id,
+      // }));
     },
     changeItem: function changeItem(event) {
         switch (String(event.target.value)) {

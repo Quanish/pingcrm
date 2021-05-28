@@ -104,7 +104,7 @@
                 <p class="font-medium text h-7 leading-loose">События</p>  
             </div>
             <hr class="my-5 mx-6 mb-0">
-            <div class="h-screen-2 overflow-y-auto px-6 pb-4">
+            <div class="h-screen-3 overflow-y-auto px-6 pb-4">
                 <div v-for="event in orderedEvents" class="mt-3">
                     <div class="border rounded-2xl px-5 py-4 flex flex-col">
                         <div class="flex flex-row justify-between mb-3">
