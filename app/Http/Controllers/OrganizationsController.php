@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request as ObjectRequest;
 use Inertia\Inertia;
 
 class OrganizationsController extends Controller
@@ -42,12 +43,13 @@ class OrganizationsController extends Controller
         return Inertia::render('Organizations/Create');
     }
 
-    public function store()
+    public function store(ObjectRequest $request)
     {
+        
         Auth::user()->account->organizations()->create(
             Request::validate([
                 'name' => ['required', 'max:100'],
-                'email' => ['nullable', 'max:50', 'email'],
+                'email' => ['nullable', 'max:50'],
                 'phone' => ['nullable', 'max:50'],
                 'address' => ['nullable', 'max:150'],
                 'city' => ['nullable', 'max:50'],

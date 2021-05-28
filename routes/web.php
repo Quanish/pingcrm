@@ -47,6 +47,11 @@ Route::get('groups',[GroupsController::class,'index'])
 ->name('groups')
 ->middleware('auth');
 
+Route::get('groups/{group}',[GroupsController::class,'show'])
+->name('groups.show')
+->middleware('auth');
+
+
 Route::post('groups',[GroupsController::class,'store'])
 ->name('groups.store')
 ->middleware('auth');
