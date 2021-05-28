@@ -4,7 +4,7 @@
   	<div class="mb-8 flex items-center">
     	<h1 class="font-bold text-2xl w-2/12">Отчеты</h1>
 		<div class="w-10/12 flex justify-between">
-    	<button class="  rounded-full pl-24 pr-24 text-white h-8 ml-5" v-bind:style="{ backgroundImage: gradient}">новый отчет</button>
+    	<button @click="openCreateModal" class="  rounded-full pl-24 pr-24 text-white h-8 ml-7" v-bind:style="{ backgroundImage: gradient}">новый отчет</button>
     	<div class="w-64 flex justify-start">
     </div>
     </div>
@@ -112,6 +112,11 @@
    </div>
    </div>
    <SalesChart />
+
+    <modal name="create">
+      <create-report></create-report>
+    </modal>
+
   </div>
 </template>
 
@@ -120,14 +125,15 @@ import Layout from '@/Shared/Layout'
 import Icon from '@/Shared/Icon'
 import PersonCard from '@/Shared/PersonCard.vue'
 import SalesChart from '@/Shared/SalesChart'
-
+import createReport from './Create.vue'
 export default {
 	metaInfo: { title: 'Отчеты' },
 	layout: Layout,
 	components: {
 	    Icon,
 		PersonCard,
-		SalesChart
+		SalesChart,
+		createReport
 	  },
 	 props:{
 	 	reports: Array,
@@ -150,6 +156,11 @@ export default {
 		gradient(){
 			return `linear-gradient(${this.angle}deg, ${this.color1}, ${this.color})`;
 		}
+	},
+	methods: {
+			openCreateModal() {
+		this.$modal.show('create')
+		},
 	}
 }
 </script>
