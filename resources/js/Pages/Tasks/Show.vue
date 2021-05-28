@@ -35,44 +35,47 @@
     <div class="flex flex-row gap-5">
 
 
-    <div class="w-5/12 bg-white rounded-2xl p-5 mt-5">
-      <div>
-        <div class="flex gap-4 justify-around">
-            <div class="w-1/2x">
-              <p class="font-medium text-base">Постановщик</p>
-            </div>   
-            <div class="w-1/2x">
-              <p class="font-medium text-base">Ответственный</p>
-            </div>   
-        </div>
+    <div class="w-5/12 bg-white rounded-2xl p-5 mt-5  mh-calc">
+      <div class="flex flex-col justify-between h-full">
+        <div>
+            <div class="flex gap-4 justify-around">
+                <div class="w-1/2x">
+                  <p class="font-medium text-base">Постановщик</p>
+                </div>   
+                <div class="w-1/2x">
+                  <p class="font-medium text-base">Ответственный</p>
+                </div>   
+            </div>
 
-        <hr class="mt-3 h-2 border-gray-200">
+            <hr class="mt-3 h-2 border-gray-200">
 
-        <div class="flex gap-4 mt-4">
-            <div class="w-1/2">
-              <person-card src="/img/user1.webp" name="Kuanish Aitimov" job="сотрудник" ></person-card>
-            </div>   
-            <div class="w-1/2">
-              <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
-            </div>   
+            <div class="flex gap-4 mt-4">
+                <div class="w-1/2">
+                  <person-card src="/img/user1.webp" name="Kuanish Aitimov" job="сотрудник" ></person-card>
+                </div>   
+                <div class="w-1/2">
+                  <person-card src="/img/default-user.png" name="John Doe" job="сотрудник"></person-card>
+                </div>   
+            </div>
+            
+            <div class="border rounded-xl border-gray-200 mt-5 p-5">
+              <p class="text-sm">{{task.description}}</p>
+              <div class="flex justify-between mt-5">
+                <form @submit.prevent="accept" class="flex flex-wrap w-full gap-3"> 
+                  <button class="rounded-full bg-green-500 hover:bg-green-600 text-white h-6 px-7 text-xs leading-6 " type="submit">принять</button>
+                  <button  @click="decline" class="rounded-full bg-gray-300 hover:bg-gray-200 h-6 px-7 text-xs leading-6 text-white ">отклонить</button>
+                  <button class="rounded-full text-white h-6 px-7 text-xs leading-6 bg-indigo-600 hover:bg-indigo-500" @click="download">скачать</button>
+                  <input type="hidden" v-model="form.status" value="в работе" />
+                </form>
+              </div>
+              <hr class="mt-5">
+              <div class="flex mt-6 mb-1">
+                <div class="bg-red-500 rounded-full w-4 h4"></div>
+                <p class="text-gray-600 font-normal ml-3 text-xs">срочно</p>
+              </div>
+            </div>
         </div>
         
-        <div class="border rounded-xl border-gray-200 mt-5 p-5">
-          <p class="text-sm">{{task.description}}</p>
-          <div class="flex justify-between mt-5">
-            <form @submit.prevent="accept" class="flex flex-wrap w-full gap-3"> 
-              <button class="rounded-full bg-green-500 hover:bg-green-600 text-white h-6 px-7 text-xs leading-6 " type="submit">принять</button>
-              <button  @click="decline" class="rounded-full bg-gray-300 hover:bg-gray-200 h-6 px-7 text-xs leading-6 text-white ">отклонить</button>
-              <button class="rounded-full text-white h-6 px-7 text-xs leading-6 bg-indigo-600 hover:bg-indigo-500" @click="download">скачать</button>
-              <input type="hidden" v-model="form.status" value="в работе" />
-            </form>
-          </div>
-          <hr class="mt-5">
-          <div class="flex mt-6 mb-1">
-            <div class="bg-red-500 rounded-full w-4 h4"></div>
-            <p class="text-gray-600 font-normal ml-3 text-xs">срочно</p>
-          </div>
-        </div>
 
           <div class="mt-10 flex flex-row leading-loose font-medium">Участники
             <img class="h-8 w-8 mr-3 ml-3 border rounded-full" src="/img/user1.webp"/>
@@ -82,8 +85,8 @@
 
 
     </div>
-    <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5 ">
-    <div class="relative">
+    <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5  mh-calc">
+    <div class="relative h-full flex flex-col justify-between ">
       <div class="flex flex-row justify-between">
         <p class="font-medium">Комментарии (0)</p>
         <p class="font-medium">Ссылки (0)</p>
@@ -106,7 +109,7 @@
     </form> 
         
 
-      <div class="w-3/12 bg-white rounded-2xl p-5 mt-5">
+      <div class="w-3/12 bg-white rounded-2xl p-5 mt-5   mh-calc">
         <div class="flex flex-row justify-between"><p class="font-medium">Дела</p>
           <div class="flex flex-row gap-2">
             <div class="relative inline-flex">

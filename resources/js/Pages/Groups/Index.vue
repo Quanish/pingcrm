@@ -12,7 +12,7 @@
 	        <span>Новая &nbsp;группа</span>
 	      </button>
     	 </div>
-	      <img class="h-10" src="img/message.png">
+	      <img class="h-10" src="/img/message.png">
 	 </div>
      <div class="rounded-2xl bg-white w-full flex flex-row flex-wrap py-4">
      	<div class="w-1/3 pl-4 pr-4 last:pr-0" v-for="chunk in chunked">
@@ -29,7 +29,10 @@
 		    	<p v-if="article.id==1" class="text-sm text-gray-300 text-2xs">admin</p>
 		    </div>
 		    <div class="mt-5 flex justify-between">
-		    	<button class="task-button text-white items-center rounded-full h-6 px-7 text-2xs leading-6">добавить участника</button>
+				
+			<inertia-link :href="route('groups.show', article.id)" class="task-button text-white items-center rounded-full h-6 px-7 text-2xs leading-6">
+		    	добавить участника
+			</inertia-link>
 		    	<button class="bg-gray-200 text-gray-700 items-center rounded-full h-6 px-7 text-2xs leading-6">выйти из группы</button>
 		    </div>
 		    </div>

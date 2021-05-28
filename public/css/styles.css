@@ -121,6 +121,10 @@
     height: calc(100vh - 350px);
 }
 
+.h-screen-3 {
+    height: calc(100vh - 290px);
+}
+
 select.bg-blue-500 {
     background: #4F58DB;
 }
@@ -160,6 +164,21 @@ body .fc .fc-scrollgrid-liquid {
     border: 0;
     background: #fff;
 }
-body .fc-theme-standard td, .fc-theme-standard th {
-    border: 1px solid rgba(81,55,226,.05);
+
+body .fc-theme-standard td,
+.fc-theme-standard th {
+    border: 1px solid rgba(81, 55, 226, .05);
+}
+
+.mh-calc {
+    min-height: calc(100vh - 205px);
+}
+
+.mh-calc-2 {
+    max-height: calc(100vh - 300px);
+}
+
+.paginate a,
+.paginate .flex div {
+    background: #fff;
 }

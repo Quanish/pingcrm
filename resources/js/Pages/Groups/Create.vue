@@ -14,7 +14,7 @@
               </p>  
             </div>
             <div class="lg:w-3/4">
-              <input type="text" v-model="form.group_name" :error="form.errors.name" class="border-b-2 w-full pb-1">
+              <input type="text" v-model="form.group_name"  :error="form.errors.name" class="border-b-2 w-full pb-1">
             </div> 
           </div>
 
