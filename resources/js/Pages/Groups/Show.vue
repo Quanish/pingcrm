@@ -31,7 +31,16 @@
 
         <div class="flex gap-4 mt-4 ">
             <div class="w-5/12">
-              <div class="bg-gray-100 rounded-2xl relative w-full h-64"></div>
+              <div class="bg-gray-100 rounded-2xl relative w-full h-40"></div>
+              <div class="p-4 rounded-2xl border border-gray-200 my-3 h-28">
+                <p class="text-gray-200 text-xs">Описание группы</p>
+              </div>
+              <button class="text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-full text-xs justify-center items-center font-light">
+                <span>Добавить</span>
+              </button>
+              <button class="mt-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-full  text-xs flex justify-center items-center font-light">
+                <span>Администраторы</span>
+              </button>
             </div>   
             <div class="w-7/12 overflow-auto mh-calc-2">
             
@@ -107,8 +116,8 @@
         
 
       <div class="w-3/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
-        <div class="flex flex-row justify-between"><p class="font-medium">Файлы</p>
-          <div class="flex flex-row gap-2">
+        <div class="flex flex-row justify-between mb-1"><p class="font-medium">Файлы</p>
+          <!-- <div class="flex flex-row gap-2">
             <div class="relative inline-flex">
                 <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white"  viewBox="0 0 412 232">
                     <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" />
@@ -121,7 +130,7 @@
                 </select>
             </div>
             <p class="task-button rounded-full text-white w-6 h-6 flex pl-2 items-center text-xs">2</p>
-          </div>
+          </div> -->
         </div>
         <hr class="mt-3">
         <div class="mt-3">

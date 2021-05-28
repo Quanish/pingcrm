@@ -1,8 +1,15 @@
 <template>
-  <div>
-    <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
-    <input :id="id" ref="input" v-bind="$attrs" class="form-input" :class="{ error: error }" :type="type" :value="value" @input="$emit('input', $event.target.value)" />
-    <div v-if="error" class="form-error">{{ error }}</div>
+  <div class="flex">
+    <div class="w-3/12">
+      <label v-if="label" class="form-label font-medium" :for="id">{{ label }}:</label>
+    </div>
+    <div class="w-9/12 border-b-1">
+      <input :id="id" ref="input" v-bind="$attrs" class="w-full border-b-1 block border-gray-200 pb-1" :class="{ error: error }" :type="type" :value="value" @input="$emit('input', $event.target.value)" />
+    <div class="w-full mt-1">
+      <div v-if="error" class="form-error">{{ error }}</div>
+    </div>
+    </div>
+    
   </div>
 </template>
 
@@ -37,3 +44,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+input {
+  border-bottom: 2px solid #ccc;
+}
+</style>
