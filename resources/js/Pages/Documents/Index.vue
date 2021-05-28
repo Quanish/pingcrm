@@ -2,10 +2,10 @@
   <div>
   	<!-- верхняя панель-->
 
-  	<div class=" relative flex  place-items-center mb-10">
+  	<div class=" relative flex  place-items-center mb-8">
     	<h1 class="font-bold text-2xl w-2/12">Документы</h1>
-		<div class="w-10/12 flex justify-between">
-			<button class="ml-5  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</button>
+		<div class="w-10/12 flex justify-between items-center">
+			<button @click="openCreateModal" class="ml-5  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</button>
 			<!--<a :href="route('documents.create')" class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</a>-->
 			<div class="w-64 flex justify-start"></div>
     	<div ><img class="h-10" src="/img/message.png"></div>
@@ -96,18 +96,24 @@
    		</table>
    </div>
    </div>
+
+   <modal name="create">
+      <create-document></create-document>
+    </modal>
   </div>
 </template>
 
 <script>
 import Layout from '@/Shared/Layout'
 import Icon from '@/Shared/Icon'
+import createDocument from './Create.vue'
 
 export default {
 	metaInfo: { title: 'Документы' },
 	layout: Layout,
 	components: {
 	    Icon,
+		createDocument
 	  },
 	  props:{
 	  	documents: Array,
@@ -123,7 +129,13 @@ export default {
   	computed:{
 		gradient(){
 			return `linear-gradient(${this.angle}deg, ${this.color1}, ${this.color})`;
-		}
+		},
+		
+	},
+	methods: {
+		openCreateModal() {
+		this.$modal.show('create')
+		},
 	}
 }
 </script>
