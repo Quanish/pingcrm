@@ -1,0 +1,38 @@
+export const planetChartData = {
+  type: "line",
+  data: {
+    labels: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август"],
+    datasets: [
+      {
+        label: "Продажа респираторов",
+        data: [0, 0, 1, 2, 79, 82, 27, 14],
+        backgroundColor: "rgba(54,73,93,.5)",
+        borderColor: "#36495d",
+        borderWidth: 3
+      },
+      {
+        label: "Продажа ИВЛ",
+        data: [1, 2, 33, 3, 6, 3, 3, 7],
+        backgroundColor: "rgba(71, 183,132,.5)",
+        borderColor: "#47b784",
+        borderWidth: 3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    lineTension: 1,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            padding: 25
+          }
+        }
+      ]
+    }
+  }
+};
+
+export default planetChartData;

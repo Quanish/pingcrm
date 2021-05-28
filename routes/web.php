@@ -250,7 +250,9 @@ Route::get('reports', [ReportsController::class, 'index'])
     ->name('reports')
     ->middleware('auth');
 
-
+route::get('reports/analytics',[ReportsController::class,'analytics'])
+->name('reports.analytics')
+->middleware('auth');
 //Post
 
 Route::get('post',[PostController::class,'index'])
