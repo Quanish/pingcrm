@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div>
+    <div style="min-width: 36px;">
       <img :src="src" alt="" class="w-8 h-8 rounded-full border">
     </div>
     <div class="pl-3">

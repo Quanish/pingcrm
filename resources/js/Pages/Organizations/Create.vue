@@ -77,7 +77,6 @@
               </p>  
             </div>
             <div class="lg:w-3/4 flex justify-end">
-              <checkbox label="срочно" v-model="form.urgent" />
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
           </div>
@@ -106,7 +105,7 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        name: null,
+        name: null, 
         email: null,
         phone: null,
         address: null,
@@ -114,12 +113,13 @@ export default {
         region: null,
         country: null,
         postal_code: null,
-        responsible: $page.props.auth.user.id,
+        responsible: 1
       }),
     }
   },
   methods: {
     store() {
+      this.form.responsible = 1
       this.form.post(this.route('organizations.store'))
     },
   },
