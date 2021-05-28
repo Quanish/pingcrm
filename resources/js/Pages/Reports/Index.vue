@@ -13,7 +13,7 @@
 
 	<!--панель офиса-->
 	<div class="flex gap-6">
-	<div class="w-2/12 bg-white rounded-2xl  h-auto p-6">
+	<div class="w-2/12 bg-white rounded-2xl  h-auto p-6 ">
 		<div class="relative">
 		  <input type="search" class="text-white absolute left-0 w-full shadow rounded-full border-0 p-1 pl-4 pr-8 text-sm font-normal" v-bind:style="{ backgroundColor: color1}" >
 		  <div class="absolute right-1 pin-r pin-t mt-2 mr-2 text-purple-lighter">
@@ -44,7 +44,7 @@
 		
 	</div>
 	<!-- список документов-->
-	<div class="w-10/12 bg-white rounded-2xl  h-auto p-6">
+	<div class="w-10/12 bg-white rounded-2xl  h-auto p-6 mh-calc">
     	<table class="w-full whitespace-nowrap">
     		<tr class="text-center font-bold">
 
@@ -111,7 +111,6 @@
    		</table>
    </div>
    </div>
-   <SalesChart />
 
     <modal name="create">
       <create-report></create-report>

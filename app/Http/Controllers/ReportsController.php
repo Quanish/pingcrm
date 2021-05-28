@@ -21,4 +21,9 @@ class ReportsController extends Controller
     		'users' => User::all(),
     	]);
     }
+
+    public function create()
+    {
+    	return Inertia::render('Reports/Create');
+    }
 }
