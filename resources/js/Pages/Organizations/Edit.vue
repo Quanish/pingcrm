@@ -1,49 +1,66 @@
 <template>
   <div>
-    <h1 class="mb-8 font-bold text-3xl">
-      <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="route('organizations')">Organizations</inertia-link>
-      <span class="text-indigo-400 font-medium">/</span>
-      {{ form.name }}
-    </h1>
-    <trashed-message v-if="organization.deleted_at" class="mb-6" @restore="restore">
+    <div>
+      <h1 class="mb-8 font-bold text-3xl">
+        <inertia-link class="text-black font-medium hover:text-indigo-600">Редактировать клиента</inertia-link>
+      </h1>
+    </div>
+    <div>
+       <trashed-message v-if="organization.deleted_at" class="mb-6" @restore="restore">
       This organization has been deleted.
     </trashed-message>
-    <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl">
-      <form @submit.prevent="update">
-        <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
+    </div>
+    <div class="flex">
+      <div class="w-6/12 pr-3">
+        <div class="bg-white mh-calc rounded-2xl">
+            <div class="bg-white rounded-2xl  overflow-hidden ">
+            <form @submit.prevent="update">
+              <div class="p-8  flex flex-wrap">
 
-          <text-input v-model="form.region" :error="form.errors.region" class="pr-6 pb-8 w-full lg:w-1/2" label="Организация" />
-          <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full lg:w-1/2" label="ФИО" />
+                <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full " label="ФИО" />
+                <text-input v-model="form.region" :error="form.errors.region" class="pr-6 pb-8 w-full " label="Организация" />
 
-          <text-input v-model="form.postal_code" :error="form.errors.postal_code" class="pr-6 pb-8 w-full lg:w-1/2" label="Должность" />
-          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Почта" />
-          <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full lg:w-1/2" label="Контакты" />
-          <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full lg:w-1/2" label="Адрес" />
-          <text-input v-model="form.city" :error="form.errors.city" class="pr-6 pb-8 w-full lg:w-1/2" label="City" />
-          <select v-model="form.responsible" :error="form.errors.responsible" class="pr-6 pb-8 w-full lg:w-1/2" label="Ответственный">
-            <
-          </select>
+                <text-input v-model="form.postal_code" :error="form.errors.postal_code" class="pr-6 pb-8 w-full " label="Должность" />
+                <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full " label="Почта" />
+                <text-input v-model="form.phone" :error="form.errors.phone" class="pr-6 pb-8 w-full " label="Контакты" />
+                <text-input v-model="form.address" :error="form.errors.address" class="pr-6 pb-8 w-full " label="Адрес" />
+                <text-input v-model="form.city" :error="form.errors.city" class="pr-6  w-full " label="Город" />
+                <!-- <select v-model="form.responsible" :error="form.errors.responsible" class="pr-6 pb-8 w-full " label="Ответственный">
+                  
+                </select> -->
+              </div>
+              <div class="px-8 py-4 border-t border-gray-100 flex items-center">
+                <loading-button :loading="form.processing" class="btn-indigo  rounded-full  mr-4" type="submit">Изменить</loading-button>
+                <loading-button :loading="form.processing" class="btn-indigo bg-red-500 rounded-full" @click="destroy">Удалить организацию</loading-button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center">
-          <button v-if="!organization.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить организацию</button>
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Изменить</loading-button>
+      </div>
+      <div class="w-6/12 pl-3">
+        <div class="bg-white mh-calc rounded-2xl p-6">
+              <h2 class=" font-bold text-2xl">Коментарии</h2>
+              <div v-if="!comments.length">
+                Комментариев пока нет!
+              </div>
+              <div v-for="comment in comments" class="mt-3">
+                <div>{{comment.user.first_name}}</div>
+                <div>{{comment.comment}}</div>
+              </div>
+              <div class="">
+                <form @submit.prevent="comment">
+                  <!-- <text-input id="message" class="pr-6 pb-8 lg:w-9/12" /> -->
+                  <loading-button type="submit" class="btn-indigo rounded-full mt-3">Оставить комментарий</loading-button>
+                </form>
+              </div>
+              
         </div>
-      </form>
+      </div>
     </div>
-    <h2 class="mt-12 font-bold text-2xl">Коментарии</h2>
-    <div v-if="!comments.length">
-      Комментариев пока нет!
-    </div>
-    <div class="">
-      <form @submit.prevent="comment">
-        <text-input id="message" class="pr-6 pb-8 lg:w-9/12" />
-        <loading-button type="submit" class="btn-indigo lg:w-3/12">Оставить комментаррий</loading-button>
-      </form>
-    </div>
-    <div v-for="comment in comments">
-      <div>{{comment.user.first_name}}</div>
-      <div>{{comment.comment}}</div>
-    </div>
+    
+   
+    
+
   </div>
 </template>
 
