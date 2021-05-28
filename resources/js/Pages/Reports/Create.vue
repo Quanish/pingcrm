@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="py-6 px-6 bg-white rounded-lg overflow-y-auto overflow-x-hidden h-full">
     <div class="mb-8">
       Новый отчет
@@ -48,6 +49,42 @@
       </div>
       <div>
         <div class="w-full flex">
+=======
+  <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full">
+    <h1 class="mb-8 font-medium text-xl">
+      <inertia-link class="text-black hover:text-indigo-600 " :href="route('tasks')">Новый отчет</inertia-link>
+    </h1>
+    <div class="ma">
+      <form @submit.prevent="store">
+        <div class="mt-4 flex flex-wrap">
+
+          <div class="w-full flex mb-8">
+           
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Название
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4">
+              <input type="text" v-model="form.title" class="border-b-2 w-full pb-1">
+            </div>  
+          </div>
+
+          <div class="w-full flex mb-8">
+           
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Документ
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4">
+              <input type="text" v-model="form.doc" class="border-b-2 w-full pb-1">
+            </div>  
+          </div>
+          
+        
+          <div class="w-full flex">
+>>>>>>> f3445bd50da4079d0f2523d68adc77077cdabd15
             <div class="lg:w-1/4">
              <p class="font-medium leading-6">Заполните поле
                 <span class="text-red-400">*</span> 
@@ -57,10 +94,17 @@
               
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
+<<<<<<< HEAD
           </div>
       </div>
     </div>
     <div></div>
+=======
+          </div> 
+        </div>
+      </form>
+    </div>
+>>>>>>> f3445bd50da4079d0f2523d68adc77077cdabd15
   </div>
 </template>
 
@@ -78,7 +122,11 @@ export default {
   computedDate() {
     return date.toISOString().substring(0, 10)
   },
+<<<<<<< HEAD
   name: 'CreateDocument',
+=======
+  name: 'CreateReport',
+>>>>>>> f3445bd50da4079d0f2523d68adc77077cdabd15
   metaInfo: { title: 'Новый отчет' },
   components: {
     LoadingButton,
@@ -91,6 +139,7 @@ export default {
   props: {
     type: String,
   },
+<<<<<<< HEAD
 
 
   methods: {
@@ -98,6 +147,25 @@ export default {
 
     customFormatter(date) {
       return moment(date).format('YYYY-MM-DD hh:mm:ss')
+=======
+  remember: 'form',
+  data() {
+    return {
+      form: this.$inertia.form({
+        user: 1,
+      }),
+    }
+  },
+  created() {
+    // axios.get('/reports/create')
+    //   .then(response => {
+    //     this.users = response.data.users 
+    // })
+  },
+  methods: {
+    store() {
+      this.form.post(this.route('reports.store'))
+>>>>>>> f3445bd50da4079d0f2523d68adc77077cdabd15
     },
   },
 }
