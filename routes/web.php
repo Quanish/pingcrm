@@ -255,9 +255,15 @@ Route::get('reports', [ReportsController::class, 'index'])
     ->name('reports')
     ->middleware('auth');
 
-route::get('reports/analytics',[ReportsController::class,'analytics'])
+Route::get('reports/analytics',[ReportsController::class,'analytics'])
 ->name('reports.analytics')
 ->middleware('auth');
+
+Route::get('reports/create',[ReportsController::class,'create'])
+->name('reports.create')
+->middleware('auth');
+
+
 //Post
 
 Route::get('post',[PostController::class,'index'])

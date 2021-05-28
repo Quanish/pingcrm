@@ -111,7 +111,6 @@
    		</table>
    </div>
    </div>
-   <SalesChart />
   </div>
 </template>
 
@@ -119,7 +118,7 @@
 import Layout from '@/Shared/Layout'
 import Icon from '@/Shared/Icon'
 import PersonCard from '@/Shared/PersonCard.vue'
-import SalesChart from '@/Shared/SalesChart'
+
 
 export default {
 	metaInfo: { title: 'Отчеты' },
@@ -127,7 +126,7 @@ export default {
 	components: {
 	    Icon,
 		PersonCard,
-		SalesChart
+		
 	  },
 	 props:{
 	 	reports: Array,
