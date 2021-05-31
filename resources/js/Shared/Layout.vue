@@ -73,7 +73,7 @@
                 </div>
                 <dropdown class="mt-1 w-48" placement="bottom-end">
                     <div class="text-gray-700 group-hover:text-indigo-600 focus:text-indigo-600  whitespace-nowrap">
-                        <img :src="'/' + $page.props.auth.user.photo_path" class="h-10 w-10 rounded-full" />
+                        <img :src="$page.props.auth.user.photo_path" class="h-10 w-10 rounded-full" />
                     </div>
                     <div slot="dropdown" class="mt-2 py-2 shadow-xl bg-white rounded text-sm">
                         <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="route('users.edit', $page.props.auth.user.id)">Профиль</inertia-link>

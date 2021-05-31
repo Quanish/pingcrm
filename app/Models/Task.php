@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
+
+	const NOT_STARTED = 0;
+    const COMPLETED = 1;
+    const IN_PROGRESS = 2;
+    const ON_CONTROL = 3; 
+	
     use SoftDeletes;
     protected $fillable = ['user','deadline','description','title','audition','status','type', 'account_id'];
     public function user()
