@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
+
 	const NOT_STARTED = 0;
     const COMPLETED = 1;
     const IN_PROGRESS = 2;

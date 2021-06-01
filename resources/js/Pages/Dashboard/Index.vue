@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="flex">
-                <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
+                <button @click="showCreateSubtaskModal()" class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
             </div> 
         </div>
 
@@ -142,8 +142,8 @@
       <create-task :type="type"></create-task>
     </modal>
 
-    <modal name="chat">
-      <Chat>Hello!</Chat>
+    <modal name="subtask">
+      <create-subtask :type="type"></create-subtask>
     </modal>
 
 </div>
@@ -155,6 +155,7 @@ import Checkbox from '@/Shared/Checkbox'
 import Chat from '@/Shared/Chat'
 import RadialProgressBar from 'vue-radial-progress'
 import CreateTask from '../Tasks/Create.vue'
+import CreateSubtask from '../Tasks/CreateSubtask.vue'
 import _ from 'lodash'
 
 export default {
@@ -203,6 +204,7 @@ export default {
         RadialProgressBar,
         Checkbox,
         CreateTask,
+        CreateSubtask,
         Chat
     },
     computed: {
@@ -211,6 +213,9 @@ export default {
         }
     },
     methods: {
+      showCreateSubtaskModal(){
+        this.$modal.show('subtask');
+      },
       test(){
         
         this.$modal.show('chat')
