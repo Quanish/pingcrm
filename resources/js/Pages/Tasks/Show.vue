@@ -123,16 +123,35 @@
                     <option>все время</option>
                 </select>
             </div>
-            <p class="task-button rounded-full text-white w-6 h-6 flex pl-2 items-center text-xs">2</p>
+            <p class="task-button rounded-full text-white w-6 h-6 flex pl-2 items-center text-xs">{{subtasks.length}}</p>
           </div>
+
         </div>
         <hr class="mt-3">
+          <div class="h-80">
+            <div v-for="subtask in subtasks" >
+              <div class="flex justify-between mt-3">
+              <div><div v-if="computeDays(subtask.deadline) <= 1" class="text-red-500">{{subtask.title}}</div>
 
+              <div v-else-if="computeDays(subtask.deadline) <= 3" class="text-yellow-500">{{subtask.title}}</div>
 
-      
+              <div v-else class="text-black">{{subtask.title}}</div></div><p>дней: {{computeDays(subtask.deadline)}}</p>
+
+            </div>
+            </div>
+          </div>
+
+         <button class="mt-10 w-full block text-black items-center rounded-full h-8  text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateSubtaskModal()">Добавить</button>
       </div>
     </div>
+
+       <modal name="subtask">
+      <create-subtask :type="type"></create-subtask>
+    </modal>
   </div>
+
+ 
+
 </template>
 
 <script>
@@ -143,6 +162,8 @@ import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
 import PersonCard from '@/Shared/PersonCard.vue'
 import axios from "axios";
+import CreateSubtask from '../Tasks/CreateSubtask.vue'
+import moment from 'moment'
 
 export default {
   metaInfo() {
@@ -155,7 +176,8 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
-    PersonCard
+    PersonCard,
+    CreateSubtask
   },
   layout: Layout,
   props: {
@@ -163,10 +185,12 @@ export default {
     user: Array,
     audition: Array,
     messages: Array,
+    subtasks: Array,
   },
   remember: 'form',
   data() {
     return {
+
       message: "",
       form: this.$inertia.form({  
         status: this.task.status,
@@ -174,6 +198,14 @@ export default {
     }
   },
   methods: {
+    computeDays(deadline){
+      var difference = Math.abs(new Date(deadline) - Date.now());
+      var days = difference/(1000 * 3600 * 24)
+      return Math.round(days);
+    },
+    showCreateSubtaskModal(){
+      this.$modal.show('subtask')
+    },
     addMessage(){
       this.message = "";
       this.form.post(this.route('tasks.message',{

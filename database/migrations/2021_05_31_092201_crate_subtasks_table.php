@@ -14,7 +14,7 @@ class CrateSubtasksTable extends Migration
     public function up()
     {
         //
-        Schema::create('subtask',function(Blueprint $table){
+        Schema::create('subtasks',function(Blueprint $table){
             $table->id('id');
             $table->integer('task_id');
             $table->string('title');

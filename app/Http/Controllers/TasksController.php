@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Comment;
+use App\Models\Subtask;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request as StaticRequest;
@@ -60,6 +61,7 @@ class TasksController extends Controller
             'audition' => User::select('first_name')->where('id',$task->audition)->get(),
             'user' => User::select('first_name')->where('id', $task->user)->get(),
             'messages' => Comment::where('task_id',$task->id)->get(),
+            'subtasks' =>Subtask::where('task_id',$task->id)->get(),
         ]);
     }
     public function message(String $message,$id){

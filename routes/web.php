@@ -18,6 +18,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\DocumentsController;
+use App\Http\Controllers\SubtasksController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -225,6 +226,12 @@ Route::post('tasks/{message}/{id}',[TasksController::class, 'message'])
 
 Route::get('dela',[TasksController::class,'dela'])
 ->name('tasks.dela')
+->middleware('auth');
+
+//Subtasks
+
+Route::post('subtasks',[SubtasksController::class,'store'])
+->name('subtasks.store')
 ->middleware('auth');
 
 //Deals
