@@ -54,18 +54,28 @@
                         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"  fill-rule="nonzero" />
                     </svg>
                     <select v-on:change="changeItem1($event)" class="text-white bg-blue-500 border border-gray-300 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                        <option>сегодня</option>
-                        <option>месяц</option>
-                        <option>год</option>
+                        <option>по сроку</option>
+                        <option>по срочности</option>
+                        <option>просроченные</option>
                         <option selected>все время</option>
                     </select>
                 </div>
-                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{workCounter}}</p>
+                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{myworks.length+1}}</p>
             </div>
             <hr class="my-5 mx-6 mb-0">
-            <div class="h-screen-2 overflow-y-auto px-6">
-                <div v-for="project in myworks" class="flex justify-start gap-2">
-                  <checkbox :label="project.title" :value="project.title" v-model="project.checked" />
+            <div class="h-screen-2 overflow-y-auto px-6  ">
+                <div v-for="subtask in myworks" class="flex justify-start gap-2 ">
+                    
+                  <div class="w-full">
+                      <div v-for="sub in subtask.subtask" >
+                          <div @click="showDescription(sub.description, sub.title, subtask.title, sub.deadline)" v-if="computeDays(sub.deadline) <= 1" class="flex justify-between rounded-full bg-red-500"><checkbox :label="sub.title" :value="sub.title" /><p class="text-xs ml-30 pt-3">{{computeDays(sub.deadline)}} дн.</p></div>
+
+                          <div @click="showDescription(sub.description, sub.title, subtask.title, sub.deadline)" v-else-if="computeDays(sub.deadline) <= 3" class="flex justify-between rounded-full bg-yellow-500"><checkbox :label="sub.title" :value="sub.title" /><p class="text-xs ml-30 pt-3">{{computeDays(sub.deadline)}} дн.</p></div>
+
+                          <div @click="showDescription(sub.description, sub.title, subtask.title, sub.deadline)" v-else class="flex justify-between"><checkbox :label="sub.title" :value="sub.title" /><p class="text-xs ml-30 pt-3">{{computeDays(sub.deadline)}} дн.</p></div>
+                          <p class="text-xs">Задача: {{subtask.title}}</p>
+                      </div>
+                  </div>
                 </div>
             </div>
             <div class="flex">
@@ -146,6 +156,19 @@
       <create-subtask :type="type"></create-subtask>
     </modal>
 
+    <modal name="subtask_description" class="p-5">
+        <div class="p-5">
+            <div class="flex justify-between">
+                <h6 class="flex">{{title}} <p class="text-gray-400 pl-2 pr-2">подзадача к</p> {{tasktitle}}</h6><p>{{deadline}} дн.</p>
+            </div>
+            <div class="border-2 border-rounded-lg border-color-black h-20 p-3 mt-3 rounded-lg">
+                
+                <p class="text-sm">{{description}}</p>
+            </div>
+            <checkbox label="отметить как выполнено" />
+        </div>
+    </modal>
+
 </div>
 </template>
 
@@ -165,8 +188,12 @@ export default {
     layout: Layout,
     data() {
         return {
+            deadline: "",
+            title: "",
+            tasktitle: "",
+            description: "",
             mytasks: [],
-            myworks: [],
+            myworks: this.tasks.filter(x => x.subtask != ''),
             mymeet: [],
             taskCounter: 0,
             workCounter: 0,
@@ -189,11 +216,7 @@ export default {
             this.mytasks.push(month[i]);
             this.taskCounter++;
         } 
-        var work = this.tasks.filter(x => x.type == 'дела');
-        for (var i = work.length - 1; i >= 0; i--) {
-            this.myworks.push(work[i]);
-            this.workCounter++;
-        }
+    
         var meet = this.tasks.filter(x => x.type == 'встреча');
         for (var i = meet.length - 1; i >= 0; i--) {
             this.mymeet.push(meet[i]);
@@ -213,6 +236,18 @@ export default {
         }
     },
     methods: {
+      showDescription(description,title,tasktitle,deadline){
+        this.deadline = this.computeDays(deadline);
+        this.title = title;
+        this.tasktitle = tasktitle;
+        this.description = description;
+        this.$modal.show('subtask_description');
+      },
+      computeDays(deadline){
+          var difference = Math.abs(new Date(deadline) - Date.now());
+          var days = difference/(1000 * 3600 * 24)
+          return Math.round(days);
+      },
       showCreateSubtaskModal(){
         this.$modal.show('subtask');
       },
@@ -234,17 +269,17 @@ export default {
         changeItem1: function changeItem1(event) {
             var today = new Date(Date.now());
             switch (String(event.target.value)) {
-                case "сегодня":
-                    this.myworks = this.tasks.filter(x => x.type == "дела" && new Date(x.deadline) > today && new Date(x.created_at) < today);
+                case "по сроку":
+                    this.myworks = _.orderBy(this.tasks, 'id','desc');
                     break;
-                case "месяц":
-                    this.myworks = this.tasks.filter(x => x.type == "дела" && new Date(x.deadline).getMonth() == today.getMonth() && new Date(x.created_at).getMonth() == today.getMonth());
+                case "по срочности":
+                    this.myworks = _.orderBy(this.tasks, 'id','asc');
                     break;
-                case "год":
-                    this.myworks = this.tasks.filter(x => x.type == "дела" && new Date(x.deadline).getFullYear() == today.getFullYear() && new Date(x.created_at).getFullYear() == today.getFullYear());
+                case "просроченные":
+                    
                     break;
                 default:
-                    this.myworks = this.tasks.filter(x => x.type == 'дела');
+                    
                     break;
             }
         },
