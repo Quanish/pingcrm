@@ -45,11 +45,6 @@
             </div>  
           </div>
 
-
-          <!-- <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.audition" :error="form.errors.user" label="Аудитор">
-            <option :value="null" />
-            <option v-for="data in select" :key="data.id" :value="data.id">{{ data.first_name }}</option> </select-input
-          > -->
           <div class="w-full flex">
             <div class="lg:w-1/4">
              <p class="font-medium leading-6">Заполните поле
@@ -58,7 +53,6 @@
             </div>
             
             <div class="lg:w-3/4 flex justify-end">
-              <checkbox label="срочно" v-model="form.urgent" />
                 <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">
                   <span>Создать</span>
                 </button>

@@ -38,17 +38,22 @@ class TasksController extends Controller
 	}
 
     public function accept(Task $task){
-        $task->update(
-            StaticRequest::validate([
-                'status' => ['required', 'max:50'],
-            ])
-        );
+        $task->update([
+            'status' => Task::IN_PROGRESS,
+        ]);
 
         return Redirect::route('dashboard')->with('success', 'Задание принято.');
     }
 
     public function show(Task $task){
 
+        $subtasks = Subtask::where([
+            'task_id' => $task->id
+        ])->get();
+        
+        foreach($subtasks as $subtask) {
+            $subtask->task = $task;
+        }
 
         return Inertia::render('Tasks/Show',[
             'task' => [
@@ -65,11 +70,10 @@ class TasksController extends Controller
             'audition' => User::select('first_name')->where('id',$task->audition)->get(),
             'user' => User::select('first_name')->where('id', $task->user)->get(),
             'messages' => Comment::where('task_id',$task->id)->get(),
-            'subtasks' =>Subtask::where([
-                'task_id' => $task->id
-            ])->get(),
+            'subtasks' => $subtasks
         ]);
     }
+
     public function message(String $message,$id){
         Comment::insert([
             'task_id' => $id,

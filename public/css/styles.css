@@ -116,10 +116,10 @@
 
 /***/
 
-
 .h-custom {
     height: calc(100vh - 103px);
 }
+
 .h-screen-2 {
     /* height: 60vh;
     height: calc(100vh - 350px); */
@@ -152,6 +152,10 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.vm--overlay {
+    background: rgba(0, 0, 0, .5) !important;
 }
 
 a,

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <div class="flex justify-between">
       <div class="flex flex-row gap-10">
         <h1 class="mb-8 font-bold text-2xl">Клиенты</h1>
@@ -76,7 +76,7 @@
         </tr>
       </table>
     </div>
-    <pagination class="mt-6 paginate" :links="organizations.links" />
+    <pagination class="mt-4 paginate" :links="organizations.links" />
 
     <modal name="create" class="w-full">
       <create-client></create-client>

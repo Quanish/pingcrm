@@ -21,7 +21,7 @@
       <div class="overflow-y-auto px-6 flex-auto pb-12 mb-2 pt-2">
           <div v-for="subtask in items" class="flex justify-start gap-2 py-1 hover:bg-gray-50 rounded-xl" :key="subtask.id">
             <div class="w-full " @click="showDescription(subtask)">
-              <checkbox :subtask="subtask.title" :task="subtask.task" :remain="subtask.deadline"  />
+              <checkbox :subtask="subtask.title" :task="subtask.task.title"  :completed="subtask.status" :remain="subtask.deadline"  />
             </div>
           </div>
       </div>
@@ -37,18 +37,60 @@
 
       <modal name="subtask_description" class="p-5">
           <div class="p-5">
-              <div class="flex justify-between">
-                  <h6 class="flex">{{title}} <p class="text-gray-400 pl-2 pr-2">подзадача к</p> {{tasktitle}}</h6><p>{{deadline}} дн.</p>
+            <div class="pb-4 mb-4 border-b border-gray-200 flex justify-between items-start">
+              <h6 class="flex flex-col">
+                <span class="text-lg font-medium text-black">{{more.tasktitle}}</span> 
+                <span>{{more.title}}</span> 
+              </h6> 
+              <div class="flex flex-col">
+                <div v-if="more.status == 1" class="bg-green-500 inline-block rounded-full py-1 px-3 mb-2 font-medium text-sm text-white text-center">
+                  Завершено
+                </div>
+                <div v-else class="bg-gray-200 inline-block rounded-full py-1 px-3 mb-2 font-medium text-sm text-black text-center">
+                  Не сделано
+                </div>
+                <div class="text-sm" v-if="more.status == 1">{{ more.updated_at }} </div>
               </div>
-              <div class="border-2 border-rounded-lg border-color-black h-20 p-3 mt-3 rounded-lg">
+            </div>
+              <div class="flex justify-between gap-3">
+                    
+                    <div class="flex gap-9">
+                      <div class="flex flex-col">
+                        <p class="text-black font-medium mb-3 text-sm">Начало</p>
+                        <p class="text-gray-500">{{ more.start }}</p>
+                      </div>
+                      <div class="flex flex-col">
+                        <p class="text-black font-medium mb-3 text-sm">Дедлайн</p>
+                        <p class="text-gray-500">{{ more.deadline }}</p>
+                      </div>
+                      <div class="flex flex-col">
+                        <p class="text-black font-medium mb-3 text-sm">Осталось</p>
+                        <p class="text-gray-500">{{ more.remain }} дн.</p>
+                      </div>
+                    </div>
+                    
+                    
+                    
                   
-                  <p class="text-sm">{{description}}</p>
               </div>
-              <checkbox label="отметить как выполнено" />
+              <div class="border border-rounded-lg border-gray-200 h-20 p-3 mt-3 rounded-lg">
+                  
+                  <p class="text-sm">{{more.description}}</p>
+              </div>
+              
+              <div class="mt-4 flex justify-end">
+                <button class="rounded-full bg-green-500 hover:bg-green-400 text-white font-medium text-sm py-1 px-5" v-if="more.status != 1">
+                  Завершить 
+                </button>
+                <button class="rounded-full bg-indigo-500 hover:bg-indigo-400 text-white font-medium text-sm py-2 px-5" v-else>
+                  Отметить невыполненным 
+                </button>
+              </div>
+              
           </div>
       </modal>
 
-      <modal name="subtask">
+      <modal name="subtask"> 
         <create-subtask :task_id="task_id"></create-subtask>
       </modal>
 
@@ -91,10 +133,13 @@ export default {
   data() {
     return {
       format: 'yyyy-MM-dd',
-      tasktitle: '',
-      title: '',
-      description: '',
-      deadline: 0,
+      more: {
+        tasktitle: '',
+        title: '',
+        description: '',
+        deadline: 0,
+        status: 0,
+      },
       disabledDates: {},
     }
   },
@@ -117,10 +162,14 @@ export default {
         return Math.round(days);
     },
     showDescription(subtask){
-        this.deadline = this.computeDays(subtask.deadline)
-        this.title = subtask.title
-        this.tasktitle = subtask.tasktitle
-        this.description = subtask.description
+        this.more.remain = this.computeDays(subtask.deadline)
+        this.more.title = subtask.task.title
+        this.more.start = subtask.start
+        this.more.tasktitle = subtask.title
+        this.more.description = subtask.description
+        this.more.deadline = subtask.deadline
+        this.more.status = subtask.status
+        this.more.updated_at = this.customFormatter(subtask.updated_at) 
         this.$modal.show('subtask_description');
       },
     showCreateSubtaskModal(){

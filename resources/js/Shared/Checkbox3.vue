@@ -1,10 +1,9 @@
 <template>
   <label class="wrapper flex items-start my-2 mt-3 text-xs">
-      <input class="checkbox" type="checkbox" :checked="isChecked" :value="value" @change="updateInput"/>
-      <span class="checkmark w-5 h-5"></span>
+      <span class="checkmark w-5 h-5" :class="{checked: completed}"></span>
       <div class="flex flex-col flex-auto justify-between rounded-full">
         <p class="text-xs ml-30">{{ subtask }}</p>
-        <p class="text-2xs text-gray-300">Задача: {{ task }}</p>
+        <p class="text-2xs text-gray-300">{{ task }}</p>
       </div>
       <div class="h-5 rounded-full text-indigo-400 flex items-center justify-center font-bold">
         {{ computeDays(remain) }}
@@ -14,28 +13,14 @@
 
 <script>
 export default {
-  model: {
-    prop: 'modelValue', 
-    event: 'change'
-  },
   props: {
-    "value": { type: String },
-    "modelValue": { default: "" },
-    "label": { type: String, required: true},
-    "trueValue": { default: true },
-    "falseValue": { default: false },
     remain: '',
     task: '',
     subtask: '',
+    completed: 0,
   },
-  computed: {
-    isChecked() {
-      if (this.modelValue instanceof Array) {
-        return this.modelValue.includes(this.value)
-      }
-      // Note that `true-value` and `false-value` are camelCase in the JS
-      return this.modelValue === this.trueValue
-    }
+  created() {
+    console.log(this.completed)
   },
   methods: {
     computeDays(deadline){
@@ -43,20 +28,6 @@ export default {
         var days = difference/(1000 * 3600 * 24)
         return Math.round(days) + ' дн';
     },
-    updateInput(event) {
-      let isChecked = event.target.checked
-      if (this.modelValue instanceof Array) {
-        let newValue = [...this.modelValue]
-        if (isChecked) {
-          newValue.push(this.value)
-        } else {
-          newValue.splice(newValue.indexOf(this.value), 1)
-        }
-        this.$emit('change', newValue)
-      } else {
-        this.$emit('change', isChecked ? this.trueValue : this.falseValue)
-      }
-    }
   }
 }
 </script>
@@ -91,11 +62,11 @@ export default {
   border: 1.5px solid #999999;
 }
 /* On mouse-over, add a grey background color */
-.wrapper:hover input ~ .checkmark {
+.wrapper:hover  .checkmark {
   background-color: #f1f1f1;
 }
 /* When the checkbox is checked, add a blue background */
-.wrapper input:checked ~ .checkmark {
+.wrapper .checkmark.checked  {
   background-color:#33cc33;
   border: 1.5px solid #33cc33;
 }
@@ -106,7 +77,7 @@ export default {
   display: none;
 }
 /* Show the checkmark when checked */
-.wrapper input:checked ~ .checkmark:after {
+.wrapper  .checkmark.checked:after {
   display: block;
 }
 /* Style the checkmark/indicator */

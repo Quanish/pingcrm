@@ -9,7 +9,11 @@
         <div class="flex flex-row gap-10">
           <div class="flex flex-col items-center">
             <p class="mb-3 font-medium">Статус</p>
-            <div class="bg-indigo-500 py-1 px-8 text-sm text-white rounded-full font-normal">новый {{ task.status }}</div>
+            <div class="py-1 px-8 text-sm text-white rounded-full font-normal" :class="'bg-' +statuses[task.status].color + '-500'">
+              
+               {{ statuses[task.status].name }}
+              
+            </div>
           </div>
           <div class="flex flex-col items-center">
             <p class="mb-5 font-medium">Старт</p>
@@ -53,16 +57,30 @@
               </div>
             </div>
 
-            <div class="border rounded-xl border-gray-200 mt-5 p-5">
+            <div class="border rounded-xl border-gray-200 mt-5 p-5 hover:border-blue-400">
               <p class="text-sm">{{ task.description }}</p>
+
+
+
+
               <div class="flex justify-between mt-5">
-                <form @submit.prevent="accept" class="flex flex-wrap w-full gap-3">
-                  <button class="rounded-full bg-green-500 hover:bg-green-600 text-white h-6 px-7 text-xs leading-6" type="submit">принять</button>
-                  <button @click="decline" class="rounded-full bg-gray-300 hover:bg-gray-200 h-6 px-7 text-xs leading-6 text-white">отклонить</button>
-                  <button class="rounded-full text-white h-6 px-7 text-xs leading-6 bg-indigo-600 hover:bg-indigo-500" @click="download">скачать</button>
-                  <input type="hidden" v-model="form.status" value="в работе" />
-                </form>
+
+
+                <template v-if="task.status == 0">  
+                  <form @submit.prevent="accept" class="flex flex-wrap w-full gap-3">
+                    <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять</button>
+                    <button @click="decline" class="rounded-full bg-gray-300 hover:bg-gray-200 h-6 px-7 text-sm leading-6 text-white">отклонить</button>
+                    <button class="rounded-full text-white h-6 px-7 text-sm leading-6 bg-indigo-600 hover:bg-indigo-500" @click="download">скачать</button>
+                    <input type="hidden" v-model="form.status" value="в работе" />
+                  </form>
+                </template>  
+
+
+
               </div>
+
+
+
               <hr class="mt-5" />
               <div class="flex mt-6 mb-1">
                 <div class="bg-red-500 rounded-full w-4 h4"></div>
@@ -155,6 +173,24 @@ export default {
       form: this.$inertia.form({
         status: this.task.status,
       }),
+      statuses: {
+        0: {
+          name: 'Новый',
+          color: 'gray'
+        },
+        1: {
+          name: 'Завершен',
+          color: 'green'
+        },
+        2: {
+          name: 'Выполняется',
+          color: 'blue'
+        },
+        3: {
+          name: 'На проверке',
+          color: 'orange'
+        },
+      }
     }
   },
   created() {

@@ -25,7 +25,11 @@ class SubtasksController extends Controller
             'status' => $request->substatus,
             'user_id' => $request->task == 0 ? Auth::user()->id : $task->user,
         ]);
-
-    	return redirect('/tasks/' . $request->task);
+        
+        if($request->task != 0) {
+            return redirect('/tasks/' . $request->task);
+        } else {
+            return redirect('/');
+        }  
     }
 }
