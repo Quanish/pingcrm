@@ -56,6 +56,7 @@
                 <span class="text-red-400">*</span> 
               </p>  
             </div>
+            
             <div class="lg:w-3/4 flex justify-end">
               <checkbox label="срочно" v-model="form.urgent" />
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
