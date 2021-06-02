@@ -9,30 +9,19 @@
                   <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"  fill-rule="nonzero" />
               </svg>
               <select v-on:change="sortBy($event)" class="text-white bg-blue-500 border border-gray-300 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                  <option>по сроку</option>
                   <option>по срочности</option>
                   <option>просроченные</option>
+                  <option>свои дела</option>
                   <option selected>все время</option>
               </select>
           </div>
           <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{ items.length }}</p>
       </div>
      
-      <div class="overflow-y-auto px-6 flex-auto pb-12 mb-2">
-          <div v-for="subtask in items" class="flex justify-start gap-2 ">
-              
-            <div class="w-full">
-             
-              <div @click="showDescription(subtask.description, subtask.title, subtask.title, subtask.deadline)" v-if="computeDays(subtask.deadline) <= 1" class="flex justify-between rounded-full bg-red-500">
-                <checkbox :label="subtask.title" :value="subtask.title" />
-                  <p class="text-xs ml-30 pt-3">{{computeDays(subtask.deadline)}} дн.</p>
-                </div>
-
-              <div @click="showDescription(subtask.description, subtask.title, subtask.title, subtask.deadline)" v-else-if="computeDays(subtask.deadline) <= 3" class="flex justify-between rounded-full bg-yellow-500"><checkbox :label="subtask.title" :value="subtask.title" /><p class="text-xs ml-30 pt-3">{{computeDays(subtask.deadline)}} дн.</p></div>
-
-              <div @click="showDescription(subtask.description, subtask.title, subtask.title, subtask.deadline)" v-else class="flex justify-between"><checkbox :label="subtask.title" :value="subtask.title" /><p class="text-xs ml-30 pt-3">{{computeDays(subtask.deadline)}} дн.</p></div>
-              <p class="text-xs">Задача: {{subtask.title}}</p>
-               
+      <div class="overflow-y-auto px-6 flex-auto pb-12 mb-2 pt-2">
+          <div v-for="subtask in items" class="flex justify-start gap-2 py-1 hover:bg-gray-50 rounded-xl" :key="subtask.id">
+            <div class="w-full " @click="showDescription(subtask)">
+              <checkbox :subtask="subtask.title" :task="subtask.task" :remain="subtask.deadline"  />
             </div>
           </div>
       </div>
@@ -74,7 +63,7 @@ import Layout from '@/Shared/Layout'
 import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
-import Checkbox from '@/Shared/Checkbox2'
+import Checkbox from '@/Shared/Checkbox3'
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 import createSubtask from './CreateSubtask.vue'
@@ -127,11 +116,11 @@ export default {
         var days = difference/(1000 * 3600 * 24)
         return Math.round(days);
     },
-    showDescription(description,title,tasktitle,deadline){
-        this.deadline = this.computeDays(deadline);
-        this.title = title;
-        this.tasktitle = tasktitle;
-        this.description = description;
+    showDescription(subtask){
+        this.deadline = this.computeDays(subtask.deadline)
+        this.title = subtask.title
+        this.tasktitle = subtask.tasktitle
+        this.description = subtask.description
         this.$modal.show('subtask_description');
       },
     showCreateSubtaskModal(){

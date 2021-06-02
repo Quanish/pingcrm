@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-custom">
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-row justify-between gap-2">
       <div class="w-5/12 mb-5">
         <input type="text" class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" v-model="task.title" />
       </div>
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="flex flex-row gap-5 flex-auto">
+    <div class="flex flex-row gap-5 flex-auto overflow-y-hidden"> 
       <div class="w-5/12 bg-white rounded-2xl p-5 mt-5 flex-auto">
         <div class="flex flex-col justify-between h-full">
           <div>
