@@ -116,9 +116,13 @@
 
 /***/
 
+
+.h-custom {
+    height: calc(100vh - 103px);
+}
 .h-screen-2 {
-    height: 60vh;
-    height: calc(100vh - 350px);
+    /* height: 60vh;
+    height: calc(100vh - 350px); */
 }
 
 .h-screen-3 {
@@ -141,6 +145,7 @@ select {
     max-height: 90vh;
     left: unset !important;
     top: unset !important;
+    overflow-y: auto !important;
 }
 
 .vm--container {

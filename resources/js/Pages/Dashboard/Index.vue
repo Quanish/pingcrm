@@ -1,13 +1,20 @@
 <template>
-<div>
-    <div class="flex flex-row justify-between">
+<div class="flex flex-col h-full">
+    <div class="flex flex-row justify-between items-start">
         <h1 class="mb-8 font-bold text-2xl">Добрый день, <span>{{ $page.props.auth.user.first_name}}</span>
             <span class="hidden md:inline">{{ $page.props.auth.user.last_name }}</span>!</h1>
-        <button v-on:click="test"><img class="h-10" src="img/message.png"></button>
+        <button ><img class="h-10" src="img/message.png"></button>
     </div>
-    <div class="flex flex-row justify-between">
-        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4 ml-0">
-            <div class="flex justify-between items-center px-6 gap-2">
+
+
+
+    <div class="flex flex-row justify-between flex-auto overflow-y-hidden gap-4">
+
+
+        
+
+        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 ml-0  overflow-y-hidden flex flex-col relative flex-auto">
+            <div class="flex justify-between items-center px-6 gap-2 py-4 border-b border-gray-100">
                 <p class="font-medium text">Задачи</p>
                 <div class="relative inline-flex">
                     <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white" viewBox="0 0 412 232">
@@ -22,11 +29,11 @@
                 </div>
                 <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{taskCounter}}</p>
             </div>
-            <hr class="my-5 mx-6 mb-0">
-            <div class="h-screen-2 overflow-y-auto px-6">
+            
+            <div class="overflow-y-auto px-6 flex-auto pb-12 mb-2">
                 <div v-for="task in mytasks">
-                    <div>
-                        <inertia-link class="py-4 flex items-center w-full justify-between focus:text-indigo-500" :href="route('tasks.show', task.id)">
+                    <div class="py-4 ">
+                        <inertia-link class="flex items-start w-full justify-between focus:text-indigo-500" :href="route('tasks.show', task.id)">
                             <div class="flex flex-col text-sm font-medium">{{task.title}}
                                 <p class="text-xs font-normal text-gray-300" style="font-size: 0.6rem">2 дня до дедлайна</p>
                             </div>
@@ -34,47 +41,26 @@
                             <icon v-if="task.deleted_at" name="trash" class="flex-shrink-0 w-3 h-3 fill-gray-400 ml-2" />
                         </inertia-link>
                         <div v-if="task.status == 'ожидание'" class="w-full bg-green-500 rounded-full h-1"></div>
-                        <div v-else-if="task.status = 'в работе'" class="w-full bg-yellow-800 rounded-full h-1"></div>
+                        <div v-else-if="task.status = 'в работе'" class="w-full bg-yellow-400 rounded-full h-1"></div>
                         <div v-else-if="task.status = 'завершено'" class="w-full bg-green-500 rounded-full h-1"></div>
                         <div v-else-if="new Date(task.deadline) < Date.now()" class="w-full bg-red-500 rounded-full h-1"></div>
                         <div v-else class="w-full bg-indigo-500 rounded-full h-1"></div>
                     </div>
-                </div>
+                </div> 
             </div>
-            <div class="flex">
-                 <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal('задача')">Новая задача</button>
+            <div class="flex absolute px-4 w-full bottom-0 bg-gradient-to-b from-transparent to-white">
+                <button class="my-4  w-full block text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal('задача')">Новая задача</button>
             </div> 
         </div>
 
-        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
-            <div class="flex justify-between items-center px-6 gap-2 ">
-                <p class="font-medium text">Дела</p>
-                <div class="relative inline-flex">
-                    <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white" viewBox="0 0 412 232">
-                        <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"  fill-rule="nonzero" />
-                    </svg>
-                    <select v-on:change="changeItem1($event)" class="text-white bg-blue-500 border border-gray-300 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                        <option>сегодня</option>
-                        <option>месяц</option>
-                        <option>год</option>
-                        <option selected>все время</option>
-                    </select>
-                </div>
-                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{workCounter}}</p>
-            </div>
-            <hr class="my-5 mx-6 mb-0">
-            <div class="h-screen-2 overflow-y-auto px-6">
-                <div v-for="project in myworks" class="flex justify-start gap-2">
-                  <checkbox :label="project.title" :value="project.title" v-model="project.checked" />
-                </div>
-            </div>
-            <div class="flex">
-                <button @click="showCreateSubtaskModal()" class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
-            </div> 
-        </div>
+        
 
-        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4">
-            <div class="flex justify-between items-center px-6 gap-2 ">
+        <subtasks task_id="0" :items="subtasks" :class="'w-1/4 flex-auto'" ></subtasks>
+        
+
+
+        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 overflow-y-hidden flex flex-col relative flex-auto">
+            <div class="flex justify-between items-center px-6 gap-2 py-4 border-b border-gray-100">
                 <p class="font-medium text">Встречи</p>
                 <div class="relative inline-flex">
                     <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white" viewBox="0 0 412 232">
@@ -88,24 +74,25 @@
                 </div>
                 <p class="bg-blue-500  rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{meetCounter}}</p>
             </div>
-            <hr class="my-5 mx-6 mb-0">
-            <div class="h-screen-2 overflow-y-auto px-6">
+         
+            <div class=" overflow-y-auto px-6 flex-auto pb-12 mb-2">
                 <div v-for="meeting in mymeet">
                     <!-- <p class="notification">{{meeting.description}}</p> -->
                 </div>
-                <div class="flex">
-                    <button class="my-4  w-full block mx-6 text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal('встреча')">Добавить</button>
-                </div> 
             </div>
+            <div class="flex absolute px-4 w-full bottom-0 bg-gradient-to-b from-transparent to-white">
+                <button class="my-4  w-full block  text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal('встреча')">Добавить</button>
+            </div> 
         </div>
 
-        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4  py-4 pb-0 mx-4 mr-0">
-            <div class="flex justify-start px-6">
+
+        <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 mr-0 overflow-y-hidden flex flex-col relative flex-auto">
+            <div class="flex justify-start px-6 py-4 border-b border-gray-100 ">
                 <p class="font-medium text h-7 leading-loose">События</p>  
             </div>
-            <hr class="my-5 mx-6 mb-0">
-            <div class="h-screen-3 overflow-y-auto px-6 pb-4">
-                <div v-for="event in orderedEvents" class="mt-3">
+            <div class="flex-auto overflow-y-auto px-6 pb-4 flex-auto">
+                <transition-group name="fade" tag="p">
+                <div v-for="event in orderedEvents" class="mt-3" @click="closeEvent(event)" :key="event.id">
                     <div class="border rounded-2xl px-5 py-4 flex flex-col">
                         <div class="flex flex-row justify-between mb-3">
                             <div class="flex flex-row">
@@ -133,18 +120,20 @@
                         </div> 
                     </div>
                 </div>
+                </transition-group>
             </div>
         </div>
     </div>
+
 
 
     <modal name="create_tasks">
       <create-task :type="type"></create-task>
     </modal>
 
-    <modal name="subtask">
-      <create-subtask :type="type"></create-subtask>
-    </modal>
+    
+
+
 
 </div>
 </template>
@@ -155,7 +144,7 @@ import Checkbox from '@/Shared/Checkbox'
 import Chat from '@/Shared/Chat'
 import RadialProgressBar from 'vue-radial-progress'
 import CreateTask from '../Tasks/Create.vue'
-import CreateSubtask from '../Tasks/CreateSubtask.vue'
+import Subtasks from '../Tasks/Subtasks.vue'
 import _ from 'lodash'
 
 export default {
@@ -165,8 +154,12 @@ export default {
     layout: Layout,
     data() {
         return {
+            deadline: "",
+            title: "",
+            tasktitle: "",
+            description: "",
             mytasks: [],
-            myworks: [],
+            myworks: this.tasks.filter(x => x.subtask != ''),
             mymeet: [],
             taskCounter: 0,
             workCounter: 0,
@@ -182,6 +175,7 @@ export default {
     props: {
         tasks: Array,
         events: Array,
+        subtasks: Array,
     },
     created() {
         var month = this.tasks;
@@ -189,11 +183,7 @@ export default {
             this.mytasks.push(month[i]);
             this.taskCounter++;
         } 
-        var work = this.tasks.filter(x => x.type == 'дела');
-        for (var i = work.length - 1; i >= 0; i--) {
-            this.myworks.push(work[i]);
-            this.workCounter++;
-        }
+    
         var meet = this.tasks.filter(x => x.type == 'встреча');
         for (var i = meet.length - 1; i >= 0; i--) {
             this.mymeet.push(meet[i]);
@@ -204,7 +194,7 @@ export default {
         RadialProgressBar,
         Checkbox,
         CreateTask,
-        CreateSubtask,
+        Subtasks,
         Chat
     },
     computed: {
@@ -213,12 +203,17 @@ export default {
         }
     },
     methods: {
-      showCreateSubtaskModal(){
-        this.$modal.show('subtask');
+      showDescription(description,title,tasktitle,deadline){
+        this.deadline = this.computeDays(deadline);
+        this.title = title;
+        this.tasktitle = tasktitle;
+        this.description = description;
+        this.$modal.show('subtask_description');
       },
-      test(){
-        
-        this.$modal.show('chat')
+      computeDays(deadline){
+          var difference = Math.abs(new Date(deadline) - Date.now());
+          var days = difference/(1000 * 3600 * 24)
+          return Math.round(days);
       },
         create() {
             this.$inertia.get(this.route('tasks.create'))
@@ -234,17 +229,17 @@ export default {
         changeItem1: function changeItem1(event) {
             var today = new Date(Date.now());
             switch (String(event.target.value)) {
-                case "сегодня":
-                    this.myworks = this.tasks.filter(x => x.type == "дела" && new Date(x.deadline) > today && new Date(x.created_at) < today);
+                case "по сроку":
+                    this.myworks = _.orderBy(this.tasks, 'id','desc');
                     break;
-                case "месяц":
-                    this.myworks = this.tasks.filter(x => x.type == "дела" && new Date(x.deadline).getMonth() == today.getMonth() && new Date(x.created_at).getMonth() == today.getMonth());
+                case "по срочности":
+                    this.myworks = _.orderBy(this.tasks, 'id','asc');
                     break;
-                case "год":
-                    this.myworks = this.tasks.filter(x => x.type == "дела" && new Date(x.deadline).getFullYear() == today.getFullYear() && new Date(x.created_at).getFullYear() == today.getFullYear());
+                case "просроченные":
+                    
                     break;
                 default:
-                    this.myworks = this.tasks.filter(x => x.type == 'дела');
+                    
                     break;
             }
         },
@@ -336,10 +331,41 @@ export default {
             this.type = type
             this.$modal.show('create_tasks')
         },
+        closeEvent(event) {
+            let index = this.events.indexOf(event);
+            if(index > -1) this.events.splice(index, 1)
+            console.log(event.id)
+            
+        }
     }
 }
 </script>
+
+
+
 <style scoped>
+
+.fade-enter-active {
+  animation: fade .4s reverse;
+}
+.fade-leave-active {
+  animation: fade .4s ;
+}
+@keyframes fade {
+  0% {
+    opacity: 1;
+    transform: translateX(0)
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%)
+  }
+}
+
+
 .btn-check {
     border: 1.5px solid #999999;
 }

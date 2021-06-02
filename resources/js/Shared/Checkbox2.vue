@@ -15,7 +15,7 @@ export default {
   props: {
     "value": { type: String },
     "modelValue": { default: "" },
-    "label": { type: String, required: true},
+    "label": { type: String, required: true, default: ''},
     "trueValue": { default: true },
     "falseValue": { default: false }
   },

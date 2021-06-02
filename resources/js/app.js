@@ -3,6 +3,7 @@ import VueMeta from 'vue-meta'
 import PortalVue from 'portal-vue'
 import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress/src'
+import Notifications from 'vue-notification'
 
 /* Axios */
 import axios from 'axios'
@@ -22,7 +23,7 @@ Vue.use(PortalVue)
 Vue.use(VueMeta)
 Vue.use(VueAxios, axios)
 Vue.use(vmodal)
-
+Vue.use(Notifications)
 
 InertiaProgress.init()
 
@@ -30,7 +31,7 @@ const el = document.getElementById('app')
 
 new Vue({
     metaInfo: {
-        titleTemplate: title => (title ? `${title} - Oazis CRM` : 'Oazis CRM'),
+        titleTemplate: title => (title ? `${title} - Oasis CRM` : 'Oasis CRM'),
     },
     render: h =>
         h(App, {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Models\Subtask;
 
 class DashboardController extends Controller
 {
@@ -13,13 +14,13 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Index', [
             'tasks' => Auth::user()->account
                 ->tasks()
+                ->with('subtask')
                 ->where('user',Auth::user()->id)
                 ->orWhere('audition',Auth::user()->id)
                 ->orderBy('user')
-                ->get()
-                ->map
-                ->only('title','id','status','deadline','created_at','type','description'),
+                ->get(),
             'events' => Event::with('user','task')->where('user',Auth::user()->id)->get(), 
+            'subtasks' => Subtask::where('user_id', Auth::user()->id)->get(), 
         ]);
     }
 

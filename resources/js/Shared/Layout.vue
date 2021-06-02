@@ -86,34 +86,58 @@
             </div>
             <div class="md:flex md:flex-grow md:overflow-hidden">
 
-                <div class="md:flex-1 px-4 py-8 md:px-10 md:overflow-y-auto bg-cover auth" scroll-region>
-                    <flash-messages />
+                <div class="md:flex-1 px-4 pt-6 pb-4 md:px-10 md:overflow-y-auto bg-cover auth" scroll-region>
+                    
                     <slot />
                 </div> 
 
             </div>
 
+            <notifications group="foo" position="bottom right" />
+
         </div>
     </div>
 </div>
 
+    
 </div>
 </template>
 
 <script>
 import Icon from '@/Shared/Icon'
-import Logo from '@/Shared/Logo'
 import Dropdown from '@/Shared/Dropdown'
-import MainMenu from '@/Shared/MainMenu'
-import FlashMessages from '@/Shared/FlashMessages'
 
 export default {
     components: {
         Dropdown,
-        FlashMessages,
         Icon,
-        //Logo,
-        //MainMenu,
+    },
+    watch: {
+        '$page.props.flash': {
+            handler() {
+                if(this.$page.props.flash.success !== null) {
+                    this.$notify({
+                        group: 'foo',
+                        title: 'Успешно',
+                        type: 'success',
+                        duration: 5000,
+                        text: this.$page.props.flash.success
+                    });
+                }
+
+                if(this.$page.props.flash.error != null) {
+                    this.$notify({
+                        group: 'foo',
+                        title: 'Ошибка',
+                        type: 'error',
+                        duration: 5000,
+                        text: this.$page.props.flash.error
+                    });
+                }
+                
+            },
+            deep: true,
+        },
     },
     methods: {
         isUrl(...urls) {

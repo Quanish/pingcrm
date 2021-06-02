@@ -59,10 +59,11 @@
             
             <div class="lg:w-3/4 flex justify-end">
               <checkbox label="срочно" v-model="form.urgent" />
-              <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
+                <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">
+                  <span>Создать</span>
+                </button>
             </div>  
           </div> 
-          <input type="hidden" name="type" :value="type">
         </div>
       </form>
     </div>
@@ -94,7 +95,7 @@ export default {
   },
   layout: Layout,
   props: {
-    type: String,
+    task_id: Number,
   },
   remember: 'form',
   data() {
@@ -111,11 +112,11 @@ export default {
       },
       users: [],
       form: this.$inertia.form({
-        task: 0,
+        task: this.task_id,
         deadline: moment().format('YYYY-MM-DD hh:mm:ss'),
         description: null,
         title: null,
-        status: 1,
+        substatus: 1,
         start: moment().format('YYYY-MM-DD hh:mm:ss'),
       }),
     }
@@ -141,6 +142,8 @@ export default {
      this.form.type = this.type
      this.form.deadline = moment(this.form.deadline).format('YYYY-MM-DD hh:mm:ss')
       this.form.post(this.route('subtasks.store'))
+      this.$modal.hide('subtask')
+      
     },
     customFormatter(date) {
       return moment(date).format('YYYY-MM-DD hh:mm:ss')

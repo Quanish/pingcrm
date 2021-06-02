@@ -32,4 +32,8 @@ class Task extends Model
     {
     	return $this->hasMany(Event::class);
     }
+    public function subtask()
+    {
+        return $this->hasMany(Subtask::class);
+    }
 }
