@@ -106,20 +106,21 @@ export default {
       },
       users: [],
       form: this.$inertia.form({
-        task: this.task_id,
+        task_id: this.task_id,
+        start: moment().format('YYYY-MM-DD hh:mm:ss'),
         deadline: moment().format('YYYY-MM-DD hh:mm:ss'),
         description: null,
         title: null,
-        substatus: 1,
-        start: moment().format('YYYY-MM-DD hh:mm:ss'),
+        substatus: 0,
       }),
     }
   },
   created() {
-    axios.get('/tasks/create')
-      .then(response => {
-        this.users = response.data.users 
-    })
+    console.log(this.task_id)
+    // axios.get('/tasks/create')
+    //   .then(response => {
+    //     this.users = response.data.users 
+    // })
   },
   methods: {
     CallDateFunction(date) {

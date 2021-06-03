@@ -20,9 +20,10 @@ class GroupsController extends Controller
     public function store(ObjectRequest $request)
     {   
     	$group = Group::create([
-            'group_name' => $request->group_name,
+            'name' => $request->group_name,
             'description' => $request->description,
-            'access' => 1,
+            'account_id' => 1,
+            'editors' => json_encode([Auth::user()->id]),
         ]);
 
         return $this->show($group);    

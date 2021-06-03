@@ -28,7 +28,7 @@
 
 
       <div class="flex absolute px-4 w-full bottom-0 bg-gradient-to-b from-transparent to-white">
-          <button @click="showCreateSubtaskModal(subtask)" class="my-4  w-full block text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
+          <button @click="showCreateSubtaskModal()" class="my-4  w-full block text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Добавить</button>
       </div>
       
 
@@ -148,6 +148,8 @@ export default {
     //   .then(response => {
     //     this.users = response.data.users 
     // })
+
+    
   },
   methods: {
     customFormatter(date) {

@@ -123,11 +123,11 @@ export default {
       },
       users: [],
       form: this.$inertia.form({
-        user: 1,
+        user_id: 1,
         deadline: moment().format('YYYY-MM-DD hh:mm:ss'),
         description: null,
         title: null,
-        audition: 1,
+        auditor_id: 1,
         type: null,
         urgent: false,
       }),

@@ -21,18 +21,18 @@ class TasksController extends Controller
             # code...
             return Inertia::render('Tasks/Index', [
                 'filters' => StaticRequest::all('search', 'trashed'),
-                'tasks' => Task::with('user','audition')->get(),
+                'tasks' => Task::with('user','auditor')->get(),
                 'users' => Auth::user()->account
                     ->tasks()
-                    ->orderBy('user')
+                    ->orderBy('user_id')
                     ->get()
                     ->map
-                    ->only('id', 'user','deadline','description'),
+                    ->only('id', 'user_id', 'deadline', 'description'),
             ]);
         }else{
     		return Inertia::render('Tasks/Index', [
     			'filters' => StaticRequest::all('search', 'trashed'),
-                'tasks' => Task::where('user',Auth::user()->id)->get(),
+                'tasks' => Task::where('user_id',Auth::user()->id)->get(),
             ]);
         }
 	}
@@ -59,17 +59,18 @@ class TasksController extends Controller
             'task' => [
                 'id' => $task->id,
                 'title' => $task->title,
-                'responsible' => User::find($task->user),
-                'auditor' => User::find($task->audition),
                 'description' => $task->description,
+                'user' => User::find($task->user_id),
+                'auditor' => User::find($task->auditor_id),
+                'start' => $task->start,
+                'type' => $task->type ? $task->type : 1,
                 'deadline' => $task->deadline,
-                'progress' => $task->progress,
-                'date_created' => $task->date_created,
                 'status' => $task->status,
+                'account_id' => 1,
             ],
-            'audition' => User::select('first_name')->where('id',$task->audition)->get(),
-            'user' => User::select('first_name')->where('id', $task->user)->get(),
-            'messages' => Comment::where('task_id',$task->id)->get(),
+            'auditor' => User::select('first_name')->where('id',$task->auditor_id)->get(),
+            'user' => User::select('first_name')->where('id', $task->user_id)->get(),
+            'messages' => Comment::where('task_id', $task->id)->get(),
             'subtasks' => $subtasks
         ]);
     }
@@ -78,7 +79,7 @@ class TasksController extends Controller
         Comment::insert([
             'task_id' => $id,
             'user_id' => Auth::user()->id,
-            'comment' => $message,
+            'text' => $message,
         ]);
         return Inertia::render('Tasks/Show',[
             'task' => [
@@ -86,12 +87,11 @@ class TasksController extends Controller
                 'title' => $task->title,
                 'description' => $task->description,
                 'deadline' => $task->deadline,
-                'progress' => $task->progress,
                 'date_created' => $task->date_created,
                 'status' => $task->status,
             ],
-            'audition' => User::select('first_name')->where('id',$task->audition)->get(),
-            'user' => User::select('first_name')->where('id',$task->user)->get(),
+            'auditor' => User::select('first_name')->where('id',$task->auditor_id)->get(),
+            'user' => User::select('first_name')->where('id',$task->user_id)->get(),
             'messages' => Comment::where('task_id',$task->id)->get(),
         ]);
         
@@ -113,21 +113,21 @@ class TasksController extends Controller
     {
         
         $task = Task::create([
-            'user' => $request->user,
-            'deadline' => $request->deadline,
-            'description' => $request->description,
             'title' => $request->title,
-            'audition' => $request->audition,
-            'progress' => 1,
-            'type' => $request->type, 
-            'status' => 'ожидание', 
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'auditor_id' => $request->auditor_id,
+            'start' => $request->start,
+            'deadline' => $request->deadline,
+            'type' => $request->type ? $request->type : 1,
+            'status' => Task::NOT_STARTED, 
             'account_id' => Auth::user()->account_id
         ]);
 
         $event = new Event();
-        $event->user = $request->user;
-        $event->description = "Назначил вас ответственным по задаче : ". $request->title;
-        $event->responsible = Auth::user()->id;
+        $event->user_id = $request->user_id;
+        $event->text = "Назначил вас ответственным по задаче : ". $request->title;
+        $event->task_id = $task->id;
         $event->save();
 
         return $this->show($task);    
@@ -137,15 +137,15 @@ class TasksController extends Controller
         return Inertia::render('Tasks/Edit', [
             'task' => [
                 'id' => $task->id,
-                'user' => $task->user,
-                'date_created' => $task->date_created,
-                'deadline' => $task->deadline,
-                'description' => $task->description,
-                'deleted_at' => $task->deleted_at,
                 'title' => $task->title,
-                'audition' => $task->audition,
+                'description' => $task->description,
+                'user_id' => $task->user_id,
+                'auditor_id' => $task->auditor_id,
+                'start' => $task->start,
+                'type' => $task->type ? $task->type : 1,
+                'deadline' => $task->deadline,
             ],
-            'current_user' => User::find($task->user),
+            'current_user' => User::find($task->user_id),
             'users' => User::all(),
         ]);
     }
@@ -154,7 +154,7 @@ class TasksController extends Controller
     {
         $task->update(
             StaticRequest::validate([
-                'user' => ['required', 'max:50'],
+                'user_id' => ['required', 'max:50'],
                 'deadline' => ['required', 'max:50'],
                 'description' => ['required', 'max:50'],
             ])

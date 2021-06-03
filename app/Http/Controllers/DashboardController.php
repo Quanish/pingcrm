@@ -33,11 +33,11 @@ class DashboardController extends Controller
             'tasks' => Auth::user()->account
                 ->tasks()
                 ->with('subtask')
-                ->where('user',Auth::user()->id)
-                ->orWhere('audition',Auth::user()->id)
-                ->orderBy('user')
+                ->where('user_id',Auth::user()->id)
+                ->orWhere('auditor_id',Auth::user()->id)
+                ->orderBy('user_id')
                 ->get(),
-            'events' => Event::with('user','task')->where('user',Auth::user()->id)->get(), 
+            'events' => Event::with('user','task')->where('user_id',Auth::user()->id)->get(), 
             'subtasks' => $subtasks, 
         ]);
     }

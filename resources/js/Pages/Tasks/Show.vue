@@ -17,14 +17,18 @@
           </div>
           <div class="flex flex-col items-center">
             <p class="mb-5 font-medium">Старт</p>
-            {{ task.date_created }}
+            {{ task.start }}
           </div>
           <div class="flex flex-col items-center">
             <p class="mb-5 font-medium">Дедлайн</p>
             {{ task.deadline }}
           </div>
-          <div class="items-center bg-gray-300 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center">
-            <p class="mb-1 text">10 дней {{ task.progress }}</p>
+          <div class="items-center bg-red-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center" v-if="computeDays(task.deadline) < 0">
+            <p class="mb-1 text">  {{ computeDays(task.deadline) }} дней</p>
+            <p class="text-sm text-sm">просрочен</p>  
+          </div>
+          <div class="items-center bg-green-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center" v-else>
+            <p class="mb-1 text">  {{ computeDays(task.deadline) }} дней</p>
             <p class="text-sm text-sm">до дедлайна</p>
           </div>
         </div>
@@ -50,10 +54,10 @@
 
             <div class="flex gap-4 mt-4">
               <div class="w-1/2">
-                <person-card :src="'/storage/' + task.auditor.photo_path" :name="task.responsible.last_name + ' ' + task.responsible.first_name" job="сотрудник"></person-card>
+                <person-card :src="'/storage/' + task.auditor.photo_path" :name="task.auditor.last_name + ' ' + task.auditor.first_name" job="сотрудник"></person-card>
               </div>
               <div class="w-1/2">
-                <person-card :src="'/storage/' + task.auditor.photo_path" :name="task.auditor.last_name + ' ' + task.auditor.first_name" job="сотрудник"></person-card>
+                <person-card :src="'/storage/' + task.user.photo_path" :name="task.user.last_name + ' ' + task.user.first_name" job="сотрудник"></person-card>
               </div>
             </div>
 
@@ -105,7 +109,7 @@
           </div>
           <div class="">
             <div v-for="mess in messages">
-              <div>{{ mess.comment }}</div>
+              <div>{{ mess.text }}</div>
             </div>
           </div>
 
@@ -162,14 +166,14 @@ export default {
   props: {
     task: Object,
     user: Array,
-    audition: Array,
+    auditor: Array,
     messages: Array,
     subtasks: Array,
   },
   remember: 'form',
   data() {
     return {
-      message: '',
+      comment: '',
       form: this.$inertia.form({
         status: this.task.status,
       }),
@@ -194,11 +198,11 @@ export default {
     }
   },
   created() {
-    console.log(this.task.responsible)
+    
   },
   methods: {
     computeDays(deadline) {
-      var difference = Math.abs(new Date(deadline) - Date.now())
+      var difference = new Date(deadline) - Date.now()
       var days = difference / (1000 * 3600 * 24)
       return Math.round(days)
     },

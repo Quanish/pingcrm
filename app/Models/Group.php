@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Group extends Model
 {
+
     use SoftDeletes;
-    protected $fillable = ['id','group_name','description'];
+
+    protected $fillable = [
+        'name',
+        'description',
+        'account_id',
+        'editors',
+    ];
+
 }

@@ -14,24 +14,41 @@ class Task extends Model
     const IN_PROGRESS = 2;
     const ON_CONTROL = 3; 
 	
+    const TYPE_TASK = 1;
+    const TYPE_MEETING = 2;
 
     use SoftDeletes;
-    protected $fillable = ['user','deadline','description','title','audition','status','type', 'account_id'];
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+        'auditor_id',
+        'status',
+        'start', 
+        'deadline',
+        'type', 
+        'account_id'
+    ];
+
     public function user()
     {
-        return $this->belongsTo(User::class,'user','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
-    public function audition(){
-    	return $this->belongsTo(User::class,'audition','id');
+
+    public function auditor(){
+    	return $this->belongsTo(User::class,'auditor_id','id');
     }
+
     public function comment()
     {
     	return $this->hasMany(Comment::class);
     }
+
     public function event()
     {
     	return $this->hasMany(Event::class);
     }
+
     public function subtask()
     {
         return $this->hasMany(Subtask::class);

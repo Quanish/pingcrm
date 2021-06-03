@@ -14,20 +14,20 @@ class SubtasksController extends Controller
     //
     public function store(Request $request)
     {
-        $task = Task::find($request->task);
+        $task = Task::find($request->task_id);
         
     	$subtask = Subtask::create([
-            'task_id' => $request->task,
+            'task_id' => $request->task_id,
             'title' => $request->title,
             'description' => $request->description,
             'start' => $request->start,
             'deadline' => $request->deadline,
             'status' => $request->substatus,
-            'user_id' => $request->task == 0 ? Auth::user()->id : $task->user,
+            'user_id' => $request->task_id == 0 ? Auth::user()->id : $task->user_id,
         ]);
         
-        if($request->task != 0) {
-            return redirect('/tasks/' . $request->task);
+        if($request->task_id != 0) {
+            return redirect('/tasks/' . $request->task_id);
         } else {
             return redirect('/');
         }  

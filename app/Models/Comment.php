@@ -10,15 +10,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comment extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['user_id','comment','client_id','task_id'];
+
+    const COMMENT = 1;
+    const LINK = 2;
+    const FILE = 3; 
+
+    protected $fillable = [
+        'user_id',
+        'text',
+        'task_id',
+        'type'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
-    public function client_id()
-    {
-    	return $this->belongsTo(Organization::class);
-    }
+
     public function task_id()
     {
         return $this->belongsTo(Task::class);
