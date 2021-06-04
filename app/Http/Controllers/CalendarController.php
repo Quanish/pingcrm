@@ -14,7 +14,7 @@ class CalendarController extends Controller
 {
     public function calendar()
     {
-        $events = Task::select('title', 'created_at', 'created_at as end', 'audition as department', 'description')->get();
+        $events = Task::select('title', 'created_at', 'created_at as end', 'auditor_id as department', 'description')->get();
 
         foreach($events as $event) {
             $event->start = $event->created_at->format('Y-m-d\TH:i:s');

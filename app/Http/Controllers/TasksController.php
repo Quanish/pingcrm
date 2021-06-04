@@ -13,21 +13,15 @@ use Illuminate\Support\Facades\Request as StaticRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use DB;
 
 class TasksController extends Controller
 {
 	public function index(Request $request){
         if (Auth::user()->owner) {
-            # code...
             return Inertia::render('Tasks/Index', [
                 'filters' => StaticRequest::all('search', 'trashed'),
                 'tasks' => Task::with('user','auditor')->get(),
-                'users' => Auth::user()->account
-                    ->tasks()
-                    ->orderBy('user_id')
-                    ->get()
-                    ->map
-                    ->only('id', 'user_id', 'deadline', 'description'),
             ]);
         }else{
     		return Inertia::render('Tasks/Index', [
@@ -38,14 +32,25 @@ class TasksController extends Controller
 	}
 
     public function accept(Task $task){
+        if($task->status == 0) $status = 2;
+        if($task->status == 2) $status = 3;
+        if($task->status == 3) $status = 1;
+
         $task->update([
-            'status' => Task::IN_PROGRESS,
+            'status' => $status,
         ]);
 
-        return Redirect::route('dashboard')->with('success', 'Задание принято.');
+        return redirect('tasks/' . $task->id)->with('success', 'Задание принято.');
     }
 
     public function show(Task $task){
+        
+        if($task->user_id != Auth::user()->id) {
+            if($task->auditor_id != Auth::user()->id) {
+                return redirect('/')->with(['success' => 'not found']);
+            }
+        }
+        
 
         $subtasks = Subtask::where([
             'task_id' => $task->id
@@ -54,7 +59,7 @@ class TasksController extends Controller
         foreach($subtasks as $subtask) {
             $subtask->task = $task;
         }
-
+        
         return Inertia::render('Tasks/Show',[
             'task' => [
                 'id' => $task->id,
@@ -68,8 +73,8 @@ class TasksController extends Controller
                 'status' => $task->status,
                 'account_id' => 1,
             ],
-            'auditor' => User::select('first_name')->where('id',$task->auditor_id)->get(),
-            'user' => User::select('first_name')->where('id', $task->user_id)->get(),
+            'auditor' => User::card($task->auditor_id),
+            'user' => User::card($task->user_id),
             'messages' => Comment::where('task_id', $task->id)->get(),
             'subtasks' => $subtasks
         ]);
@@ -97,10 +102,9 @@ class TasksController extends Controller
         
     }
 
-    public function create()
-    {
+    public function create() {
         return [
-            'users' => User::where('account_id', Auth::user()->account_id)->get()
+            'users' =>  User::select(DB::raw("CONCAT(last_name, ' ', first_name)  AS label"), 'id as code')->where('account_id', 1)->get()
         ];
     }
 
@@ -111,21 +115,21 @@ class TasksController extends Controller
 
 	public function store(Request $request)
     {
-        
         $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,
-            'auditor_id' => $request->auditor_id,
+            'auditor_id' => Auth::user()->id,
             'start' => $request->start,
             'deadline' => $request->deadline,
-            'type' => $request->type ? $request->type : 1,
+            'type' => $request->type ? $request->type : Task::TYPE_TASK,
             'status' => Task::NOT_STARTED, 
-            'account_id' => Auth::user()->account_id
+            'account_id' => Auth::user()->account_id,
         ]);
 
         $event = new Event();
         $event->user_id = $request->user_id;
+        $event->author_id = Auth::user()->id;
         $event->text = "Назначил вас ответственным по задаче : ". $request->title;
         $event->task_id = $task->id;
         $event->save();

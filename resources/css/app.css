@@ -12,6 +12,9 @@
 /* Utilities */
 
 @import 'tailwindcss/utilities';
+
+
+
 .group:hover .group-hover\:block {
     display: block;
 }

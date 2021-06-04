@@ -9,11 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
+    // добавить таблицу event_types
+    // добавить поля event_type_id, event_model_id
 	use SoftDeletes;
     protected $fillable = [
         'user_id',
         'text',
         'task_id',
+        'author_id',
         'seen',
     ];
 

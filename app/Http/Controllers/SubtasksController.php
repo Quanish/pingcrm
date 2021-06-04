@@ -32,4 +32,12 @@ class SubtasksController extends Controller
             return redirect('/');
         }  
     }
+
+    public function status(Request $request) {
+        $item = Subtask::find($request->id);
+        if($item) {
+            $item->status = $request->status;
+            $item->save();
+        }
+    }
 }

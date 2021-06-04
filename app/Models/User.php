@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use League\Glide\Server;
+use Auth;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -19,6 +20,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $casts = [
         'owner' => 'boolean',
     ];
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'position_id',
+        'password', 
+        'owner',
+        'photo_path', 
+        'remember_token', 
+        'account_id'
+    ];
+
     public function event(){
         return $this->hasMany(Events::class);
     }
@@ -38,6 +52,25 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function account()
     {
         return $this->belongsTo(Account::class);
+    }
+
+    public static function getTasks() {
+        $_tasks_1 = Task::where([
+            'user_id' => Auth::user()->id,
+        ])->orderBy('deadline', 'asc')->get();
+        
+        $_tasks_2 = Task::where([
+            'auditor_id' => Auth::user()->id,
+        ])->orderBy('deadline', 'asc')->get();
+
+        return $_tasks_1->merge($_tasks_2);
+    }
+
+    public static function card(int $user_id)
+    {   
+        $user = self::select('id', 'first_name', 'last_name' , 'photo_path', 'position_id')->where('id', $user_id)->first();
+        $user->position = Position::find($user->position_id);
+        return $user;
     }
 
     public function getNameAttribute()

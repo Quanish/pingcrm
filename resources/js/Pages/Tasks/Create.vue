@@ -31,6 +31,23 @@
             </div>  
           </div>
 
+
+           <div class="w-full flex mb-8">
+            <div class="lg:w-1/4">
+             <p class="font-medium leading-6">Ответственный
+                <span class="text-red-400">*</span> 
+              </p>  
+            </div>
+            <div class="lg:w-3/4">
+
+
+              <v-select class="border-b-2 w-full pb-1" :options="users" v-model="selectedUser"></v-select>
+
+
+            </div>  
+          </div>
+
+          
           <div class="w-full flex mb-8">
            
             <div class="lg:w-1/4">
@@ -45,19 +62,7 @@
             </div>  
           </div>
 
-          <div class="w-full flex mb-8">
-            <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Ответственный
-                <span class="text-red-400">*</span> 
-              </p>  
-            </div>
-            <div class="lg:w-3/4">
-              <select class="border-b-2 w-full pb-1" v-model="form.user">
-                <option :value="null" />
-                <option v-for="data in users" :key="data.id" :value="data.id">{{ data.last_name }} {{ data.first_name }}</option>
-              </select>
-            </div>  
-          </div>
+         
 
           <!-- <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.audition" :error="form.errors.user" label="Аудитор">
             <option :value="null" />
@@ -121,13 +126,13 @@ export default {
           }
         },
       },
+      selectedUser: {},
       users: [],
       form: this.$inertia.form({
         user_id: 1,
         deadline: moment().format('YYYY-MM-DD hh:mm:ss'),
         description: null,
         title: null,
-        auditor_id: 1,
         type: null,
         urgent: false,
       }),
@@ -151,8 +156,9 @@ export default {
       }
     },
     store() {
-     this.form.type = this.type
-     this.form.deadline = moment(this.form.deadline).format('YYYY-MM-DD hh:mm:ss')
+      this.form.type = this.type
+      this.form.user_id = this.selectedUser.code
+      this.form.deadline = moment(this.form.deadline).format('YYYY-MM-DD hh:mm:ss')
       this.form.post(this.route('tasks.store'))
     },
     customFormatter(date) {

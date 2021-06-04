@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
+import vSelect from 'vue-select'
 import PortalVue from 'portal-vue'
 import { App, plugin } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress/src'
@@ -12,8 +13,12 @@ import VueAxios from 'vue-axios'
 /* Modal */
 import vmodal from 'vue-js-modal'
 
-/* Checkbox */
+import moment from 'moment'
 
+/** Vue Select */
+import 'vue-select/dist/vue-select.css';
+
+/* Checkbox */
 
 
 Vue.config.productionTip = false
@@ -21,9 +26,12 @@ Vue.mixin({ methods: { route: window.route } })
 Vue.use(plugin)
 Vue.use(PortalVue)
 Vue.use(VueMeta)
-Vue.use(VueAxios, axios)
 Vue.use(vmodal)
 Vue.use(Notifications)
+
+Vue.component('v-select', vSelect)
+
+
 
 InertiaProgress.init()
 

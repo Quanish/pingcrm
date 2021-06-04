@@ -54,12 +54,12 @@
 
             <div class="flex gap-4 mt-4">
               <div class="w-1/2">
-                <person-card :src="'/storage/' + task.auditor.photo_path" :name="task.auditor.last_name + ' ' + task.auditor.first_name" job="сотрудник"></person-card>
+                <person-card :src="'/storage/' + auditor.photo_path" :fullname="auditor.name" :job="auditor.position.name"></person-card>
               </div>
               <div class="w-1/2">
-                <person-card :src="'/storage/' + task.user.photo_path" :name="task.user.last_name + ' ' + task.user.first_name" job="сотрудник"></person-card>
+                <person-card :src="'/storage/' + user.photo_path" :fullname="user.name" :job="user.position.name"></person-card>
               </div>
-            </div>
+            </div> 
 
             <div class="border rounded-xl border-gray-200 mt-5 p-5 hover:border-blue-400">
               <p class="text-sm">{{ task.description }}</p>
@@ -70,15 +70,33 @@
               <div class="flex justify-between mt-5">
 
 
-                <template v-if="task.status == 0">  
-                  <form @submit.prevent="accept" class="flex flex-wrap w-full gap-3">
+                <template v-if="task.status == 0 && $page.props.auth.user.id != task.auditor_id">   
+                  
+                  <form @submit.prevent="accept(2)" class="flex flex-wrap w-full gap-3">
                     <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять</button>
-                    <button @click="decline" class="rounded-full bg-gray-300 hover:bg-gray-200 h-6 px-7 text-sm leading-6 text-white">отклонить</button>
-                    <button class="rounded-full text-white h-6 px-7 text-sm leading-6 bg-indigo-600 hover:bg-indigo-500" @click="download">скачать</button>
-                    <input type="hidden" v-model="form.status" value="в работе" />
+                    <!-- <button class="rounded-full text-white h-6 px-7 text-sm leading-6 bg-indigo-600 hover:bg-indigo-500" @click="download">скачать</button> -->
                   </form>
+
                 </template>  
 
+                <template v-if="task.status == 2 && user.id == $page.props.auth.user.id">  
+                  
+                  <form @submit.prevent="accept(3)" class="flex flex-wrap w-full gap-3">
+                    <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">завершить</button>
+                  </form>
+ 
+                </template>  
+
+      
+
+                <template v-if="task.status == 3 && auditor.id == $page.props.auth.user.id">  
+                  
+                  <form @submit.prevent="accept(1)" class="flex flex-wrap w-full gap-3">
+                    <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять и завершить</button>
+                  </form>
+
+                </template>  
+          
 
 
               </div>
@@ -100,6 +118,10 @@
           </div>
         </div>
       </div>
+
+
+
+      
       <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5 flex-auto">
         <div class="relative h-full flex flex-col justify-between">
           <div class="flex flex-row justify-between border-b border-gray-100 pb-4">
@@ -107,6 +129,8 @@
             <p class="font-medium">Ссылки (0)</p>
             <p class="font-medium">Файлы (0)</p>
           </div>
+
+          
           <div class="">
             <div v-for="mess in messages">
               <div>{{ mess.text }}</div>
@@ -119,8 +143,7 @@
                 <path
                   d="M438.731,209.463l-416-192c-6.624-3.008-14.528-1.216-19.136,4.48c-4.64,5.696-4.8,13.792-0.384,19.648l136.8,182.4
               l-136.8,182.4c-4.416,5.856-4.256,13.984,0.352,19.648c3.104,3.872,7.744,5.952,12.448,5.952c2.272,0,4.544-0.48,6.688-1.472
-              l416-192c5.696-2.624,9.312-8.288,9.312-14.528S444.395,212.087,438.731,209.463z"
-                />
+              l416-192c5.696-2.624,9.312-8.288,9.312-14.528S444.395,212.087,438.731,209.463z"/>
               </g>
             </svg>
             <input class="p-4 h-10 border border-gray-200 rounded-lg w-full" v-model="comment" placeholder="Ваше сообщение..." />
@@ -165,8 +188,8 @@ export default {
   layout: Layout,
   props: {
     task: Object,
-    user: Array,
-    auditor: Array,
+    user: Object,
+    auditor: Object,
     messages: Array,
     subtasks: Array,
   },
@@ -188,7 +211,7 @@ export default {
         },
         2: {
           name: 'Выполняется',
-          color: 'blue'
+          color: 'skyblue'
         },
         3: {
           name: 'На проверке',
@@ -198,7 +221,9 @@ export default {
     }
   },
   created() {
-    
+    console.log(this.user)
+    this.user.name = this.user.last_name + ' '  + this.user.first_name
+    this.auditor.name = this.auditor.last_name + ' '  + this.auditor.first_name
   },
   methods: {
     computeDays(deadline) {
@@ -289,8 +314,7 @@ export default {
     decline() {
       alert('отклонить')
     },
-    accept() {
-      this.form.status = 'в работе'
+    accept(status) {
       this.form.put(this.route('tasks.accept', this.task.id))
     },
   },

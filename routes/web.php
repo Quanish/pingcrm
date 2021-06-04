@@ -77,6 +77,10 @@ Route::get('/', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
 
+Route::post('/events/seen', [DashboardController::class, 'setEventSeen'])
+    ->name('events.seen')
+    ->middleware('auth');
+
 // Users
 
 Route::get('users', [UsersController::class, 'index'])
@@ -268,6 +272,11 @@ Route::get('reports/analytics',[ReportsController::class,'analytics'])
 
 Route::get('reports/create',[ReportsController::class,'create'])
 ->name('reports.create')
+->middleware('auth');
+
+// SUBTASKS
+Route::post('subtask/status',[SubtasksController::class,'status'])
+->name('subtask.status')
 ->middleware('auth');
 
 

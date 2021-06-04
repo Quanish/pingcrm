@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Models\User;
 use App\Models\Subtask;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -29,17 +31,24 @@ class DashboardController extends Controller
            
         }
 
+        
+
         return Inertia::render('Dashboard/Index', [
-            'tasks' => Auth::user()->account
-                ->tasks()
-                ->with('subtask')
-                ->where('user_id',Auth::user()->id)
-                ->orWhere('auditor_id',Auth::user()->id)
-                ->orderBy('user_id')
-                ->get(),
-            'events' => Event::with('user','task')->where('user_id',Auth::user()->id)->get(), 
+            'tasks' => User::getTasks(),
+            'events' => Event::with('user','task')->where('user_id',Auth::user()->id)->where('seen', 0)->get(), 
             'subtasks' => $subtasks, 
         ]);
+    }
+
+
+    public function setEventSeen(Request $request)
+    {   
+        $event = Event::find($request->id);
+
+        if($event) {
+            $event->seen = 1;
+            $event->save();
+        }
     }
 
 }

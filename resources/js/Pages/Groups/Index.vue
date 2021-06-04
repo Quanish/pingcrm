@@ -18,15 +18,15 @@
 
 
 
-    <div class="rounded-2xl bg-white w-full flex flex-row flex-wrap py-4 px-4 gap-4">
-      <div class="w-1/3" v-for="chunk in chunked">
-        <div class="mb-4" v-for="article in chunk">
-          <div class="border rounded-2xl p-5 pb-3">
+    <div class="rounded-2xl bg-white w-full  py-4 px-4 ">
+      <div class="flex flex-row  gap-4" v-for="chunk in chunked">
+        <div class="mb-4 w-1/3" v-for="article in chunk">
+          <div class="border rounded-2xl p-5 pb-3 hover:shadow-md hover:border-blue-400">
             <div class="flex justify-between">
               <div class="flex justify-start gap-3">
                 <img src="img/default-user.png" class="w-12 h-12" />
                 <div class="flex flex-col text-sm font-medium text-black">
-                  {{ article.group_name }}
+                  {{ article.name }}
                   <p class="text-sm text-black text-2xs font-normal" v-if="article.access == 1">закрытая группа</p>
                   <p class="text-sm text-black text-2xs font-normal" v-if="article.access == 2">открытая группа</p>
                 </div>
