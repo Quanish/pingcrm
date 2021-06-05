@@ -254,7 +254,7 @@ export default {
 
                 break;
             default:
-                this.taskCounter = 0;
+                this.taskCounter = 0; 
                 this.mytasks.splice(0);
 
                 //this.mytasks.pop(0);
