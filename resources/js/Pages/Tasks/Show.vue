@@ -1,8 +1,15 @@
 <template>
-  <div class="flex flex-col h-custom">
-    <div class="flex flex-row justify-between gap-2">
-      <div class="w-5/12 mb-5">
-        <input type="text" class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" v-model="task.title" />
+  <div class="flex flex-col h-full">
+    <div class="flex flex-row justify-between gap-5">
+      <div class="w-5/12 mb-5 pr-2">
+        <div class="px-4">
+          <input type="text" class="w-11/12 text-black font-medium bg-transparent text-lg mr-2 mb-2" v-model="task.title" />
+          <div v-if="new Date(task.deadline) < Date.now() && task.status != 1" class="w-full bg-red-400 rounded-full h-1 mr-2"></div>
+          <div v-else-if="computeDays(task.deadline) == 1 && task.status != 1" class="w-full bg-orange-400 rounded-full h-1 mr-2"></div>
+          <div v-else-if="computeDays(task.deadline) > 1 && computeDays(task.deadline) < 4 && task.status != 1" class="w-full bg-yellow-400 rounded-full h-1 mr-2"></div>
+          <div v-else class="w-full rounded-full h-1" :class="'bg-green-400'"></div>
+        </div>
+        
       </div>
 
       <div class="flex flex-row gap-8 w-7/12 justify-between">
@@ -40,7 +47,7 @@
     </div>
 
     <div class="flex flex-row gap-5 flex-auto overflow-y-hidden"> 
-      <div class="w-5/12 bg-white rounded-2xl p-5 mt-5 flex-auto">
+      <div class="w-5/12 bg-white rounded-2xl p-5 mt-2 flex-auto overflow-y-auto">
         <div class="flex flex-col justify-between h-full">
           <div>
             <div class="flex gap-4 justify-around border-gray-100 pb-3 border-b">
@@ -54,10 +61,10 @@
 
             <div class="flex gap-4 mt-4">
               <div class="w-1/2">
-                <person-card :src="'/storage/' + auditor.photo_path" :fullname="auditor.name" :job="auditor.position.name"></person-card>
+                <person-card :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name"></person-card>
               </div>
               <div class="w-1/2">
-                <person-card :src="'/storage/' + user.photo_path" :fullname="user.name" :job="user.position.name"></person-card>
+                <person-card :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name"></person-card>
               </div>
             </div> 
 
@@ -70,7 +77,7 @@
               <div class="flex justify-between mt-5">
 
 
-                <template v-if="task.status == 0 && $page.props.auth.user.id != task.auditor_id">   
+                <template v-if="task.status == 0 && $page.props.auth.user.id != task.auditor.id">   
                   
                   <form @submit.prevent="accept(2)" class="flex flex-wrap w-full gap-3">
                     <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять</button>
@@ -79,7 +86,7 @@
 
                 </template>  
 
-                <template v-if="task.status == 2 && user.id == $page.props.auth.user.id">  
+                <template v-if="task.status == 2 && task.user.id == $page.props.auth.user.id">  
                   
                   <form @submit.prevent="accept(3)" class="flex flex-wrap w-full gap-3">
                     <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">завершить</button>
@@ -89,7 +96,7 @@
 
       
 
-                <template v-if="task.status == 3 && auditor.id == $page.props.auth.user.id">  
+                <template v-if="task.status == 3 && task.auditor.id == $page.props.auth.user.id">  
                   
                   <form @submit.prevent="accept(1)" class="flex flex-wrap w-full gap-3">
                     <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять и завершить</button>
@@ -111,10 +118,10 @@
             </div>
           </div>
 
-          <div class="mt-10 flex flex-row leading-loose font-medium">
-            Участники
-            <img class="h-8 w-8 mr-3 ml-3 border rounded-full" src="/img/user1.webp" />
-            <img class="h-8 w-8 mr-3 border rounded-full relative -left-4" src="/img/default-user.png" />
+          <div class="mt-10 pb-3 flex flex-row leading-loose font-medium">
+            <span class="mr-3">Участники</span>  
+            <person-card class="relative" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="true"></person-card>
+            <person-card class="relative -left-1" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="true"></person-card>
           </div>
         </div>
       </div>
@@ -122,23 +129,53 @@
 
 
       
-      <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5 flex-auto">
+      <div class="w-4/12 bg-white rounded-2xl p-5 mt-2 flex-auto">
         <div class="relative h-full flex flex-col justify-between">
           <div class="flex flex-row justify-between border-b border-gray-100 pb-4">
-            <p class="font-medium">Комментарии (0)</p>
-            <p class="font-medium">Ссылки (0)</p>
-            <p class="font-medium">Файлы (0)</p>
+            <p class="font-medium">Комментарии ({{coms.length }})</p>
           </div>
 
           
-          <div class="">
-            <div v-for="mess in messages">
-              <div>{{ mess.text }}</div>
+          <div class="flex-auto overflow-y-auto">
+            <div v-for="com in coms" class="my-3">
+
+
+              <div v-if="$page.props.auth.user.id != com.user.id">
+                <person-card class="relative" :src="'/storage/' + com.user.photo_path" :fullname="com.user.name" :job="com.user.position.name" :hide="false"></person-card>
+                
+                <div class="flex flex-col gap-2 border border-gray-200 rounded-xl p-2 mt-2 w-9/12">
+                  <div class="text-2xs text-gray-300">
+                    {{ date(com.created_at) }}
+                  </div>
+                  <div class="text-sm text-black">
+                      {{ com.text }}
+                  </div>
+                </div>
+                
+              </div>
+
+              <div v-else class="flex flex-row justify-end items-start gap-2"> 
+                
+                <div class="flex flex-col gap-2 border border-gray-200 rounded-xl p-2 w-9/12">
+                  <div class="text-2xs text-gray-300">
+                    {{ date(com.created_at) }}
+                  </div>
+                  <div class="text-sm text-black">
+                      {{ com.text }}
+                  </div>
+                </div>
+                <person-card class="relative" :src="'/storage/' + com.user.photo_path" :fullname="com.user.name" :job="com.user.position.name" :hide="true"></person-card>
+                
+              </div>
+
+
+
+
             </div>
           </div>
 
           <div class="relative w-full mt-auto">
-            <svg class="absolute right-2 top-2.5 w-5 h-5 fill-current text-indigo-600 cursor-pointer" viewBox="0 0 448.011 448.011">
+            <svg class="absolute right-2 top-2.5 w-5 h-5 fill-current text-indigo-600 cursor-pointer" viewBox="0 0 448.011 448.011" @click="addComment">
               <g>
                 <path
                   d="M438.731,209.463l-416-192c-6.624-3.008-14.528-1.216-19.136,4.48c-4.64,5.696-4.8,13.792-0.384,19.648l136.8,182.4
@@ -149,10 +186,10 @@
             <input class="p-4 h-10 border border-gray-200 rounded-lg w-full" v-model="comment" placeholder="Ваше сообщение..." />
           </div>
         </div>
-      </form>
+      </div>
  
      
-      <subtasks :task_id="task.id" :items="subtasks" :class="'w-3/12 flex-auto mt-4'"></subtasks>
+      <subtasks :task_id="task.id" :items="subtasks" :class="'w-3/12 flex-auto mt-2'"></subtasks>
      
     </div>
 
@@ -188,15 +225,14 @@ export default {
   layout: Layout,
   props: {
     task: Object,
-    user: Object,
-    auditor: Object,
-    messages: Array,
+    comments: Array,
     subtasks: Array,
   },
   remember: 'form',
   data() {
     return {
       comment: '',
+      coms: {},
       form: this.$inertia.form({
         status: this.task.status,
       }),
@@ -221,28 +257,37 @@ export default {
     }
   },
   created() {
-    console.log(this.user)
-    this.user.name = this.user.last_name + ' '  + this.user.first_name
-    this.auditor.name = this.auditor.last_name + ' '  + this.auditor.first_name
+    
+    this.coms = this.comments
   },
   methods: {
+    date(date) {
+      return moment(date).format('lll')
+    },
     computeDays(deadline) {
       var difference = new Date(deadline) - Date.now()
       var days = difference / (1000 * 3600 * 24)
       return Math.round(days)
     },
+
     showCreateSubtaskModal() {
       this.$modal.show('subtask')
     },
-    addMessage() {
-      this.message = ''
-      this.form.post(
-        this.route('tasks.message', {
-          message: this.message,
-          id: this.task.id,
-        }),
-      )
+
+    addComment() {
+      
+      axios.post('/tasks/comment', {
+        text: this.comment,
+        id: this.task.id,
+      }).then(response => {
+
+        console.log(response.data)
+        this.coms.push(response.data)
+      })
+      
+      this.comment = ''
     },
+
     changeItem: function changeItem(event) {
       switch (String(event.target.value)) {
         case 'месяц':
@@ -259,7 +304,6 @@ export default {
 
             this.taskCounter++
           }
-          console.log(this.mytasks)
 
           break
         case 'год':
@@ -275,7 +319,6 @@ export default {
             this.mytasks.push(month[i])
             this.taskCounter++
           }
-          console.log(this.mytasks)
 
           break
         case 'сегодня':
@@ -290,33 +333,36 @@ export default {
             this.mytasks.push(month[i])
             this.taskCounter++
           }
-          console.log(this.mytasks)
 
           break
         default:
           this.taskCounter = 0
           this.mytasks.splice(0)
 
-          //this.mytasks.pop(0);
-          //console.log(this.mytasks.filter(x => new Date(x.deadline) < Date.now()))
           var month = this.tasks
 
           for (var i = month.length - 1; i >= 0; i--) {
             this.mytasks.push(month[i])
             this.taskCounter++
           }
-          console.log(this.mytasks)
+          
       }
     },
+
     download() {
       alert('В работе')
     },
+
     decline() {
       alert('отклонить')
     },
+
     accept(status) {
       this.form.put(this.route('tasks.accept', this.task.id))
     },
+
+    
+
   },
 }
 </script>

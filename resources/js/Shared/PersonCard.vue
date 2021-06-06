@@ -1,10 +1,10 @@
 <template>
   <div class="flex">
-    <div style="min-width: 36px;">
-      <img :src="src" alt="" class="w-8 h-8 rounded-full border">
+    <div class="w-10">
+      <img :src="src" alt="" class="w-10 h-10 rounded-full shadow-sm border-2 border-gray-200">
     </div>
-    <div class="pl-3">
-      <p class="text-black font-normal  text-sm">{{ fullname }}</p>
+    <div class="pl-3" v-if="!hide">
+      <p class="text-black font-normal  text-sm pt-1">{{ fullname }}</p>
       <p class="text-3xs font-light text-gray-400">{{ job }}</p>
     </div>
   </div>
@@ -20,6 +20,10 @@ export default {
     src: { default: "/img/default-user.png" },
     fullname: { default: "Имя Фамилия" },
     job: { default: "Должность" },
+    hide: { default: false },
+  },
+  created() {
+    if(this.src == '') this.src = '/img/default-user.png';
   },
   computed: {
     isChecked() {

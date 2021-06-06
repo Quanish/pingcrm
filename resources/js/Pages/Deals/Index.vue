@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
   	<!-- верхняя панель-->
   	<div class=" relative flex justify-between place-items-center mb-10">
     	<h1 class="font-bold text-3xl">Сделки</h1>
@@ -28,7 +28,7 @@
     	<div ><img class="h-10" src="img/message.png"></div>
 	</div>
 	<!-- список сделок-->
-	<div class="bg-white rounded-2xl  overflow-x-auto">
+	<div class="bg-white rounded-2xl  overflow-x-auto flex-auto">
     	<table class="w-full whitespace-nowrap">
     		<tr class="text-left font-bold border-b-2 border-gray-100">
 

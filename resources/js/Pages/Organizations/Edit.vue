@@ -1,21 +1,16 @@
 <template>
-  <div>
-    <div>
-      <h1 class="mb-8 font-bold text-3xl">
-        <inertia-link class="text-black font-medium hover:text-indigo-600">Редактировать клиента</inertia-link>
+  <div class="flex flex-col h-full">
+    <div class="">
+      <h1 class="mb-8 font-bold text-2xl text-black font-medium ">
+        Редактировать клиента
       </h1>
     </div>
-    <div>
-       <trashed-message v-if="organization.deleted_at" class="mb-6" @restore="restore">
-      This organization has been deleted.
-    </trashed-message>
-    </div>
-    <div class="flex">
-      <div class="w-6/12 pr-3">
+    <div class="flex flex-auto overflow-hidden gap-4">
+      <div class="w-6/12 pr-3 bg-white overflow-y-auto rounded-2xl">
         <div class="bg-white mh-calc rounded-2xl">
             <div class="bg-white rounded-2xl  overflow-hidden ">
             <form @submit.prevent="update">
-              <div class="p-8  flex flex-wrap">
+              <div class="p-4  flex flex-wrap">
 
                 <text-input v-model="form.name" :error="form.errors.name" class="pr-6 pb-8 w-full " label="ФИО" />
                 <text-input v-model="form.region" :error="form.errors.region" class="pr-6 pb-8 w-full " label="Организация" />
@@ -29,7 +24,7 @@
                   
                 </select> -->
               </div>
-              <div class="px-8 py-4 border-t border-gray-100 flex items-center">
+              <div class="p-4 py-4 border-t border-gray-100 flex items-center">
                 <loading-button :loading="form.processing" class="btn-indigo  rounded-full  mr-4" type="submit">Изменить</loading-button>
                 <loading-button :loading="form.processing" class="btn-indigo bg-red-500 rounded-full" @click="destroy">Удалить организацию</loading-button>
               </div>
@@ -37,9 +32,9 @@
           </div>
         </div>
       </div>
-      <div class="w-6/12 pl-3">
-        <div class="bg-white mh-calc rounded-2xl p-6">
-              <h2 class=" font-bold text-2xl">Коментарии</h2>
+      <div class="w-6/12 bg-white overflow-y-auto rounded-2xl">
+        <div class="  p-4">
+              <h2 class=" font-bold text-2xl">Комментарии</h2>
               <div v-if="!comments.length">
                 Комментариев пока нет!
               </div>

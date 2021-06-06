@@ -192,22 +192,50 @@ body .fc-theme-standard td,
 .paginate .flex div {
     background: #fff;
 }
+
+
 /*** vue notification **/
-.notification-content {
-    
-}
+
+.notification-content {}
+
 .vue-notification {
     font-size: 14px !important;
     padding: 15px !important;
     line-height: 18px !important;
     border-radius: 20px !important;
 }
+
+
 /****/
+
+
 /** Vue select **/
+
 .vs__dropdown-toggle {
     border: 0 !important
 }
+
 .vs__dropdown-menu {
     border: 0 !important
 }
+
+
 /****/
+
+.fc .fc-toolbar.fc-header-toolbar * {
+    font-size: 14px !important;
+}
+
+.fc .fc-toolbar .fc-toolbar-title {
+    font-size: 18px !important;
+}
+
+.fc-theme-standard .fc-list-day-cushion {
+    background: #fff;
+}
+
+.fc-theme-standard .fc-list {
+    border-radius: 15px !important;
+    background: #fff !important;
+    border: 1px solid #f1f1f1
+}

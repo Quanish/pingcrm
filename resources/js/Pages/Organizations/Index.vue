@@ -28,51 +28,59 @@
 
           <th class="px-6 pb-4 pt-4 text-center">Примечания</th>
         </tr>
+
+
         <tr v-for="organization in organizations.data" :key="organization.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t py-3 px-6">
-            <inertia-link class="py-1 flex items-center focus:text-indigo-500" :href="route('organizations.edit', organization.id)">
+            <inertia-link class="py-1 flex text-sm font-normal text-sm items-center focus:text-indigo-500" :href="route('organizations.edit', organization.id)">
               {{ organization.name }}
               <icon v-if="organization.deleted_at" name="trash" class="flex-shrink-0 w-3 h-3 fill-gray-400 ml-2" />
             </inertia-link>
           </td>
           <td class="border-t py-3 px-6 ">
-            <inertia-link class=" py-1 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+            <inertia-link class=" py-1 flex text-sm font-normal items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
               {{ organization.phone }}
             </inertia-link>
           </td>
           <td class="border-t py-3  items-center"> 
             <div class="flex justify-center">
-              <inertia-link class="px-6 py-1  items-center leading-4 bg-gray-300 rounded-full h-6 text-center inline-block" :href="route('organizations.edit', organization.id)" tabindex="-1">
+              <inertia-link class="px-6 py-1  text-sm font-normal items-center leading-4 bg-gray-300 rounded-full h-6 text-center inline-block" :href="route('organizations.edit', organization.id)" tabindex="-1">
                 {{ status[organization.status] }}
               </inertia-link>
             </div>
             
           </td>
           <td class="border-t py-3 px-6 w-px">
-            <inertia-link class=" py-1 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              <div>
-                <person-card src="/img/user1.webp" name="John Doe" job="сотрудник"></person-card> 
+
+            <inertia-link class=" py-1 flex text-sm font-normal items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+              <div v-if="organization.responsible !== null">
+                <person-card src="/img/user1.webp" :name="organization.responsible.last_name" job="сотрудник"></person-card> 
+              </div>
+              <div v-else class="w-10 h-10">
+
               </div>
             </inertia-link>
+
+
           </td>
           <td class="border-t py-3 px-6 w-px">
-            <inertia-link class="px-6 py-1 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+            <inertia-link class="px-6 py-1 text-sm font-normal flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div>{{ stage[organization.stage] }}</div>
             </inertia-link>
           </td>
           <td class="border-t py-3 px-6 w-px">
-            <inertia-link class="px-6 py-1 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+            <inertia-link class="px-6 py-1 text-sm font-normal flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div>{{ agreement[organization.agreement] }}</div>
             </inertia-link>
           </td>
           <td class="border-t py-3 px-6 w-px">
-            <inertia-link class="px-6 py-1 flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
+            <inertia-link class="px-6 py-1 flex items-center text-sm font-normal" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div>нет комментариев</div>
             </inertia-link>
           </td>
         </tr>
         <tr v-if="organizations.data.length === 0">
-          <td class="border-t py-3 px-6 py-1" colspan="4">No organizations found.</td>
+          <td class="border-t py-3 px-6 py-1 text-sm font-normal" colspan="4">Ничего не найдено</td>
         </tr>
       </table>
     </div>
@@ -109,6 +117,9 @@ export default {
     organizations: Object,
     filters: Object,
   },
+  created() {
+    
+  },
   data() {
     return {
       agreement: ['не подписан', 'подписан'],
@@ -134,7 +145,5 @@ export default {
 
 <style scoped>
 
-td div {
-  font-size: 0.8em;
-}
+
 </style>

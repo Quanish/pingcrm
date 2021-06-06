@@ -97,20 +97,14 @@
     
     <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
     <div class="relative h-full flex flex-col justify-between">
-      <div class="flex flex-row justify-between">
-        <p class="font-medium">Групповой чат</p>
+      <div class="flex flex-row justify-between border-b border-gray-200 pb-4">
+        <p class="font-medium">Информация для группы</p>
       </div>
-      <hr class="mt-5">
-      <div class="h-80">
-        
+      <div class="flex-auto py-4">
+        <div>
+          dsdfs
+        </div>
       </div>
-     
-            <div class="relative w-full mt-auto">
-              <svg class="absolute right-2 top-2.5 w-5 h-5 fill-current text-indigo-600 cursor-pointer" viewBox="0 0 448.011 448.011"><g><path d="M438.731,209.463l-416-192c-6.624-3.008-14.528-1.216-19.136,4.48c-4.64,5.696-4.8,13.792-0.384,19.648l136.8,182.4
-            l-136.8,182.4c-4.416,5.856-4.256,13.984,0.352,19.648c3.104,3.872,7.744,5.952,12.448,5.952c2.272,0,4.544-0.48,6.688-1.472
-            l416-192c5.696-2.624,9.312-8.288,9.312-14.528S444.395,212.087,438.731,209.463z"/></g></svg>
-              <input class="p-4 h-10 border border-gray-200 rounded-lg w-full" v-model="comment" placeholder="Ваше сообщение...">
-            </div>
     </div>
     </form> 
         

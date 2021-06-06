@@ -20,7 +20,7 @@ export default {
     completed: 0,
   },
   created() {
-    console.log(this.completed)
+    
   },
   methods: {
     computeDays(deadline){

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
   	<!-- верхняя панель-->
 
   	<div class=" relative flex  place-items-center mb-8">
@@ -17,7 +17,7 @@
 	</div>
 
 	<!--панель офиса-->
-	<div class="flex gap-6">
+	<div class="flex gap-6 flex-auto">
 	<div class="w-2/12 bg-white rounded-2xl h-auto p-6">
 		<div class="relative">
 		  <input type="search" class="text-white absolute left-0 w-full shadow rounded-full border-0 p-1 pl-4 pr-8 text-sm font-normal" v-bind:style="{ backgroundColor: color1}" >
@@ -39,52 +39,52 @@
 			<div class="flex h-6 justify-start gap-4 mt-3"><img class="y-3" src="/img/icons/PIC.png" /><p class="pt-1 text-sm">Изображения</p></div>
 			<div class="flex h-6 justify-start gap-4 mt-3"><img class="y-3" src="/img/icons/Star.png" /><p class="pt-1 text-sm">Избранные</p></div>
 			<div class="flex h-6 justify-start gap-4 mt-3 text-sm">Все</div>
-			<div class="flex h-6 justify-start gap-4 mt-3 mb-3 w-full">
-				<button class="w-full block text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300">Шаблоны</button>
-			</div>
+			
 		</div>
 	</div>
 	<!-- список документов-->
-	<div class="w-10/12 bg-white rounded-2xl  h-auto p-6">
-    	<table class="w-full whitespace-nowrap">
+	<div class="w-10/12 bg-white rounded-2xl  h-auto p-6 overflow-y-auto">
+    	<table class="w-full whitespace-nowrap   ">
     		<tr class="text-center font-bold">
 
-	            <th class="pb-4 flex">
-	            	<p class="font-strong">Название</p>
+	            <th class=" p-0 border border-gray-200 bg-blue-500">
+	            	<p class=" p-2  text-white font-normal  ">Название</p>
 	            </th>
-	            <th class="pb-4">
-	            	<p class="font-strong">Проект или сделка</p>
+	            <th class=" p-2 border border-gray-200 bg-blue-500">
+	            	<p class="font-normal text-white">Проект или сделка</p>
 	            </th>
-	             <th class="pb-4">
-	            	<p class="font-strong">Дата</p>
+	             <th class=" p-2 border border-gray-200 bg-blue-500">
+	            	<p class="font-normal text-white">Дата</p>
 	            </th>
-	            <th class="pb-4">
-	            	<p class="font-strong">Примечания</p>
+	            <th class=" p-2 border border-gray-200 bg-blue-500">
+	            	<p class="font-normal text-white">Примечания</p>
 	            </th>
-	            <th class="pb-4">
-	            	<p class="font-strong"></p>
+	            <th class="p-0 border border-gray-200 bg-blue-500">
+	            	<p class="p-2  text-white font-normal ">
+						Действия
+					</p>
 	            </th>
 	          
 	        </tr>
 
 	        <tr v-for="document in documents" class="text-center hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
-	        	<td class="">
+	        	<td class="p-2 border border-gray-200">
 					<div class="flex">
 						<p class="text-sm">{{document.name}}</p>
 					</div>
                </td>  
-	       	   <td class="w-8">
+	       	   <td class="p-2 border border-gray-200">
 	       	   		<p class="text-sm">{{document.type}}</p>
 	       	   		
                </td>      
-               <td class="">
+               <td class="p-2 border border-gray-200">
                		<p class="text-sm">{{document.date}}</p>
                </td> 
-               <td class="">
+               <td class="p-2 border border-gray-200">
                		<p class="text-sm">{{document.comment}}</p>
                </td> 
-               <td class="">
-               		<button class="rounded-full text-white h-6 pl-3 pr-3 flex" v-bind:style="{ backgroundColor: color}">
+               <td class="p-2 border border-gray-200">
+               		<button class="rounded-full text-white h-6 pl-3 pr-3 flex m-auto" v-bind:style="{ backgroundColor: color}">
                			<icon name="download" class="w-4 pt-1" />
                			<p class="ml-1 mt-0.5 text-sm">скачать</p>
                		</button>

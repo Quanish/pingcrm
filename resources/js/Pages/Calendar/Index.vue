@@ -38,12 +38,12 @@ props:{
 data() {
     return {
        calendarOptions: {
-          plugins: [ dayGridPlugin, interactionPlugin, timeGridPlugin],
+          plugins: [ dayGridPlugin, interactionPlugin, timeGridPlugin, ListPlugin],
           initialView: 'dayGridMonth',
           headerToolbar: {
             left: 'prevYear,prev,next,nextYear today',
             center: 'title',
-            right: 'dayGridMonth,dayGridWeek,dayGridDay'
+            right: 'dayGridMonth,dayGridWeek,dayGridDay,listWeek'
           },
           navLinks: true, // can click day/week names to navigate views
           editable: true,

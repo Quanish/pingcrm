@@ -1,8 +1,14 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full">
 
     <modal name="create">
       <create-group></create-group>
+    </modal>
+
+    <modal name="quit">
+      <div class="text">
+        sadasd
+      </div>
     </modal>
 
 
@@ -18,7 +24,7 @@
 
 
 
-    <div class="rounded-2xl bg-white w-full  py-4 px-4 ">
+    <div class="rounded-2xl bg-white w-full  py-4 px-4 flex-auto">
       <div class="flex flex-row  gap-4" v-for="chunk in chunked">
         <div class="mb-4 w-1/3" v-for="article in chunk">
           <div class="border rounded-2xl p-5 pb-3 hover:shadow-md hover:border-blue-400">
@@ -33,9 +39,9 @@
               </div>
               <p v-if="article.id == 1" class="text-sm text-gray-300 text-2xs">admin</p>
             </div>
-            <div class="mt-5 flex flex-wrap justify-between">
-              <inertia-link :href="route('groups.show', article.id)" class="task-button text-white items-center rounded-full h-6 px-7 text-xs leading-6 mb-2 font-normal"> добавить участника </inertia-link>
-              <button class="bg-gray-200 text-gray-700 items-center rounded-full h-6 px-7 text-xs leading-6 font-normal">выйти из группы</button>
+            <div class="mt-5 flex flex-wrap justify-end gap-3">
+              <inertia-link :href="route('groups.show', article.id)" class="bg-blue-400 hover:bg-blue-500 text-white items-center rounded-full h-6 px-7 text-xs leading-6 mb-2 font-normal"> Войти </inertia-link>
+              <button @click="quit(article)" class="bg-gray-200  hover:bg-gray-300 text-gray-700 items-center rounded-full h-6 px-7 text-xs leading-6 font-normal">выйти из группы</button>
             </div>
           </div>
         </div>
@@ -69,7 +75,7 @@ export default {
     TextInput,
     createGroup,
   },
-  metaInfo: { title: 'Groups' },
+  metaInfo: { title: 'Группы' },
   layout: Layout,
   props: {
     groups: Array,
@@ -81,6 +87,7 @@ export default {
         name: null,
         description: null,
       }),
+      quit: {}
     }
   },
   computed: {
@@ -102,6 +109,14 @@ export default {
     open() {
       this.modal = true
     },
+    openQuitModal(article) {
+      this.$modal.show('quit')
+      this.quit = article
+    },
+    quit() {
+      sebx
+      this.$modal.hide('quit')
+    }
   },
 }
 </script>

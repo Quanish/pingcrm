@@ -32,7 +32,7 @@ class OrganizationsController extends Controller
                         'status'=> $organization->status,
                         'stage' => $organization->stage,
                         'agreement' => $organization->agreement,
-                        'responsible' => $organization->responsible()->get(),
+                        'responsible' => $organization->responsible()->first(),
                     ];
                 }),
         ]);
@@ -80,8 +80,7 @@ class OrganizationsController extends Controller
                 'deleted_at' => $organization->deleted_at,
                 'contacts' => $organization->contacts()->orderByName()->get()->map->only('id', 'name', 'city', 'phone'),
             ],
-            'comments' => Comment::select('user_id','comment')->with('user')->where('client_id',$organization->id)->get(),
-
+            'comments' => $organization->comments()
         ]);
     }
 
@@ -118,11 +117,11 @@ class OrganizationsController extends Controller
     }
 
     public function comment(String $message,$id){
-        
+        /********* TODO */
         Comment::insert([
             'client_id' => $id,
             'user_id' => Auth::user()->id,
-            'comment' => $message,
+            'comment' => Comment::TEXT,
         ]);
         return Redirect::route('organizations')->with('успешно', 'Комментарий добавлен.');
     }

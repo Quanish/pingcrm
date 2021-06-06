@@ -30,6 +30,8 @@ class Task extends Model
         'account_id'
     ];
 
+    public $timestamps = true;
+    
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');
@@ -39,9 +41,18 @@ class Task extends Model
     	return $this->belongsTo(User::class,'auditor_id','id');
     }
 
-    public function comment()
+    public function comments()
     {
-    	return $this->hasMany(Comment::class);
+        $comments = Comment::select('user_id','text', 'created_at')->where([
+            'model_id' => $this->id,
+            'model_type' => 'task',
+        ])->get();
+
+        foreach($comments as $comment) {
+            $comment->user = User::card($comment->user_id);
+        }
+
+    	return $comments;
     }
 
     public function event()

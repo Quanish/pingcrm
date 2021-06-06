@@ -18,17 +18,20 @@ use DB;
 class TasksController extends Controller
 {
 	public function index(Request $request){
-        if (Auth::user()->owner) {
-            return Inertia::render('Tasks/Index', [
-                'filters' => StaticRequest::all('search', 'trashed'),
-                'tasks' => Task::with('user','auditor')->get(),
-            ]);
-        }else{
-    		return Inertia::render('Tasks/Index', [
-    			'filters' => StaticRequest::all('search', 'trashed'),
-                'tasks' => Task::where('user_id',Auth::user()->id)->get(),
-            ]);
+
+        $tasks = Task::where('user_id', Auth::user()->id)->orderBy('deadline', 'desc')->paginate(10);
+
+        foreach($tasks->items() as $task) {
+            $task->user = User::card($task->user_id);
+            $task->auditor = User::card($task->auditor_id);
         }
+        
+       
+        return Inertia::render('Tasks/Index', [
+            'filters' => StaticRequest::all('search', 'trashed'),
+            'tasks' => $tasks
+        ]);
+       
 	}
 
     public function accept(Task $task){
@@ -44,7 +47,7 @@ class TasksController extends Controller
     }
 
     public function show(Task $task){
-        
+            
         if($task->user_id != Auth::user()->id) {
             if($task->auditor_id != Auth::user()->id) {
                 return redirect('/')->with(['success' => 'not found']);
@@ -60,45 +63,39 @@ class TasksController extends Controller
             $subtask->task = $task;
         }
         
+        
         return Inertia::render('Tasks/Show',[
             'task' => [
                 'id' => $task->id,
                 'title' => $task->title,
                 'description' => $task->description,
-                'user' => User::find($task->user_id),
-                'auditor' => User::find($task->auditor_id),
+                'user' => User::card($task->user_id),
+                'auditor' =>User::card($task->auditor_id),
                 'start' => $task->start,
                 'type' => $task->type ? $task->type : 1,
                 'deadline' => $task->deadline,
                 'status' => $task->status,
                 'account_id' => 1,
             ],
-            'auditor' => User::card($task->auditor_id),
-            'user' => User::card($task->user_id),
-            'messages' => Comment::where('task_id', $task->id)->get(),
+            
+            'comments' => $task->comments(),
             'subtasks' => $subtasks
         ]);
     }
 
-    public function message(String $message,$id){
-        Comment::insert([
-            'task_id' => $id,
+    public function comment(Request $request){
+        
+        $comment = Comment::create([
+            'model_id' => $request->id,
+            'model_type' => 'task',
             'user_id' => Auth::user()->id,
-            'text' => $message,
+            'text' => $request->text,
+            'type' => Comment::TEXT
         ]);
-        return Inertia::render('Tasks/Show',[
-            'task' => [
-                'id' => $task->id,
-                'title' => $task->title,
-                'description' => $task->description,
-                'deadline' => $task->deadline,
-                'date_created' => $task->date_created,
-                'status' => $task->status,
-            ],
-            'auditor' => User::select('first_name')->where('id',$task->auditor_id)->get(),
-            'user' => User::select('first_name')->where('id',$task->user_id)->get(),
-            'messages' => Comment::where('task_id',$task->id)->get(),
-        ]);
+
+        $comment->user = User::card($comment->user_id);
+
+        return $comment;
         
     }
 

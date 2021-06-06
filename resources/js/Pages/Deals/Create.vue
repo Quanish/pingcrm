@@ -24,32 +24,9 @@
 						</div>
 						<input type="text" class="border-b-2 w-full pb-1">
 						<input type="text" class="border-b-2 w-full pb-1">
-						<div  class="border-b-2 w-full pb-1 mb-3">
-							<select class="rounded-full bg-gray-200 p-1">
-								<option>безналичный расчет</option>
-								<option>наличный расчет</option>
-								<option>онлайн</option>
-							</select>
-						</div>
 					</div>
 					
 				</div>
-				<div class="rounded-lg bg-gray-200 p-5 shadow">
-						<table class="w-full">
-							<tr >
-								<th class="border-2 border-black p-2 border-t-0">№</th>
-								<th class="border-2 border-black p-2 border-t-0">Товар и услуга</th>
-								<th class="border-2 border-black p-2 border-t-0">Ед. мер.</th>
-								<th class="border-2 border-black p-2 border-t-0">Кол-во</th>
-								<th class="border-2 border-black p-2 border-t-0">Скидка</th>
-								<th class="border-2 border-black p-2 border-t-0">Стоимость</th>
-								
-							</tr>
-							<tr>
-								
-							</tr>
-						</table>
-					</div>
 			</div>
 		</div>
 		<div class="w-full flex mt-3 ">

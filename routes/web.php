@@ -224,8 +224,8 @@ Route::put('tasks/{task}',[TasksController::class, 'accept'])
 ->name('tasks.accept')
 ->middleware('auth');
 
-Route::post('tasks/{message}/{id}',[TasksController::class, 'message'])
-->name('tasks.message')
+Route::post('tasks/comment',[TasksController::class, 'comment'])
+->name('tasks.comment')
 ->middleware('auth');
 
 Route::get('dela',[TasksController::class,'dela'])

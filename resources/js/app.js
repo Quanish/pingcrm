@@ -8,7 +8,7 @@ import Notifications from 'vue-notification'
 
 /* Axios */
 import axios from 'axios'
-import VueAxios from 'vue-axios' 
+import VueAxios from 'vue-axios'
 
 /* Modal */
 import vmodal from 'vue-js-modal'
@@ -31,7 +31,7 @@ Vue.use(Notifications)
 
 Vue.component('v-select', vSelect)
 
-
+moment.locale('ru')
 
 InertiaProgress.init()
 

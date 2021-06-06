@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use App\Models\User;
+use App\Models\Task;
 use App\Models\Subtask;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,12 @@ class DashboardController extends Controller
 
         $subtasks = Subtask::where('user_id', Auth::user()->id)->get();
 
-        foreach($subtasks as $subtask) {
+        foreach($subtasks as $key => $subtask) {
             
             
             if($subtask->task_id != 0) {
                 $subtask->task = $subtask->task()->first();
+                if($subtask->task->status == Task::COMPLETED) $subtasks->forget($key);
             } else {
                 $subtask->task = [
                     'id' => 0,

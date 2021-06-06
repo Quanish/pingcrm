@@ -116,7 +116,6 @@ export default {
     }
   },
   created() {
-    console.log(this.task_id)
     // axios.get('/tasks/create')
     //   .then(response => {
     //     this.users = response.data.users 
@@ -128,7 +127,6 @@ export default {
         this.form.deadline = date.toISOString().substring(0, 10)
 
         const dateString = date.toISOString().substring(0, 10)
-        console.log(dateString)
       } else {
         console.log('null date')
       }

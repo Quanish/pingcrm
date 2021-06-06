@@ -15,9 +15,13 @@ class Organization extends Model
     {
         return $this->hasMany(Contact::class);
     }
+    
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+    	return Comment::select('user_id','text', 'created_at')->with('user')->where([
+            'model_id' => $this->id,
+            'model_type' => 'client',
+        ])->get();
     }
 
     public function scopeFilter($query, array $filters)
