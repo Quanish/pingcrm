@@ -1,9 +1,20 @@
 <template>
   <div class="auth bg-cover h-screen flex justify-center items-center ">
   
-    <div class="w-full grid grid-cols-2 gap-2 place-items-center">
-      <img class="px-50 w-56" src="/img/logo2.png">
-      <form class="mt-8 bg-white rounded-2xl overflow-hidden font-light" @submit.prevent="login">
+
+      <div class="fixed w-screen h-screen z-10 bluebg flex items-center justify-center" v-if="show">
+        <div class="anima">
+          <img class="w-32  block" src="/img/logo2.svg">
+        </div>
+         
+      </div>
+
+
+
+
+    <div class="w-full grid grid-cols-2 gap-2 place-items-center" v-if="!show">
+      <img class="px-50 w-48" src="/img/logo.svg">
+      <form class="mt-8 bg-white rounded-2xl overflow-hidden font-light shadow-sm" @submit.prevent="login">
         <div class="px-16 py-12">
           <h3 class="text-center font-light text-2xl">ВХОД В ЛИЧНЫЙ КАБИНЕТ</h3>
 
@@ -11,12 +22,12 @@
           <br>
           <div class="passwordField" style="position:relative;">
             <text-input id="show" name="show" v-model="form.password" type="password" :class="mt-6"  :maxlength='maxlength' :placeholder="placeholder" v-bind:value="value"  v-on:input="$emit('input', $event.target.value)" label="Пароль" />
-            <a id="eyeshow" @click="showPassword" style="position: absolute; right: 5px; top: 30px;"><img class="h-5 opacity-30 mt-1" src="img/eyes/private.png"></a>
-            <a id="eyehide" @click="hidePassword" style="position: absolute; right: 5px; top: 30px;visibility:hidden;"><img class="h-5 mt-1 opacity-30" src="img/eyes/view.png"></a>
+            <a id="eyeshow" @click="showPassword" class="absolute -top-1 right-0"><img class="h-5 opacity-30 mt-1" src="img/eyes/private.png"></a>
+            <a id="eyehide" @click="hidePassword" class="absolute -top-1 right-0" style="visibility:hidden;"><img class="h-5 mt-1 opacity-30" src="img/eyes/view.png"></a>
           </div>
           
 
-
+          
            
             
            
@@ -48,7 +59,7 @@ import TextInput from '@/Shared/TextInput'
 import LoadingButton from '@/Shared/LoadingButton'
 
 export default {
-  metaInfo: { title: 'Login' },
+  metaInfo: { title: 'Вход' },
   components: {
     LoadingButton,
     Logo,
@@ -56,12 +67,18 @@ export default {
   },
   data() {
     return {
+      show: true,
       form: this.$inertia.form({
-        email: 'johndoe@example.com',
+        email: 'abik@gmail.com',
         password: 'secret',
         remember: false,
       }),
     }
+  },
+  created() {
+    setTimeout(()=> {
+      this.show = false;
+    }, 3000)
   },
   methods: {
     post(){
@@ -100,3 +117,45 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+.bluebg {
+  background-image: url(/img/blue_bg.png);
+  background-position: center;
+  background-size: cover;
+}
+.anima {
+  animation: 3s anima ease-in-out infinite;
+}
+
+.bluebg {
+  animation: 2s tesxs ease infinite;
+}
+
+@keyframes anima {
+  from {
+    opacity: 1;
+  } 
+  40% {
+    opacity: 0;
+    transform: scale(1.03)
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tesxs {
+  from {
+    filter: contrast(1)
+  } 
+  50% {
+    filter: contrast(1.1);
+    transform: scale(1.01)
+  }
+  to {
+    filter: contrast(1)
+  }
+}
+</style>

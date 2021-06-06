@@ -75,6 +75,7 @@ class TasksController extends Controller
                 'type' => $task->type ? $task->type : 1,
                 'deadline' => $task->deadline,
                 'status' => $task->status,
+                'urgent' => $task->urgent,
                 'account_id' => 1,
             ],
             
@@ -121,6 +122,7 @@ class TasksController extends Controller
             'deadline' => $request->deadline,
             'type' => $request->type ? $request->type : Task::TYPE_TASK,
             'status' => Task::NOT_STARTED, 
+            'urgent' => $request->urgent ? 1 : 0, 
             'account_id' => Auth::user()->account_id,
         ]);
 

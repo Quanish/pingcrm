@@ -32,7 +32,7 @@ class OrganizationsController extends Controller
                         'status'=> $organization->status,
                         'stage' => $organization->stage,
                         'agreement' => $organization->agreement,
-                        'responsible' => $organization->responsible()->first(),
+                        'responsible' => User::card($organization->responsible_id),
                     ];
                 }),
         ]);

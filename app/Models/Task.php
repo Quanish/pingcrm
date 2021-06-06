@@ -27,6 +27,7 @@ class Task extends Model
         'start', 
         'deadline',
         'type', 
+        'urgent', 
         'account_id'
     ];
 

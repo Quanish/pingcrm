@@ -62,7 +62,7 @@
           </td>
           <td class="text-center pt-1 pb-1">
             <div class="flex justify-center items-center ">
-              <p class="text-white inline-block leading-6 text-sm py-0 px-3 login_button rounded-full">{{ task.status }}</p>
+              <p class="rounded-full text-white text-xs flex px-2 py-1 items-center whitespace-nowrap font-light" :class="'bg-' + statuses[task.status].color + '-500'">{{ statuses[task.status].name }}</p>
             </div>
             
           </td>
@@ -139,7 +139,7 @@ export default {
   },
   layout: Layout,
   props: {
-    tasks: Array,
+    tasks: Object,
     filters: Object,
   },
   
@@ -152,6 +152,24 @@ export default {
         search: this.filters.search,
         trashed: this.filters.trashed,
       },
+      statuses: {
+          0: {
+              name: 'Новый',
+              color: 'indigo'
+          },
+          1: {
+              name: 'Завершен',
+              color: 'green'
+          },
+          2: {
+              name: 'Выполняется',
+              color: 'skyblue'
+          },
+          3: {
+              name: 'На проверке',
+              color: 'orange'
+          },
+      }
     }
   },
   watch: {

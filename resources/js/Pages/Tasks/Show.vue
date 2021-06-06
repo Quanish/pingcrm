@@ -3,7 +3,7 @@
     <div class="flex flex-row justify-between gap-5">
       <div class="w-5/12 mb-5 pr-2">
         <div class="px-4">
-          <input type="text" class="w-11/12 text-black font-medium bg-transparent text-lg mr-2 mb-2" v-model="task.title" />
+          <input type="text" class="w-full text-black font-medium bg-transparent text-lg mr-2 mb-2" v-model="task.title" />
           <div v-if="new Date(task.deadline) < Date.now() && task.status != 1" class="w-full bg-red-400 rounded-full h-1 mr-2"></div>
           <div v-else-if="computeDays(task.deadline) == 1 && task.status != 1" class="w-full bg-orange-400 rounded-full h-1 mr-2"></div>
           <div v-else-if="computeDays(task.deadline) > 1 && computeDays(task.deadline) < 4 && task.status != 1" class="w-full bg-yellow-400 rounded-full h-1 mr-2"></div>
@@ -109,11 +109,9 @@
               </div>
 
 
-
-              <hr class="mt-5" />
-              <div class="flex mt-6 mb-1">
+              <div class="flex mt-6 mb-1" v-if="task.urgent">
                 <div class="bg-red-500 rounded-full w-4 h4"></div>
-                <p class="text-gray-600 font-normal ml-3 text-xs">срочно</p>
+                <p class="text-gray-600 font-normal ml-3 text-xs" >срочно</p>
               </div>
             </div>
           </div>

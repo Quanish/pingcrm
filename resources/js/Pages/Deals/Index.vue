@@ -2,11 +2,11 @@
   <div class="flex flex-col h-full">
   	<!-- верхняя панель-->
   	<div class=" relative flex justify-between place-items-center mb-10">
-    	<h1 class="font-bold text-3xl">Сделки</h1>
+    	<h1 class="font-bold text-2xl">Сделки</h1>
 		<button class="login_button rounded-full text-white h-8 w-1/5 flex justify-center items-center" @click="openCreateModal">
         <span>Новая&nbsp;сделка</span>
       </button>
-    	<select class="  rounded-full text-white h-8 pl-2 pr-2 " v-bind:style="{ backgroundColor: color}">
+    	<select class="  rounded-full text-white h-8 px-6 text-sm " v-bind:style="{ backgroundColor: color}">
     		<option>цель на квартал</option>
     		<option>цель на неделю</option>
     		<option>цель на месяц</option>
@@ -21,7 +21,7 @@
     			<img class="h-8" src="img/user1.webp">
     			
     		</div>
-    		<p class="absolute top-0 left-52 w-max   bg-gray-300 text-xs rounded-full px-1">5 000 000</p>
+    		<p class="absolute top-2 left-52 w-max   bg-gray-300 text-xs rounded-full px-1">5 000 000</p>
     		<p class="absolute top-16 left-12 w-max bg-green-500 text-white text-xs rounded-full px-1">3 400 000</p>
     	</div>
     </div>
@@ -30,7 +30,7 @@
 	<!-- список сделок-->
 	<div class="bg-white rounded-2xl  overflow-x-auto flex-auto">
     	<table class="w-full whitespace-nowrap">
-    		<tr class="text-left font-bold border-b-2 border-gray-100">
+    		<tr class="text-left font-bold border-b border-gray-200">
 
 	            <th class="px-6 pt-4 pb-4 flex">
 	            	<p class="font-bold">Номер</p>&nbsp;<p class="font-bold">сделки</p>

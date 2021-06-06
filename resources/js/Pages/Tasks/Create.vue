@@ -1,7 +1,7 @@
 <template>
   <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full">
     <h1 class="mb-8 font-medium text-xl">
-      <inertia-link class="text-black hover:text-indigo-600 " :href="route('tasks')">Новая задача</inertia-link>
+      Новая задача
     </h1>
     <div class="ma">
       <form @submit.prevent="store">
@@ -15,7 +15,7 @@
               </p>  
             </div>
             <div class="lg:w-3/4">
-              <input type="text" v-model="form.title" class="border-b-2 w-full pb-1">
+              <input type="text" v-model="form.title" ref="title" class="border-b-2 w-full pb-1">
             </div>  
           </div>
           
@@ -27,7 +27,7 @@
               </p>  
             </div>
             <div class="lg:w-3/4">
-              <input type="text" v-model="form.description" class="border-b-2 w-full pb-1">
+              <input type="text" v-model="form.description" ref="description" class="border-b-2 w-full pb-1">
             </div>  
           </div>
 
@@ -41,7 +41,7 @@
             <div class="lg:w-3/4">
 
 
-              <v-select class="border-b-2 w-full pb-1" :options="users" v-model="selectedUser"></v-select>
+              <v-select class="border-b-2 w-full pb-1" :options="users" v-model="selectedUser" ref="user_id"></v-select>
 
 
             </div>  
@@ -74,7 +74,10 @@
                 <span class="text-red-400">*</span> 
               </p>  
             </div>
-            <div class="lg:w-3/4 flex justify-end">
+            <div class="lg:w-3/4 flex justify-end items-center">
+              <div class="text-red-500 font-medium mr-3">
+                {{ err }}
+              </div>
               <checkbox label="срочно" v-model="form.urgent" />
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
@@ -111,7 +114,7 @@ export default {
   },
   layout: Layout,
   props: {
-    type: String,
+    type: Number,
   },
   remember: 'form',
   data() {
@@ -119,6 +122,7 @@ export default {
       format: 'yyyy-MM-dd',
       disabledDates: {},
       date: null,
+      err: '',
       disabledFn: {
         customPredictor(date) {
           if (date.getDate() % 3 === 0) {
@@ -129,7 +133,7 @@ export default {
       selectedUser: {},
       users: [],
       form: this.$inertia.form({
-        user_id: 1,
+        user_id: null,
         deadline: moment().format('YYYY-MM-DD hh:mm:ss'),
         description: null,
         title: null,
@@ -156,6 +160,23 @@ export default {
       }
     },
     store() {
+      this.err = '';
+      if(this.form.title === null) {
+        this.$refs.title.focus();
+        this.err = 'Заполните название!'
+        return null;
+      }
+      if(this.form.description === null) {
+        this.$refs.description.focus();
+        this.err = 'Заполните описание!'
+        return null;
+      }
+      if(this.selectedUser.code === undefined) {
+        this.err ='Выберите ответственного!'
+        return null;
+      }
+
+
       this.form.type = this.type
       this.form.user_id = this.selectedUser.code
       this.form.deadline = moment(this.form.deadline).format('YYYY-MM-DD hh:mm:ss')

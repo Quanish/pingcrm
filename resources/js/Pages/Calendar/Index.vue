@@ -5,8 +5,38 @@
     <div class="flex flex-auto">
       <div class="w-3/12 flex flex-col">
         <h1 class="mb-8 font-bold text-2xl">Календарь</h1>
-        <div class="bg-white rounded-2xl shadow-sm w-full h-full pr-3 overflow-y-auto py-4 px-4">
-          test
+        <div class="bg-white rounded-2xl shadow-sm w-full h-full overflow-y-auto p-6">
+          <div class="mb-4 flex flex-col gap-3">
+          <label class="font-medium">
+            По ответственности
+          </label>
+          <select class="w-full px-4 py-2 border border-gray-200 font-normal rounded">
+            <option value="">Все задачи</option>
+            <option value="">Свои</option>
+            <option value="">Порученные</option>
+          </select>
+        </div>
+          <div class="mb-4  flex flex-col gap-3">
+            <label  class="font-medium">
+              По типу
+            </label>
+            <select class="w-full px-4 py-2 border border-gray-200 font-normal rounded">
+              <option value="">Все задачи</option>
+              <option value="">Задачи</option>
+              <option value="">Встречи</option>
+            </select>
+          </div>
+          
+
+        <div class="mb-4  flex flex-col gap-3">
+          <label  class="font-medium">
+            По срочности
+          </label>
+          <select class="w-full px-4 py-2 border border-gray-200 font-normal rounded">
+            <option value="">Несрочные</option>
+            <option value="">Срочные</option>
+          </select>
+        </div>
         </div>
       </div>  
       <div class="w-9/12 pl-3">

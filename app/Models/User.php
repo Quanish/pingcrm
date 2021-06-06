@@ -70,8 +70,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public static function card(int $user_id)
     {   
         $user = self::select('id', 'first_name','last_name', 'photo_path', 'position_id')->where('id', $user_id)->first();
-        $user->position = Position::find($user->position_id);
-        $user->name = $user->last_name . ' ' . $user->first_name;
+        if($user) {
+            $user->position = Position::find($user->position_id);
+            $user->name = $user->last_name . ' ' . $user->first_name;
+        }
         return $user;
     }
 

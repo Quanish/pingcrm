@@ -8,13 +8,13 @@
         </button>
       </div>
 
-      <img class="h-6 text-center" src="img/message.png" />
+      <img class="h-10 text-center" src="img/message.png" />
     </div>
 
     <div class="bg-white rounded-2xl  overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
-          <th class="pt-4 px-6 pb-4 pt-4">Фио\Название</th>
+          <th class="pt-4 px-6 pb-4 pt-4">Название</th>
 
           <th class="px-6 pb-4 pt-4">Контакты</th>
 
@@ -54,7 +54,7 @@
 
             <inertia-link class=" py-1 flex text-sm font-normal items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div v-if="organization.responsible !== null">
-                <person-card src="/img/user1.webp" :name="organization.responsible.last_name" job="сотрудник"></person-card> 
+                <person-card class="relative" :src="'/storage/' + organization.responsible.photo_path" :fullname="organization.responsible.name" :job="organization.responsible.position.name" :hide="false"></person-card>
               </div>
               <div v-else class="w-10 h-10">
 
@@ -104,7 +104,7 @@ import PersonCard from '@/Shared/PersonCard.vue'
 import CreateClient from './Create.vue'
 
 export default {
-  metaInfo: { title: 'Organizations' },
+  metaInfo: { title: 'Клиенты' },
   components: {
     Icon,
     Pagination,
