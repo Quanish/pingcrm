@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\GroupUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -13,8 +14,10 @@ class GroupsController extends Controller
 {
     public function index()
     {
+        $groups = Group::with('users')->get();
+
     	return Inertia::render('Groups/Index',[
-    		'groups' => Group::all(),
+    		'groups' => $groups,
     	]);
     }
     public function store(ObjectRequest $request)
@@ -29,11 +32,26 @@ class GroupsController extends Controller
         return $this->show($group);    
     }
 
-    
-
     public function show(Group $group){
         return Inertia::render('Groups/Show',[
-            'group' => Group::find($group->id)
+            'group' => Group::find($group->id),
+            'members' => GroupUser::getUsers($group->id)
         ]);
+    }
+
+    public function saveUsers(ObjectRequest $request)
+    {   
+        $x = GroupUser::where('group_id', $request->group_id)->get();
+
+        foreach($x as $y) {
+           $y->delete();     
+        }
+
+        foreach($request->users as $user) {
+            GroupUser::create([
+                'group_id' => $request->group_id,
+                'user_id' => $user['id'],
+            ]);
+        }
     }
 }

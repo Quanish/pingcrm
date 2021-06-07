@@ -121,4 +121,8 @@ class UsersController extends Controller
 
         return Redirect::back()->with('успешно', 'Пользователь восстановлен.');
     }
+
+    public function getUsers(){
+        return User::with('position')->get(); // @TODO SELECT IMPORTANT FIELDSs
+    }
 }

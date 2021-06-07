@@ -35,6 +35,7 @@
                   {{ article.name }}
                   <p class="text-sm text-black text-2xs font-normal" v-if="article.access == 1">закрытая группа</p>
                   <p class="text-sm text-black text-2xs font-normal" v-if="article.access == 2">открытая группа</p>
+                  <p class="text-sm text-black text-2xs font-normal">{{ article.users.length }} участника (-ов)</p>
                 </div>
               </div>
               <p v-if="article.id == 1" class="text-sm text-gray-300 text-2xs">admin</p>

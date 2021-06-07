@@ -20,12 +20,11 @@ class TasksController extends Controller
 	public function index(Request $request){
 
         $tasks = Task::where('user_id', Auth::user()->id)->orderBy('deadline', 'desc')->paginate(10);
-
+        
         foreach($tasks->items() as $task) {
             $task->user = User::card($task->user_id);
             $task->auditor = User::card($task->auditor_id);
         }
-        
        
         return Inertia::render('Tasks/Index', [
             'filters' => StaticRequest::all('search', 'trashed'),
@@ -106,11 +105,6 @@ class TasksController extends Controller
         ];
     }
 
-    public function getUsers(){
-        $data = User::get();
-        return $response()->json($data);
-    }
-
 	public function store(Request $request)
     {
         $task = Task::create([
@@ -176,7 +170,7 @@ class TasksController extends Controller
     public function restore(Task $task)
     {
         $task->restore();
-
+        
         return Redirect::back()->with('success', 'Task restored.');
     }
 

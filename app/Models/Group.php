@@ -19,4 +19,8 @@ class Group extends Model
         'editors',
     ];
 
+    public function users(){
+    	return $this->hasMany(GroupUser::class,'group_id','id');
+    }
+
 }

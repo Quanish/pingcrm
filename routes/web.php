@@ -248,6 +248,10 @@ Route::get('deals/create', [DealsController::class,'create'])
 ->name('deals.create')
 ->middleware('auth');
 
+Route::post('deals/store', [DealsController::class,'store'])
+->name('deals.store')
+->middleware('auth');
+
 //Meetings
 
 Route::get('meetings', [MeetingsController::class, 'index'])
@@ -314,4 +318,5 @@ Route::get('500', function () {
 
 Route::resource('categories',CategoryController::class);
 
-Route::get('getUsers', 'TasksController@getUsers');
+Route::get('get-users', [UsersController::class, 'getUsers']);
+Route::post('save-users-to-group', [GroupsController::class, 'saveUsers']);

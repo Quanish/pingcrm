@@ -31,8 +31,8 @@
             {{ task.deadline }}
           </div>
           <div class="items-center bg-red-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center" v-if="computeDays(task.deadline) < 0">
-            <p class="mb-1 text">  {{ computeDays(task.deadline) }} дней</p>
-            <p class="text-sm text-sm">просрочен</p>  
+            <p class="mb-1 text">  {{ computeDays(task.deadline) }} день</p>
+            <p class="text-sm text-sm">просрочена</p>  
           </div>
           <div class="items-center bg-green-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center" v-else>
             <p class="mb-1 text">  {{ computeDays(task.deadline) }} дней</p>
@@ -76,8 +76,9 @@
 
               <div class="flex justify-between mt-5">
 
+                  
 
-                <template v-if="task.status == 0 && $page.props.auth.user.id != task.auditor.id">   
+                <template v-if="(task.status == 0 && $page.props.auth.user.id != task.auditor.id) || (task.status == 0 && task.user.id == task.auditor.id)">   
                   
                   <form @submit.prevent="accept(2)" class="flex flex-wrap w-full gap-3">
                     <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять</button>
@@ -86,7 +87,7 @@
 
                 </template>  
 
-                <template v-if="task.status == 2 && task.user.id == $page.props.auth.user.id">  
+                <template v-if="(task.status == 2 && task.user.id == $page.props.auth.user.id) || (task.status == 2 && task.user.id == task.auditor.id)">  
                   
                   <form @submit.prevent="accept(3)" class="flex flex-wrap w-full gap-3">
                     <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">завершить</button>
@@ -96,7 +97,7 @@
 
       
 
-                <template v-if="task.status == 3 && task.auditor.id == $page.props.auth.user.id">  
+                <template v-if="(task.status == 3 && task.auditor.id == $page.props.auth.user.id) || (task.status == 3 && task.user.id == task.auditor.id)">  
                   
                   <form @submit.prevent="accept(1)" class="flex flex-wrap w-full gap-3">
                     <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять и завершить</button>
@@ -119,7 +120,7 @@
           <div class="mt-10 pb-3 flex flex-row leading-loose font-medium">
             <span class="mr-3">Участники</span>  
             <person-card class="relative" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="true"></person-card>
-            <person-card class="relative -left-1" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="true"></person-card>
+            <person-card class="relative -left-1" :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name" :hide="true"></person-card>
           </div>
         </div>
       </div>

@@ -14,11 +14,9 @@ class DashboardController extends Controller
 {
     public function index()
     {   
-
         $subtasks = Subtask::where('user_id', Auth::user()->id)->get();
 
         foreach($subtasks as $key => $subtask) {
-            
             
             if($subtask->task_id != 0) {
                 $subtask->task = $subtask->task()->first();
@@ -30,10 +28,7 @@ class DashboardController extends Controller
                 ];
             }
             
-           
         }
-
-        
 
         return Inertia::render('Dashboard/Index', [
             'tasks' => User::getTasks(),

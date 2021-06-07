@@ -43,6 +43,6 @@ class Deal extends Model
 
 	public function client()
     {
-    	return $this->hasOne(Organization::class);
+    	return $this->belongsTo(Organization::class);
     }
 }

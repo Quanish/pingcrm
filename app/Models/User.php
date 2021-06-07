@@ -58,13 +58,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public static function getTasks() {
         $_tasks_1 = Task::where([
             'user_id' => Auth::user()->id,
-        ])->orderBy('deadline', 'asc')->get();
+        ])->orderBy('deadline', 'asc')->with('user')->with('auditor')->get();
         
         $_tasks_2 = Task::where([
             'auditor_id' => Auth::user()->id,
-        ])->orderBy('deadline', 'asc')->get();
+        ])->orderBy('deadline', 'asc')->with('user')->with('auditor')->get();
 
         return $_tasks_1->merge($_tasks_2);
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
     }
 
     public static function card(int $user_id)

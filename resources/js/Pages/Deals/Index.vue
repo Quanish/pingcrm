@@ -17,12 +17,12 @@
     		<div class="absolute top-7 left-0 bg-gray-300 w-64 h-8 rounded-full">
     			
     		</div>
-    		<div class="absolute top-7 left-0 bg-green-500 w-24 rounded-full flex justify-end">
+    		<div class="absolute top-7 left-0 bg-green-500 w-0 rounded-full flex justify-end">
     			<img class="h-8" src="img/user1.webp">
     			
     		</div>
     		<p class="absolute top-2 left-52 w-max   bg-gray-300 text-xs rounded-full px-1">5 000 000</p>
-    		<p class="absolute top-16 left-12 w-max bg-green-500 text-white text-xs rounded-full px-1">3 400 000</p>
+    		<p class="absolute top-16 left-0 w-max bg-green-500 text-white text-xs rounded-full px-1">0</p>
     	</div>
     </div>
     	<div ><img class="h-10" src="img/message.png"></div>
@@ -48,9 +48,6 @@
 	            	<p class="font-bold">Статус</p>
 	            </th>
 	            <th class="px-6 pt-4 pb-4 pb-4">
-	            	<p class="font-bold">Стадия</p>
-	            </th>
-	            <th class="px-6 pt-4 pb-4 pb-4">
 	            	<p class="font-bold">Примечания</p>
 	            </th>
 
@@ -58,26 +55,25 @@
 	        </tr>
 	        <tr v-for="deal in test" class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
 
-	       	   <td class="px-6 pt-6 pb-4 w-8">
-	       	   		<p class="text-sm">{{deal.deal_number}}</p>
-	       	   		<p class="text-2xs">Название заказа/ детали/ </p><p class="text-xs">спецификация</p>
+	       	   <td class="px-6 pt-3 pb-3 w-8">
+	       	   		<p class="text-sm">№00000{{deal.id}} {{deal.title}}</p>
+	       	   		<p class="text-2xs"> номер/ детали/ </p><p class="text-2xs">спецификация</p>
                </td>      
-               <td class="px-6 pt-6 pb-4">
-               		<p class="text-sm">{{deal.price}} tg</p>
+               <td class="px-6 pt-3 pb-3">
+               		<p class="text-sm">{{deal.sum}} TG</p>
                </td>   
-               <td class="px-6 pt-6 pb-4">
-               		<p class="text-sm">{{deal.client}}</p>
+               <td class="px-6 pt-3 pb-3">
+               		<p class="text-sm">{{deal.client.name}}</p>
                </td> 
-               <td class="px-6 pt-6 pb-4">
-               		<p class="text-sm">{{deal.client}}</p>
+               <td class="px-6 pt-3 pb-3">
+               		<p class="text-sm">{{deal.client.phone}}</p>
                </td> 
-               <td class="px-6 pt-6 pb-4">
-               	 <p class="text-sm">{{deal.status}}</p>
+               <td class="px-6 pt-3 pb-3">
+               	 <p class="text-sm rounded-full py-1  text-white text-center" :class="'bg-' + statuses[deal.status].color + '-500'">  
+						{{ statuses[deal.status].name }}
+				  </p>
                </td> 
-               <td class="px-6 pt-6 pb-4">
-               		<p class="text-sm">{{deal.stage}}</p>
-               </td> 
-               <td class="px-6 pt-6 pb-4">
+               <td class="px-6 pt-3 pb-3">
                		<p class="text-sm">{{deal.comment}}</p>
                </td>       
              
@@ -112,7 +108,38 @@ export default {
 			color: "#875FDA",
 			color1: "#4A32E3",
 			angle: '50',
-      mytest: 'fuck',
+      		mytest: 'xxx',
+			statuses: {
+				0: {
+					name: 'Отменена',
+					color: 'indigo'
+				},
+				1: {
+					name: 'Закрыта',
+					color: 'green'
+				},
+				2: {
+					name: 'Открыта',
+					color: 'skyblue'
+				},
+				3: {
+					name: 'Договор',
+					color: 'orange'
+				},
+				4: {
+					name: 'Оплата',
+					color: 'orange'
+				},
+				5: {
+					name: 'Доставка',
+					color: 'orange'
+				},
+				6: {
+					name: 'Обслуживание',
+					color: 'orange'
+				},
+
+			}  
 		}
   	},
   	computed:{

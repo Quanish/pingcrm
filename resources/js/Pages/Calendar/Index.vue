@@ -46,6 +46,56 @@
     
 
 
+
+    <modal name="more">
+      <div class="flex flex-col p-6">
+        <div>
+          <h1 class="mb-8 font-medium text-xl">
+            
+            {{eventObj.title}}
+          </h1>
+          <div class="flex flex-wrap">
+            <div class="w-1/3 mb-3">
+              <p class="font-medium text-gray-400 mb-3">Дедлайн</p>
+              <p class="font-medium text-black">{{ eventObj.extendedProps.deadline}}</p>
+            </div>
+            <div class="w-1/3 mb-3">
+                <p class="font-medium text-gray-400 mb-3">Постановщик</p>
+                <div class="font-medium text-black">
+                  {{ eventObj.extendedProps.auditor.last_name + ' ' + eventObj.extendedProps.auditor.first_name}}
+                </div>
+            </div>
+            <div class="w-1/3 mb-3">
+                <p class="font-medium text-gray-400 mb-3">Ответственный</p>
+                <div class="font-medium text-black">
+                  {{ eventObj.extendedProps.user.last_name + ' ' + eventObj.extendedProps.user.first_name}}
+                </div>
+            </div>
+            <div class="w-full mb-3">
+              <p class="font-medium text-gray-400 mb-3">Описание</p>
+              <div class="font-medium text-black">{{ eventObj.extendedProps.description}}</div>
+            </div>
+          </div>
+          
+          
+          
+
+          <div class="w-full flex mt-3 ">
+            <div class="lg:w-1/4">
+             <!-- <p class="font-medium leading-6">Заполните поле
+                <span class="text-red-400">*</span> 
+              </p>   -->
+            </div>
+            <div class="lg:w-3/4 flex justify-end">
+              <inertia-link :href="'tasks/' + eventObj.id" class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">Перейти
+                                </inertia-link>
+            </div>  
+          </div> 
+        </div>
+      </div>
+    </modal>
+
+
   </div>
 </template>
 
@@ -67,6 +117,12 @@ props:{
 },
 data() {
     return {
+       eventObj: {
+         extendedProps: {
+           user: {},
+           auditor: {},
+         }
+       },
        calendarOptions: {
           plugins: [ dayGridPlugin, interactionPlugin, timeGridPlugin, ListPlugin],
           initialView: 'dayGridMonth',
@@ -83,10 +139,12 @@ data() {
           dayMaxEvents: true,
           events: this.event,
           select: (event) => {
-            this.handleSelect()
+            // this.handleSelect()
           },
-          eventClick: (event) => {
-            console.log(event)
+          eventClick: (info) => {
+            // console.log(event)
+            this.eventObj = info.event;
+            this.$modal.show('more')
           },
           windowResize: function(arg) {
             console.log(arg)
