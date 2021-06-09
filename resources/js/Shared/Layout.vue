@@ -84,9 +84,9 @@
                     </div>
                 </dropdown>
             </div>
-            <div class="md:flex md:flex-grow md:overflow-hidden">
+            <div class="md:flex md:flex-grow md:overflow-hidden " >
 
-                <div class="md:flex-1 px-4 pt-6 pb-4 md:px-10 md:overflow-y-auto bg-cover auth" scroll-region>
+                <div class="md:flex-1 px-4 pt-6 pb-4 md:px-10 md:overflow-y-auto bg-cover bg-gray-100" scroll-region>
                     
                     <slot />
                 </div> 

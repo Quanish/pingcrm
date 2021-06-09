@@ -5,12 +5,6 @@
       <create-group></create-group>
     </modal>
 
-    <modal name="quit">
-      <div class="text">
-        sadasd
-      </div>
-    </modal>
-
 
     <div class="flex justify-between">
       <div class="flex flex-row gap-10">
@@ -41,8 +35,7 @@
               <p v-if="article.id == 1" class="text-sm text-gray-300 text-2xs">admin</p>
             </div>
             <div class="mt-5 flex flex-wrap justify-end gap-3">
-              <inertia-link :href="route('groups.show', article.id)" class="bg-blue-400 hover:bg-blue-500 text-white items-center rounded-full h-6 px-7 text-xs leading-6 mb-2 font-normal"> Войти </inertia-link>
-              <button @click="quit(article)" class="bg-gray-200  hover:bg-gray-300 text-gray-700 items-center rounded-full h-6 px-7 text-xs leading-6 font-normal">выйти из группы</button>
+              <inertia-link :href="route('groups.show', article.id)" class="bg-blue-400 hover:bg-blue-500 text-white items-center rounded-full h-6 px-7 text-xs leading-6 mb-2 font-normal">Войти  в группу</inertia-link>
             </div>
           </div>
         </div>
@@ -109,10 +102,6 @@ export default {
     },
     open() {
       this.modal = true
-    },
-    openQuitModal(article) {
-      this.$modal.show('quit')
-      this.quit = article
     },
     quit() {
       sebx

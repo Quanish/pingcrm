@@ -22,10 +22,6 @@
 
           <th class="px-6 pb-4 pt-4 text-center">Ответственный</th>
 
-          <th class="px-6 pb-4 pt-4 text-center">Стадия</th>
-
-          <th class="px-6 pb-4 pt-4 text-center">Договор</th>
-
           <th class="px-6 pb-4 pt-4 text-center">Примечания</th>
         </tr>
 
@@ -63,16 +59,7 @@
 
 
           </td>
-          <td class="border-t py-3 px-6 w-px">
-            <inertia-link class="px-6 py-1 text-sm font-normal flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              <div>{{ stage[organization.stage] }}</div>
-            </inertia-link>
-          </td>
-          <td class="border-t py-3 px-6 w-px">
-            <inertia-link class="px-6 py-1 text-sm font-normal flex items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              <div>{{ agreement[organization.agreement] }}</div>
-            </inertia-link>
-          </td>
+
           <td class="border-t py-3 px-6 w-px">
             <inertia-link class="px-6 py-1 flex items-center text-sm font-normal" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div>нет комментариев</div>
