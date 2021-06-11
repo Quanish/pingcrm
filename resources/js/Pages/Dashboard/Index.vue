@@ -40,8 +40,9 @@
                             <icon v-if="task.deleted_at" name="trash" class="flex-shrink-0 w-3 h-3 fill-gray-400 ml-2" />
                         </inertia-link>
 
-                        <div v-if="new Date(task.deadline) < Date.now() && task.status != 1" class="w-full bg-red-400 rounded-full h-1"></div>
+                        <div v-if="computeDays(task.deadline) < 0  && task.status != 1" class="w-full bg-red-400 rounded-full h-1"></div>
                         <div v-else-if="computeDays(task.deadline) == 1 && task.status != 1" class="w-full bg-orange-400 rounded-full h-1"></div>
+                        <div v-else-if="computeDays(task.deadline) == 0 && task.status != 1" class="w-full bg-yellow-400 rounded-full h-1"></div>
                         <div v-else-if="computeDays(task.deadline) > 1 && computeDays(task.deadline) < 4 && task.status != 1" class="w-full bg-yellow-400 rounded-full h-1"></div>
                         <div v-else class="w-full rounded-full h-1" :class="'bg-green-400'"></div>
                     </div>
@@ -95,11 +96,7 @@
                     <div class="border rounded-2xl px-5 py-4 flex flex-col hover:border-indigo-300 hover:shadow-sm">
                         <div class="flex flex-row justify-between mb-3">
                             <div class="flex flex-row">
-                                <img class="h-8 border rounded-full" src="img/user1.webp">
-                                <div class="flex flex-col  ml-2">
-                                    <p>{{event.user.last_name}} {{event.user.first_name}}</p>
-                                    <p class="text-xs text-gray-300">Должность</p>
-                                </div>
+                                <person-card :src="'/storage/' + event.user.photo_path" :fullname="event.user.last_name + ' ' + event.user.first_name" :job="event.user.position.name"></person-card>
                             </div>
                             <button class="rounded-full bg-gray-100 hover:bg-gray-200 flex justify-center items-center w-5 h-5" @click="closeEvent(event)">
                                 <svg class="h-2 w-2 fill-current text-black-600" viewBox="0 0 311 311.07733"><path d="m16.035156 311.078125c-4.097656 0-8.195312-1.558594-11.308594-4.695313-6.25-6.25-6.25-16.382812 0-22.632812l279.0625-279.0625c6.25-6.25 16.382813-6.25 22.632813 0s6.25 16.382812 0 22.636719l-279.058594 279.058593c-3.136719 3.117188-7.234375 4.695313-11.328125 4.695313zm0 0"/><path d="m295.117188 311.078125c-4.097657 0-8.191407-1.558594-11.308594-4.695313l-279.082032-279.058593c-6.25-6.253907-6.25-16.386719 0-22.636719s16.382813-6.25 22.636719 0l279.058594 279.0625c6.25 6.25 6.25 16.382812 0 22.632812-3.136719 3.117188-7.230469 4.695313-11.304687 4.695313zm0 0"/></svg>
@@ -144,6 +141,7 @@ import Chat from '@/Shared/Chat'
 import RadialProgressBar from 'vue-radial-progress'
 import CreateTask from '../Tasks/Create.vue'
 import Subtasks from '../Tasks/Subtasks.vue'
+import PersonCard from '@/Shared/PersonCard.vue'
 import axios from "axios";
 import moment from "moment";
 import _ from 'lodash'
@@ -219,6 +217,7 @@ export default {
         Checkbox,
         CreateTask,
         Subtasks,
+        PersonCard,
         Chat
     },
     watch: {

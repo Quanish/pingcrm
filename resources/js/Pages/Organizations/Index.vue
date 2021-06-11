@@ -7,7 +7,14 @@
           <span>Добавить&nbsp;клиента</span>
         </button>
       </div>
-
+      <div>
+        <select class="rounded-full text-white h-8 px-6 text-sm bg-indigo-500 login_button" @change="changeStatus" v-model="select1">
+          <option value="0">Все клиенты</option>
+          <option value="3">Вероятные</option>
+          <option value="2">Постоянные</option>
+          <option value="1">Новые</option>
+        </select>
+      </div>
       <img class="h-10 text-center" src="img/message.png" />
     </div>
 
@@ -26,7 +33,7 @@
         </tr>
 
 
-        <tr v-for="organization in organizations.data" :key="organization.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+        <tr v-for="organization in clients.data" :key="organization.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t py-3 px-6">
             <inertia-link class="py-1 flex text-sm font-normal text-sm items-center focus:text-indigo-500" :href="route('organizations.edit', organization.id)">
               {{ organization.name }}
@@ -40,8 +47,8 @@
           </td>
           <td class="border-t py-3  items-center"> 
             <div class="flex justify-center">
-              <inertia-link class="px-6 py-1  text-sm font-normal items-center leading-4 bg-gray-300 rounded-full h-6 text-center inline-block" :href="route('organizations.edit', organization.id)" tabindex="-1">
-                {{ status[organization.status] }}
+              <inertia-link class="px-6 py-1  text-sm font-normal items-center leading-4  rounded-full h-6 text-center inline-block" :class="'bg-' + statuses[organization.status].color + '-500'" :href="route('organizations.edit', organization.id)" tabindex="-1">
+                {{ statuses[organization.status].name }}
               </inertia-link>
             </div>
             
@@ -66,12 +73,12 @@
             </inertia-link>
           </td>
         </tr>
-        <tr v-if="organizations.data.length === 0">
+        <tr v-if="clients.data.length === 0">
           <td class="border-t py-3 px-6 py-1 text-sm font-normal" colspan="4">Ничего не найдено</td>
         </tr>
       </table>
     </div>
-    <pagination class="mt-4 paginate" :links="organizations.links" />
+    <pagination class="mt-4 paginate" :links="clients.links" />
 
     <modal name="create" class="w-full">
       <create-client></create-client>
@@ -89,6 +96,7 @@ import Pagination from '@/Shared/Pagination'
 import SearchFilter from '@/Shared/SearchFilter'
 import PersonCard from '@/Shared/PersonCard.vue'
 import CreateClient from './Create.vue'
+import axios from 'axios'
 
 export default {
   metaInfo: { title: 'Клиенты' },
@@ -105,17 +113,36 @@ export default {
     filters: Object,
   },
   created() {
-    
+    this.clients = this.organizations
   },
   data() {
     return {
+      clients: [],
+      select1: 0,
       agreement: ['не подписан', 'подписан'],
       stage: ['переговоры', 'подписание', 'закрыта'],
-      status: ['новый', 'текущий', 'вероятный', 'постоянный'],
       form: {
         search: this.filters.search,
         trashed: this.filters.trashed,
       },
+      statuses: {
+          0: {
+              name: 'Без статуса',
+              color: 'gray'
+          },
+          1: {
+              name: 'Новый',
+              color: 'skyblue'
+          },
+          2: {
+              name: 'Постоянный',
+              color: 'green'
+          },
+          3: {
+              name: 'Вероятный',
+              color: 'orange'
+          },
+      }
     }
   },
 
@@ -126,6 +153,13 @@ export default {
     openCreateModal() {
       this.$modal.show('create')
     },
+    changeStatus() {
+      axios.post('/organizations/status', {
+        status: this.select1,
+      }).then(response => {
+        this.clients = response.data
+      })
+    }
   },
 }
 </script>

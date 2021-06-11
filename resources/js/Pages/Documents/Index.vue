@@ -42,24 +42,24 @@
 		</div>
 	</div>
 	<!-- список документов-->
-	<div class="w-10/12 bg-white rounded-2xl  h-auto p-6 overflow-y-auto">
+	<div class="w-10/12 bg-white rounded-2xl  h-auto p-6 overflow-y-auto pt-2">
     	<table class="w-full whitespace-nowrap   ">
-    		<tr class="text-center font-bold">
+    		<tr class="text-left font-bold border-b border-gray-200">
 
-	            <th class=" p-0 border border-gray-200 bg-blue-500">
-	            	<p class=" p-2  text-white font-normal  ">Название</p>
+	            <th class="px-6 pt-4 pb-4 flex">
+	            	<p class="font-bold text-center">Название</p>
 	            </th>
-	            <th class=" p-2 border border-gray-200 bg-blue-500">
-	            	<p class="font-normal text-white">Проект или сделка</p>
+	            <th class="px-6 pt-4 pb-4">
+	            	<p class="font-bold text-center">Проект или сделка</p>
 	            </th>
-	             <th class=" p-2 border border-gray-200 bg-blue-500">
-	            	<p class="font-normal text-white">Дата</p>
+	             <th class="px-6 pt-4 pb-4">
+	            	<p class="font-bold text-center">Дата</p>
 	            </th>
-	            <th class=" p-2 border border-gray-200 bg-blue-500">
-	            	<p class="font-normal text-white">Примечания</p>
+	            <th class="px-6 pt-4 pb-4">
+	            	<p class="font-bold text-center">Примечания</p>
 	            </th>
-	            <th class="p-0 border border-gray-200 bg-blue-500">
-	            	<p class="p-2  text-white font-normal ">
+	            <th class="px-6 pt-4 pb-4">
+	            	<p class="font-bold text-center">
 						Действия
 					</p>
 	            </th>
@@ -67,24 +67,24 @@
 	        </tr>
 
 	        <tr v-for="document in documents" class="text-center hover:bg-gray-100 focus-within:bg-gray-100 mb-3" :key="document.id">
-	        	<td class="p-2 border border-gray-200">
+	        	<td class="px-6 pt-3 pb-3 w-8">
 					<div class="flex">
 						<p class="text-sm">{{document.name}}</p>
 					</div>
                </td>  
-	       	   <td class="p-2 border border-gray-200">
+	       	   <td class="px-6 pt-3 pb-3 w-8">
 	       	   		<p class="text-sm">{{document.type}}</p>
 	       	   		
                </td>      
-               <td class="p-2 border border-gray-200">
+               <td class="px-6 pt-3 pb-3 w-8">
                		<p class="text-sm">{{document.date}}</p>
                </td> 
-               <td class="p-2 border border-gray-200">
+               <td class="px-6 pt-3 pb-3 w-8">
                		<p class="text-sm">{{document.comment}}</p>
                </td> 
-               <td class="p-2 border border-gray-200">
-               		<a :href="document.file" class="rounded-full text-white h-6 pl-3 pr-3 flex m-auto text-center flex justify-center" v-bind:style="{ backgroundColor: color}">
-               			<icon name="download" class="w-4 pt-1" />
+               <td class="px-6 pt-3 pb-3 w-8">
+               		<a :href="document.file" class="rounded-full text-white py-1 pl-3 pr-3 flex m-auto text-center flex justify-center" v-bind:style="{ backgroundColor: color}">
+               			<icon name="download" class="w-4 pt-1 relative -top-0.5" />
                			<p class="ml-1 mt-0.5 text-sm">скачать</p>
                		</a>
 

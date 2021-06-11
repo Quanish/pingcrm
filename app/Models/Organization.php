@@ -7,6 +7,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Organization extends Model
 {
     use SoftDeletes;
+
+    const NEW_CLIENT = 1;
+    const PERMANENT = 2;
+    const POSSIBLE = 3;
+
+    protected $fillable = [
+        'account_id',
+        'name',
+        'email',
+        'phone',
+        'address',
+        'city', 
+        'region',
+        'country', 
+        'postal_code', 
+        'status',
+        'stage',
+        'agreement',
+    ];
+
+
     public function responsible(){
         return $this->belongsTo(User::class,'responsible','id');
     }

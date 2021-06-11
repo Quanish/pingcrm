@@ -41,11 +41,11 @@
 	             <th class="px-6 pt-4 pb-4 pb-4">
 	            	<p class="font-bold">Клиент</p>
 	            </th>
+				<td class="px-6 pt-3 pb-3">
+               		<p class="font-bold">Ответственный</p>
+               </td> 
 	            <th class="px-6 pt-4 pb-4 pb-4">
-	            	<p class="font-bold">Контакты</p>
-	            </th>
-	            <th class="px-6 pt-4 pb-4 pb-4">
-	            	<p class="font-bold">Статус</p>
+	            	<p class="font-bold text-center">Статус</p>
 	            </th>
 	            <th class="px-6 pt-4 pb-4 pb-4">
 	            	<p class="font-bold">Примечания</p>
@@ -65,8 +65,8 @@
                <td class="px-6 pt-3 pb-3">
                		<p class="text-sm">{{deal.client.name}}</p>
                </td> 
-               <td class="px-6 pt-3 pb-3">
-               		<p class="text-sm">{{deal.client.phone}}</p>
+			   <td class="px-6 pt-3 pb-3">
+               		<person-card></person-card>
                </td> 
                <td class="px-6 pt-3 pb-3">
                	 <p class="text-sm rounded-full py-1  text-white text-center" :class="'bg-' + statuses[deal.status].color + '-500'">  
@@ -94,10 +94,12 @@
 <script>
 import Layout from '@/Shared/Layout'
 import createDeal from './Create.vue'
+import PersonCard from '../../Shared/PersonCard.vue'
 export default {
 	metaInfo: { title: 'Сделки' },
 	components: {
 		createDeal,
+PersonCard,
 	},
 	layout: Layout,
   props:{

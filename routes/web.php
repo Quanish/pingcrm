@@ -125,6 +125,10 @@ Route::post('organizations', [OrganizationsController::class, 'store'])
     ->name('organizations.store')
     ->middleware('auth');
 
+Route::post('/organizations/status', [OrganizationsController::class, 'status'])
+    ->name('organizations.status')
+    ->middleware('auth');
+    
 Route::get('organizations/{organization}/edit', [OrganizationsController::class, 'edit'])
     ->name('organizations.edit')
     ->middleware('auth');

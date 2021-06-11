@@ -1,11 +1,16 @@
 <template>
   <div class="flex flex-col h-full">
-    <div class="flex justify-between gap-3 flex-wrap">
-      <h1 class="mb-8 font- text-2xl text-black font-medium ">
-        Карточка клиента
-      </h1>
-      <div>
+    <div class="flex justify-between gap-3 flex-wrap items-start">
+        <h1 class="mb-8 font- text-2xl text-black font-medium ">
+          Карточка клиента
+        </h1>
 
+        <div class="flex gap-3 items-center">
+          <p class="font-medium">Статус</p>
+          <p class="font-normal text rounded-full px-3 text-white py-1" :class="'bg-' + statuses[form.status].color + '-500'">{{ statuses[form.status].name }}</p>
+        </div>
+      <div>
+        
         <button class="text-white hover:bg-indigo-400 mr-2 bg-indigo-500 rounded-lg p-2" @click="update">
           <svg class="fill-current w-4 h-4" viewBox="0 0 512.007 512.007"><g><path d="m511.927 126.537c-.279-2.828-1.38-5.666-3.315-8.027-.747-.913 6.893 6.786-114.006-114.113-2.882-2.882-6.794-4.395-10.612-4.394-9.096 0-329.933 0-338.995 0-24.813 0-45 20.187-45 45v422c0 24.813 20.187 45 45 45h422c24.813 0 45-20.187 45-45 .001-364.186.041-339.316-.072-340.466zm-166.927-96.534v98c0 8.271-6.729 15-15 15h-19v-113zm-64 0v113h-139c-8.271 0-15-6.729-15-15v-98zm64 291h-218v-19c0-8.271 6.729-15 15-15h188c8.271 0 15 6.729 15 15zm-218 161v-131h218v131zm355-15c0 8.271-6.729 15-15 15h-92c0-19.555 0-157.708 0-180 0-24.813-20.187-45-45-45h-188c-24.813 0-45 20.187-45 45v180h-52c-8.271 0-15-6.729-15-15v-422c0-8.271 6.729-15 15-15h52v98c0 24.813 20.187 45 45 45h188c24.813 0 45-20.187 45-45v-98h2.787l104.213 104.214z"/></g></svg>
         </button>
@@ -120,6 +125,9 @@ export default {
     message:"",
   },
   remember: 'form',
+  created() {
+    console.log(this.organization)
+  },
   data() {
     return {
       form: this.$inertia.form({
@@ -130,9 +138,28 @@ export default {
         city: this.organization.city,
         region: this.organization.region,
         country: this.organization.country,
+        status: this.organization.status,
         postal_code: this.organization.postal_code,
         responsible: this.organization.responsible,
       }),
+      statuses: {
+        0: {
+              name: 'Без статуса',
+              color: 'gray'
+          },
+          1: {
+              name: 'Новый',
+              color: 'skyblue'
+          },
+          2: {
+              name: 'Постоянный',
+              color: 'green'
+          },
+          3: {
+              name: 'Вероятный',
+              color: 'orange'
+          },
+      }
     }
   },
   methods: {

@@ -4,8 +4,9 @@
       <div class="w-5/12 mb-5 pr-2">
         <div class="px-4">
           <input type="text" class="w-full text-black font-medium bg-transparent text-lg mr-2 mb-2" v-model="task.title" />
-          <div v-if="new Date(task.deadline) < Date.now() && task.status != 1" class="w-full bg-red-400 rounded-full h-1 mr-2"></div>
+          <div v-if="computeDays(task.deadline) < 0 && task.status != 1" class="w-full bg-red-400 rounded-full h-1 mr-2"></div>
           <div v-else-if="computeDays(task.deadline) == 1 && task.status != 1" class="w-full bg-orange-400 rounded-full h-1 mr-2"></div>
+          <div v-else-if="computeDays(task.deadline) == 0 && task.status != 1" class="w-full bg-yellow-400 rounded-full h-1 mr-2"></div>
           <div v-else-if="computeDays(task.deadline) > 1 && computeDays(task.deadline) < 4 && task.status != 1" class="w-full bg-yellow-400 rounded-full h-1 mr-2"></div>
           <div v-else class="w-full rounded-full h-1" :class="'bg-green-400'"></div>
         </div>
@@ -24,17 +25,21 @@
           </div>
           <div class="flex flex-col items-center">
             <p class="mb-5 font-medium">Старт</p>
-            {{ task.start }}
+            {{ date(task.start) }}
           </div>
           <div class="flex flex-col items-center">
             <p class="mb-5 font-medium">Дедлайн</p>
-            {{ task.deadline }}
+            {{ date(task.deadline) }}
           </div>
-          <div class="items-center bg-red-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center" v-if="computeDays(task.deadline) < 0">
+          <div class="items-center bg-red-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center relative -top-1" v-if="computeDays(task.deadline) < 0">
             <p class="mb-1 text">  {{ computeDays(task.deadline) }} день</p>
             <p class="text-sm text-sm">просрочена</p>  
           </div>
-          <div class="items-center bg-green-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center" v-else>
+          <div class="items-center bg-yellow-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center relative -top-1" v-else-if="computeDays(task.deadline) == 0">
+            <p class="mb-1 text">  Дедлайн</p>
+            <p class="text-sm text-sm">сегодня</p>  
+          </div>
+          <div class="items-center bg-green-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center relative -top-1" v-else>
             <p class="mb-1 text">  {{ computeDays(task.deadline) }} дней</p>
             <p class="text-sm text-sm">до дедлайна</p>
           </div>
@@ -99,9 +104,16 @@
 
                 <template v-if="(task.status == 3 && task.auditor.id == $page.props.auth.user.id) || (task.status == 3 && task.user.id == task.auditor.id)">  
                   
-                  <form @submit.prevent="accept(1)" class="flex flex-wrap w-full gap-3">
-                    <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять и завершить</button>
-                  </form>
+                  <div class="flex flex-wrap w-full gap-3">
+                    <form @submit.prevent="accept(1)" >
+                      <button class="rounded-full bg-green-400 hover:bg-green-500 text-white h-6 px-7 text-sm leading-6" type="submit">принять и завершить</button>
+                    </form>
+
+                    <form @submit.prevent="accept(2)" >
+                      <button class="rounded-full bg-gray-400 hover:bg-gray-500 text-white h-6 px-7 text-sm leading-6" type="submit">на доработку</button>
+                    </form>
+                  </div>
+                  
 
                 </template>  
           
@@ -182,7 +194,7 @@
               l416-192c5.696-2.624,9.312-8.288,9.312-14.528S444.395,212.087,438.731,209.463z"/>
               </g>
             </svg>
-            <input class="p-4 h-10 border border-gray-200 rounded-lg w-full" v-model="comment" placeholder="Ваше сообщение..." />
+            <input class="p-4 h-10 border border-gray-200 rounded-lg w-full" v-model="comment" placeholder="Ваше сообщение..."  v-on:keyup.13="addComment"/>
           </div>
         </div>
       </div>
@@ -261,7 +273,10 @@ export default {
   },
   methods: {
     date(date) {
-      return moment(date).format('lll')
+      return moment(date).format('LL')
+    },
+    hour(date) {
+      return moment(date).format('LT')
     },
     computeDays(deadline) {
       var difference = new Date(deadline) - Date.now()

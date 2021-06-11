@@ -30,9 +30,16 @@ class DashboardController extends Controller
             
         }
 
+        $events = Event::with('task')->where('user_id',Auth::user()->id)->where('seen', 0)->get();
+
+        foreach($events as $event) {
+            $event->user = User::card($event->user_id);
+        }
+        	
+        
         return Inertia::render('Dashboard/Index', [
             'tasks' => User::getTasks(),
-            'events' => Event::with('user','task')->where('user_id',Auth::user()->id)->where('seen', 0)->get(), 
+            'events' => $events, 
             'subtasks' => $subtasks, 
         ]);
     }

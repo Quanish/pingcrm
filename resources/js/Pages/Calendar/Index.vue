@@ -129,7 +129,7 @@ data() {
           headerToolbar: {
             left: 'prevYear,prev,next,nextYear today',
             center: 'title',
-            right: 'dayGridMonth,dayGridWeek,dayGridDay,listWeek'
+            right: 'dayGridMonth,dayGridWeek,listWeek'
           },
           navLinks: true, // can click day/week names to navigate views
           editable: true,

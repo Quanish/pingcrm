@@ -28,8 +28,9 @@ class OrganizationsController extends Controller
                         'name' => $organization->name,
                         'phone' => $organization->phone,
                         'city' => $organization->city,
+                        'status' => $organization->status,
                         'deleted_at' => $organization->deleted_at,
-                        'status'=> $organization->status,
+                        'status'=> $organization->status, 
                         'stage' => $organization->stage,
                         'agreement' => $organization->agreement,
                         'responsible' => User::card($organization->responsible_id),
@@ -76,6 +77,7 @@ class OrganizationsController extends Controller
                 'city' => $organization->city,
                 'region' => $organization->region,
                 'country' => $organization->country,
+                'status' => $organization->status,
                 'postal_code' => $organization->postal_code,
                 'deleted_at' => $organization->deleted_at,
                 'contacts' => $organization->contacts()->orderByName()->get()->map->only('id', 'name', 'city', 'phone'),
@@ -122,7 +124,27 @@ class OrganizationsController extends Controller
             'client_id' => $id,
             'user_id' => Auth::user()->id,
             'comment' => Comment::TEXT,
-        ]);
-        return Redirect::route('organizations')->with('успешно', 'Комментарий добавлен.');
+            ]);
+            return Redirect::route('organizations')->with('успешно', 'Комментарий добавлен.');
+    }
+
+    public function status(ObjectRequest $request){ 
+
+        return Organization::where('status', $request->status) 
+                ->paginate()
+                ->through(function ($organization) {
+                    return [
+                        'id' => $organization->id,
+                        'name' => $organization->name,
+                        'phone' => $organization->phone,
+                        'city' => $organization->city,
+                        'status' => $organization->status,
+                        'deleted_at' => $organization->deleted_at,
+                        'status'=> $organization->status, 
+                        'stage' => $organization->stage,
+                        'agreement' => $organization->agreement,
+                        'responsible' => User::card($organization->responsible_id),
+                    ];
+                });
     }
 }

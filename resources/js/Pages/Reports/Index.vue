@@ -18,10 +18,11 @@
 
 			<div class="flex flex-col gap-4">
 
-				<div class="flex h-4 justify-start   text-sm"><p class="-3">По сделкам</p></div>
-				<div class="flex h-4 justify-start   text-sm"><p class="">По звонкам</p></div>
-				<div class="flex h-4 justify-start  text-sm"><p class="">По встречам</p></div>
-				<div class="flex h-4 justify-start  text-sm"><p class="">По отделу</p></div>
+				<div class="flex h-4 justify-start  font-medium text-sm cursor-pointer hover:text-indigo-500" @click="showPage(1)"><p class="-3">Планы</p></div>
+				<div class="flex h-4 justify-start  font-medium text-sm cursor-pointer hover:text-indigo-500" @click="showPage(2)"><p class="-3">По сделкам</p></div>
+				<div class="flex h-4 justify-start  font-medium  text-sm cursor-pointer hover:text-indigo-500" @click="showPage(3)" ><p class="">По звонкам</p></div>
+				<div class="flex h-4 justify-start font-medium text-sm cursor-pointer hover:text-indigo-500" @click="showPage(4)"><p class="">По встречам</p></div>
+				<div class="flex h-4 justify-start font-medium text-sm cursor-pointer hover:text-indigo-500" @click="showPage(5)"><p class="">По отделу</p></div>
 				
 				
 			</div>
@@ -30,7 +31,10 @@
 		<!-- список документов-->
 		<div class="w-10/12 bg-white rounded-2xl  h-full p-6 overflow-y-auto shadow-sm flex flex-col">
 			
-			<div class="border-1 rounded-lg mb-5 flex flex-col h-full">	
+			<div class="border-1 rounded-lg mb-5 flex flex-col h-full" v-if="show == 1">
+				Планы	
+			</div>
+			<div class="border-1 rounded-lg mb-5 flex flex-col h-full" v-if="show == 2">	
 				
 				<div class="flex justify-between">
 					<div>
@@ -47,9 +51,21 @@
 			
 				<SalesChart class="flex-auto flex flex-col"/>
 			</div>
-			<div class="border-1 rounded-lg">
+
+
+
+
+			<div class="border-1 rounded-lg" v-if="show == 3">
 				<div class="flex justify-between p-5">Клиенты<button class="border-1 w-24 border-black rounded-full p-1">неделя</button><button class="border-2 w-24 border-black rounded-full p-1">месяц</button><button class="border-2  w-24 border-black rounded-full p-1">квартал</button><button class="border-2  w-24 border-black rounded-full p-1">год</button></div>
 				<ClientChart />
+			</div>
+
+			<div class="border-1 rounded-lg" v-if="show == 4">
+				4
+			</div>
+
+			<div class="border-1 rounded-lg" v-if="show == 5">
+				5
 			</div>
 		</div>
    </div>
@@ -82,7 +98,8 @@ export default {
 	 	reports: Array,
 	 },
 	data () {
-    	return {      	
+    	return {    
+			show: 1,  	
 			color: "#875FDA",
 			color1: "#4A32E3",
 			angle: '50',
@@ -102,8 +119,11 @@ export default {
 	},
 	methods: {
 			openCreateModal() {
-		this.$modal.show('create')
+			this.$modal.show('create')
 		},
+		showPage(k) {
+			this.show = k;
+		}
 	}
 }
 </script>

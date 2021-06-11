@@ -120,6 +120,8 @@ class TasksController extends Controller
             'account_id' => Auth::user()->account_id,
         ]);
 
+        $task->start = $task->created_at;
+
         $event = new Event();
         $event->user_id = $request->user_id;
         $event->author_id = Auth::user()->id;

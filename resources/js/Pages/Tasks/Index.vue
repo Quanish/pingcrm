@@ -7,7 +7,7 @@
       </button>
       <div class="flex flex-row gap-2">
 
-        <select v-on:change="changeDate($event)" class="login_button rounded-full text-sm text-white h-8 w-auto pr-2 pl-2 flex justify-center items-center">
+        <select v-on:change="changeDate($event)" class="login_button rounded-full text-sm text-white h-8 w-auto pr-2 pl-2 flex justify-center items-center bg-indigo-500">
           <option>сегодня</option>
           <option>месяц</option>
           <option>год</option>
@@ -53,11 +53,11 @@
               {{ task.title }}
               <p class="text-2xs text-gray-400 mb-2 mt-1">{{ Math.round((new Date(task.deadline) - Date.now()) / (1000 * 3600 * 24)) }} дн. до дедлайна</p>
 
-              <div v-if="new Date(task.deadline) < Date.now()" class="bg-red-500  h-1 w-96 mr-3 rounded-full"></div>
+              <div v-if="computeDays(task.deadline) < 0" class="bg-red-500  h-1 w-96 mr-3 rounded-full"></div>
               <div v-else-if="task.status == 3" class="bg-yellow-400 h-1 w-96 mr-3 rounded-full"></div>
               <div v-else-if="task.status == 2" class="bg-green-400  h-1 w-96 mr-3 rounded-full"></div>
               <div v-else-if="task.status == 1" class="bg-gray-400  h-1 w-96 mr-3 rounded-full"></div>
-              <div v-else class="bg-indigo-500  h-1 w-96 mr-3 rounded-full"></div>
+              <div v-else class="bg-green-500  h-1 w-96 mr-3 rounded-full"></div>
             </inertia-link>
           </td>
           <td class="text-center pt-1 pb-1">
@@ -180,11 +180,17 @@ export default {
       }, 150),
       deep: true,
     },
+    checked: {}
   },
   created() {
     console.log(this.tasks)
   },
   methods: {
+    computeDays(deadline) {
+      var difference = new Date(deadline) - Date.now()
+      var days = difference / (1000 * 3600 * 24)
+      return Math.round(days)
+    },
     date(date) {
       return moment(date).format('LL')
     },
