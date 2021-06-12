@@ -24,7 +24,8 @@
           <div class="border rounded-2xl p-5 pb-3 hover:shadow-md hover:border-blue-400">
             <div class="flex justify-between">
               <div class="flex justify-start gap-3">
-                <img src="img/default-user.png" class="w-12 h-12" />
+                <img v-if="article.logo_path" :src="/storage/+article.logo_path" class="w-12 h-12" />
+                <img v-else src="img/default-user.png" class="w-12 h-12" />
                 <div class="flex flex-col text-sm font-medium text-black">
                   {{ article.name }}
                   <p class="text-sm text-black text-2xs font-normal" v-if="article.access == 1">закрытая группа</p>

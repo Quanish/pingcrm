@@ -65,6 +65,6 @@ class GroupsController extends Controller
         $group = Group::find($request->group_id);
         $group->logo_path = 'groups/'.$image_name;
         $group->save();
-
+        return 'groups/'.$image_name;
     }
 }
