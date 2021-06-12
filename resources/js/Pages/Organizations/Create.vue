@@ -9,7 +9,7 @@
 
           <div class="w-full flex mb-8">
             <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Директор
+             <p class="font-medium leading-6">Компания
                 <span class="text-red-400">*</span> 
               </p>  
             </div>
@@ -22,26 +22,14 @@
 
             <div class="w-full flex mb-8">
               <div class="lg:w-1/4">
-                <p class="font-medium leading-6">Компания
+                <p class="font-medium leading-6">Директор
                   <span class="text-red-400">*</span> 
                 </p>  
               </div>
             <div class="lg:w-3/4">
-              <input type="text"  v-model="form.region" :error="form.errors.region" class="border-b-2 w-full pb-1">
+              <input type="text"  v-model="form.ceo" :error="form.errors.ceo" class="border-b-2 w-full pb-1">
             </div> 
             </div>
-
-            <div class="w-full flex mb-8">
-              <div class="lg:w-1/4">
-                <p class="font-medium leading-6">Город
-                  <span class="text-red-400">*</span> 
-                </p>  
-              </div>
-            <div class="lg:w-3/4">
-              <input type="text"  v-model="form.city" :error="form.errors.city" class="border-b-2 w-full pb-1">
-            </div> 
-            </div>
-
 
 
         </div>
@@ -83,30 +71,19 @@ export default {
       err: '',
       form: this.$inertia.form({
         name: null, 
-        email: null,
-        phone: null,
-        address: null,
-        city: null,
-        region: null,
-        country: null,
-        postal_code: null,
-        responsible: 1
+        ceo: null,
       }),
     }
   },
   methods: {
     store() {
       this.err = ''
-      if(this.form.name == null) {
+      if(this.form.ceo == null) {
         this.err = 'Заполните директора!'
         return null;
       }
-      if(this.form.region == null) {
+      if(this.form.name == null) {
         this.err = 'Заполните компанию!'
-        return null;
-      }
-      if(this.form.city == null) {
-        this.err = 'Заполните город!'
         return null;
       }
       this.form.post(this.route('organizations.store'))

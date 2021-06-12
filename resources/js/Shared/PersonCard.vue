@@ -1,9 +1,9 @@
 <template>
-  <div class="flex">
-    <div class="w-10">
+  <div class="flex cursor-pointer">
+    <div class="w-10"  @click="openProfile">
       <img :src="src" alt="" class="w-10 h-10 rounded-full shadow-sm border-2 border-gray-200">
     </div>
-    <div class="pl-3" v-if="!hide">
+    <div class="pl-3" v-if="!hide"  @click="openProfile">
       <p class="text-black font-normal  text-sm pt-1">{{ fullname }}</p>
       <p class="text-3xs font-light text-gray-400">{{ job }}</p>
     </div>
@@ -17,6 +17,7 @@ export default {
     event: 'change'
   },
   props: {
+    id: { default: 0 },
     src: { default: "/img/default-user.png" },
     fullname: { default: "Имя Фамилия" },
     job: { default: "Должность" },
@@ -35,6 +36,10 @@ export default {
     }
   },
   methods: {
+    openProfile(){
+      this.$page.props.auth.sidebar_profile = true
+      this.$page.props.actions.selected_user = this.id
+    },
     updateInput(event) {
       let isChecked = event.target.checked
       if (this.modelValue instanceof Array) {

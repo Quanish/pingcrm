@@ -33,7 +33,6 @@ class OrganizationsController extends Controller
                         'status' => $organization->status,
                         'deleted_at' => $organization->deleted_at,
                         'status'=> $organization->status, 
-                        'stage' => $organization->stage,
                         'agreement' => $organization->agreement,
                         'responsible' => User::card($organization->responsible_id),
                     ];
@@ -67,6 +66,12 @@ class OrganizationsController extends Controller
 
     public function edit(Organization $organization)
     {
+        $deals = Deal::where('client_id', $organization->id)->get();
+
+        foreach($deals as $deal) {
+            $deal->user = User::card($deal->responsible_id);
+        }
+
         return Inertia::render('Organizations/Edit', [
             'organization' => [
                 'id' => $organization->id,
@@ -81,7 +86,7 @@ class OrganizationsController extends Controller
                 'postal_code' => $organization->postal_code,
                 'deleted_at' => $organization->deleted_at,
                 'contacts' => $organization->contacts()->get(),
-                'deals' => Deal::where('client_id', $organization->id)->get(),
+                'deals' => $deals,
             ],
             'responsible' => User::card($organization->responsible_id),
             'comments' => $organization->comments()

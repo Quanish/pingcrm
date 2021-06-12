@@ -51,7 +51,14 @@ class HandleInertiaRequests extends Middleware
                             'name' => $request->user()->account->name,
                         ],
                     ] : null,
-                    'sidebar' => false
+                    'sidebar' => false,
+                    'sidebar' => false,
+                    'sidebar_profile' => false,
+                ];
+            },
+            'actions' => function() use ($request) {
+                return [
+                    'selected_user' => $request->user()->id
                 ];
             },
             'flash' => function () use ($request) {

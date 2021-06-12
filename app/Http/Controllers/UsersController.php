@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Position;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -59,6 +60,16 @@ class UsersController extends Controller
         ]);
 
         return Redirect::route('users')->with('успешно', 'Пользователь добавлен.');
+    }
+
+    public function getProfile(int $id) {
+        if($id == 0) {
+            $user = Auth::user();
+        } else {
+            $user = User::find($id);
+        }
+        $user->position = Position::where('id', $user->position_id)->first();
+        return $user; //@TODO Select need fields
     }
 
     public function edit(User $user)

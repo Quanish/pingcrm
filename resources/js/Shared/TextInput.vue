@@ -4,7 +4,7 @@
       <label v-if="label" class="form-label font-medium" :for="id">{{ label }}:</label>
     </div>
     <div :class="{ 'w-9/12' : col }">
-      <input :id="id" ref="input" v-bind="$attrs" class="w-full block  pb-1 border-b border-gray-200" :class="{ error: error }" :type="type" :value="value" @input="$emit('input', $event.target.value)" />
+      <input :id="id" ref="input" v-bind="$attrs" class="w-full block  pb-1 border-b-2 border-gray-200" :class="{ error: error }" :type="type" :value="value" @input="$emit('input', $event.target.value)" />
       <div class="w-full mt-1">
         <div v-if="error" class="form-error">{{ error }}</div>
       </div>

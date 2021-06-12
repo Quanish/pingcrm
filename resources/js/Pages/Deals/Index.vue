@@ -53,8 +53,7 @@
 
 	          
 	        </tr>
-	        <tr v-for="deal in test" class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3">
-
+	        <tr v-for="deal in test" class="hover:bg-gray-100 focus-within:bg-gray-100 mb-3 cursor-pointer" @click="openOrganization(deal.client.id)">
 	       	   <td class="px-6 pt-3 pb-3 w-8">
 	       	   		<p class="text-sm">№00000{{deal.id}} {{deal.title}}</p>
 	       	   		<p class="text-2xs"> номер/ детали/ </p><p class="text-2xs">спецификация</p>
@@ -151,8 +150,11 @@ PersonCard,
 	},
 	methods: {
 		openCreateModal() {
-      this.$modal.show('create')
-    },
+			this.$modal.show('create')
+		},
+		openOrganization(id) {
+			window.location = '/organizations/' + id + '/edit';
+		}
 	}
 }
 </script>

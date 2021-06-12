@@ -1,34 +1,63 @@
 <template>
-  <div>
-    <div class="mb-8 flex justify-start max-w-3xl">
-      <h1 class="font-bold text-3xl">
-        <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="route('users')">Users</inertia-link>
-        <span class="text-indigo-400 font-medium">/</span>
-        {{ form.first_name }} {{ form.last_name }}
+  <div class="overflow-y-auto">
+    
+    <div class="mb-8 flex justify-start w-full p-8 mr-2 items-center">
+      <img src="/storage/avatars/kenny.jpg" class="block w-10 h-10 rounded-full mr-4">
+      <h1 class="font-bold text-xl">
+        <p class="text-black">{{ user.last_name + ' ' + user.first_name }}</p>
+        <p class="text-sm">{{ user.position.name }}</p>
       </h1>
-      <img v-if="user.photo" class="block w-8 h-8 rounded-full ml-4" :src="user.photo" />
     </div>
-    <trashed-message v-if="user.deleted_at" class="mb-6" @restore="restore">
-      This user has been deleted.
-    </trashed-message>
-    <div class="bg-white rounded-md shadow overflow-hidden max-w-3xl">
-      <form @submit.prevent="update">
-        <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
-          <text-input v-model="form.first_name" :error="form.errors.first_name" class="pr-6 pb-8 w-full lg:w-1/2" label="First name" />
-          <text-input v-model="form.last_name" :error="form.errors.last_name" class="pr-6 pb-8 w-full lg:w-1/2" label="Last name" />
-          <text-input v-model="form.email" :error="form.errors.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Email" />
-          <text-input v-model="form.password" :error="form.errors.password" class="pr-6 pb-8 w-full lg:w-1/2" type="password" autocomplete="new-password" label="Password" />
-          <select-input v-if="user.owner==1" v-model="form.owner" :error="form.errors.owner" class="pr-6 pb-8 w-full lg:w-1/2" label="Owner">
-            <option :value="true">Yes</option>
-            <option :value="false">No</option>
-          </select-input>
-          <file-input v-model="form.photo" :error="form.errors.photo" class="pr-6 pb-8 w-full lg:w-1/2" type="file" accept="image/*" label="Photo" />
+    
+    <div class="bg-white rounded-md  overflow-hidden w-full px-8">
+
+        <div class="flex flex-wrap mb-3 justify-start mt-3">
+
+					<div class="w-3/12 space-y-6 py-2">
+						<p class="font-medium">Имя</p>
+					</div>
+					<div class="w-9/12 space-y-4 pl-5 py-2">
+						<input type="text" class="border-b-2 w-full pb-1" v-model="user.first_name">		
+					</div>
+          
         </div>
-        <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center">
-          <button v-if="!user.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete User</button>
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Update User</loading-button>
+
+        <div class="flex flex-wrap mb-3 justify-start mt-3">
+
+					<div class="w-3/12 space-y-6 py-2">
+						<p class="font-medium">Фамилия</p>
+					</div>
+					<div class="w-9/12 space-y-4 pl-5 py-2">
+						<input type="text" class="border-b-2 w-full pb-1" v-model="user.last_name">		
+					</div>
+          
         </div>
-      </form>
+
+        <div class="flex flex-wrap mb-3 justify-start mt-3">
+
+					<div class="w-3/12 space-y-6 py-2">
+						<p class="font-medium">Email</p>
+					</div>
+					<div class="w-9/12 space-y-4 pl-5 py-2">
+						<input type="text" class="border-b-2 w-full pb-1" v-model="user.email">		
+					</div>
+          
+        </div>
+
+
+
+        <div class="p-8 -mr-6 -mb-8 flex flex-wrap" v-if="$page.props.auth.user.id == user_id">
+          <text-input v-model="user.first_name" class="pr-6 pb-8 w-full lg:w-1/2" label="First name" />
+          <text-input v-model="user.last_name"  class="pr-6 pb-8 w-full lg:w-1/2" label="Last name" />
+          <text-input v-model="user.email" class="pr-6 pb-8 w-full lg:w-1/2" label="Email" />
+          <text-input v-model="user.password" class="pr-6 pb-8 w-full lg:w-1/2" type="password" autocomplete="new-password" label="Password" />
+          <file-input v-model="user.photo_path"  class="pr-6 pb-8 w-full lg:w-1/2" type="file" accept="image/*" label="Photo" />
+        </div>
+
+        <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center" v-if="$page.props.auth.user.id == user_id">
+          <loading-button class="btn-indigo ml-auto">Сохранить</loading-button>
+        </div>
+  
     </div>
   </div>
 </template>
@@ -40,11 +69,12 @@ import FileInput from '@/Shared/FileInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import TrashedMessage from '@/Shared/TrashedMessage'
+import axios from 'axios'
 
 export default {
   metaInfo() {
     return {
-      title: `${this.form.first_name} ${this.form.last_name}`,
+      title: 'Профиль',
     }
   },
   components: {
@@ -54,38 +84,42 @@ export default {
     TextInput,
     TrashedMessage,
   },
-  layout: Layout,
   props: {
-    user: Object,
+    user_id: Number,
   },
-  remember: 'form',
+  created(){
+    axios.get('/get-profile/' + this.$page.props.actions.selected_user)
+    .then(response => {
+      this.user = response.data
+    })
+
+  },
   data() {
     return {
-      form: this.$inertia.form({
-        _method: 'put',
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-        email: this.user.email,
-        password: null,
-        owner: this.user.owner,
-        photo: null,
-      }),
+      user: {
+        first_name: 'Имя',
+        last_name: 'Фамилия',
+        email: 'test@gmail.com',
+        password: '',
+        photo_path: '',
+        position: {
+          name: 'Должность'
+        },
+        deleted_at: null,
+        processing: null,
+      },
+      
     }
   },
   methods: {
     update() {
-      this.form.post(this.route('users.update', this.user.id), {
-        onSuccess: () => this.form.reset('password', 'photo'),
+      this.user.post(this.route('users.update', this.user.id), {
+        onSuccess: () => this.user.reset('password', 'photo'),
       })
     },
     destroy() {
       if (confirm('Are you sure you want to delete this user?')) {
         this.$inertia.delete(this.route('users.destroy', this.user.id))
-      }
-    },
-    restore() {
-      if (confirm('Are you sure you want to restore this user?')) {
-        this.$inertia.put(this.route('users.restore', this.user.id))
       }
     },
   },

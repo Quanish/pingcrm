@@ -15,22 +15,14 @@ class Organization extends Model
     protected $fillable = [
         'account_id',
         'name',
-        'email',
-        'phone',
-        'address',
-        'city', 
-        'region',
-        'country', 
-        'postal_code', 
+        'seo',
         'status',
-        'stage',
         'responsible_id',
-        'agreement',
     ];
 
 
     public function responsible(){
-        return $this->belongsTo(User::class,'responsible','id');
+        return $this->belongsTo(User::class,'responsible_id','id');
     }
 
     public function contacts()
@@ -40,7 +32,7 @@ class Organization extends Model
 
     public function actions()
     {
-        return $this->hasMany(Action::class, 'client_id', 'id');
+        return $this->hasMany(Action::class, 'id', 'client_id');
     }
 
     public function deals()

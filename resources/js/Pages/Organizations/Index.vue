@@ -15,15 +15,15 @@
           <option value="1">Новые</option>
         </select>
       </div>
-      <img class="h-10 text-center" src="img/message.png" @click="$page.props.auth.sidebar = true" />
+      <img class="h-10 text-center" src="/img/message.png" @click="$page.props.auth.sidebar = true" />
     </div>
 
     <div class="bg-white rounded-2xl  overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
-          <th class="pt-4 px-6 pb-4 pt-4">Название</th>
+          <th class="pt-4 px-6 pb-4 pt-4">Клиент</th>
 
-          <th class="px-6 pb-4 pt-4">Контакты</th>
+          <th class="px-6 pb-4 pt-4">Директор</th>
 
           <th class="px-6 pb-4 pt-4 text-center">Статус</th>
 
@@ -42,7 +42,7 @@
           </td>
           <td class="border-t py-3 px-6 ">
             <inertia-link class=" py-1 flex text-sm font-normal items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              {{ organization.phone }}
+              {{ organization.region }}
             </inertia-link>
           </td>
           <td class="border-t py-3  items-center"> 

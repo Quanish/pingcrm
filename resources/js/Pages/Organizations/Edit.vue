@@ -7,7 +7,7 @@
 
         <div class="flex gap-3 items-center">
           <p class="font-medium">Статус</p>
-          <select class="font-medium text-sm rounded-full px-3  py-1 " :class="'bg-' + statuses[form.status].color + '-500 text-' + statuses[form.status].color +'-700'" @change="changeStatus" v-model="form.status">
+          <select class="font-medium text-sm rounded-full px-3  py-1.5 " :class="'bg-' + statuses[form.status].color + '-500 text-' + statuses[form.status].color +'-700'" @change="changeStatus" v-model="form.status">
             <option value="0">Без статуса</option>
             <option value="3">Вероятные</option>
             <option value="2">Постоянные</option>
@@ -15,15 +15,17 @@
           </select>
         </div>
 
-        <div>
-          
-        </div> 
+          <div>
+            <button class="login_button rounded-full text-white px-4 p-1 text-sm flex justify-center items-center" @click="addAction">
+              <span>+ Новое действие</span>
+            </button>
+          </div>
 
 
       <div>
         
-        <button class="text-white hover:bg-indigo-400 mr-2 bg-indigo-500 rounded-lg p-2 flex gap-3" @click="update">
-          <span>Сохранить</span>
+        <button class="text-white login_button mr-2  rounded-full px-4 p-1 flex gap-3" @click="update">
+          <span class="text-sm">Сохранить</span>
           <svg class="fill-current w-4 h-4" viewBox="0 0 512.007 512.007"><g><path d="m511.927 126.537c-.279-2.828-1.38-5.666-3.315-8.027-.747-.913 6.893 6.786-114.006-114.113-2.882-2.882-6.794-4.395-10.612-4.394-9.096 0-329.933 0-338.995 0-24.813 0-45 20.187-45 45v422c0 24.813 20.187 45 45 45h422c24.813 0 45-20.187 45-45 .001-364.186.041-339.316-.072-340.466zm-166.927-96.534v98c0 8.271-6.729 15-15 15h-19v-113zm-64 0v113h-139c-8.271 0-15-6.729-15-15v-98zm64 291h-218v-19c0-8.271 6.729-15 15-15h188c8.271 0 15 6.729 15 15zm-218 161v-131h218v131zm355-15c0 8.271-6.729 15-15 15h-92c0-19.555 0-157.708 0-180 0-24.813-20.187-45-45-45h-188c-24.813 0-45 20.187-45 45v180h-52c-8.271 0-15-6.729-15-15v-422c0-8.271 6.729-15 15-15h52v98c0 24.813 20.187 45 45 45h188c24.813 0 45-20.187 45-45v-98h2.787l104.213 104.214z"/></g></svg>
         </button>
 
@@ -31,133 +33,178 @@
       </div>
     </div>
     <div class="flex flex-auto overflow-hidden gap-4">
-      <div class="w-4/12  bg-white overflow-y-auto rounded-2xl">
+      <div class="w-3/12  bg-white overflow-y-auto rounded-2xl">
         <div class="bg-white rounded-2xl overflow-hidden p-4">
-          <h2 class=" font-medium text mb-8">Основная информация</h2>
-        
+          <h2 class=" font-medium text mb-8 pb-4 border-b border-gray-300" >Основная информация</h2>
           <form @submit.prevent="update">
             <div class="flex flex-wrap  text-sm">
 
-              <text-input v-model="form.name" :error="form.errors.name" :col="false" class="pr-6 pb-8 w-full " label="Директор" />
-              <text-input v-model="form.region" :error="form.errors.region" :col="false" class="pr-6 pb-8 w-full " label="Компания" />
-              <text-input v-model="form.city" :error="form.errors.city" :col="false" class="pr-6  w-full " label="Город" />
+              <text-input v-model="form.name" :error="form.errors.name" :col="false" class="w-full mb-5" label="Компания" />
+              <text-input v-model="form.ceo" :error="form.errors.ceo" :col="false" class="w-full " label="Директор" />
 
               <div class="mt-3 flex flex-col gap-3" v-if="responsible">
-                <p class="text-black font-medium">Ответственный:</p>
+                <p class="text-black font-medium">Создал карточку:</p>
                 <person-card  :src="'/storage/' + responsible.photo_path" :fullname="responsible.last_name + ' ' + responsible.first_name" :job="responsible.position.name"></person-card>
               </div>
             </div>
           </form>
         </div>
       </div>
-      <div class="w-8/12 overflow-y-auto flex flex-col gap-4">
+      <div class="w-9/12 overflow-y-hidden flex flex-col gap-4">
 
-        <div class="flex flex-2 gap-4 flex-auto">
+        <div class="flex flex-col gap-4 h-full bg-white  rounded-2xl p-4">
+          <div class="flex gap-5 flex-wrap pb-4 border-b border-gray-300 justify-between">
+            <div class="flex gap-5 flex-wrap">
+              <div class=" font-medium text text-black hover:text-indigo-500 cursor-pointer" :class="{'text-indigo-400' : tab == 1}" @click="showTab(1)">Контакты ({{ organization.contacts.length }})</div>
+              <div class=" font-medium text text-black hover:text-indigo-500 cursor-pointer" :class="{'text-indigo-400' : tab == 2}"  @click="showTab(2)" >Сделки ({{ organization.deals.length }})</div>
+              <div class=" font-medium text text-black hover:text-indigo-500 cursor-pointer" :class="{'text-indigo-400' : tab == 3}" @click="showTab(3)">История</div>  
+            </div>
+            <div>
+              <div class="text-sm text-skyblue-500 cursor-pointer hover:text-skyblue-400" v-show="tab == 1" @click="showCreateContactModal">+ Новый контакт</div>
+              <div class="text-sm text-skyblue-500 cursor-pointer hover:text-skyblue-400" v-show="tab == 2" @click="showCreateDealModal">+ Новая сделка</div>
+              <!-- <div class="text-sm text-skyblue-500 cursor-pointer hover:text-skyblue-400" v-show="tab == 3" @click="null">+ Новое действие</div> -->
+            </div>
+          </div>
+          <div class="overflow-y-auto">  
+            <div v-show="tab == 1">
+              <!--  -->
 
-          <div class="w-6/12 bg-white overflow-y-auto rounded-2xl p-4">
-            <div class="flex justify-between items-center mb-8">
-              <h2 class=" font-medium text ">Контакты</h2>
-              <button class="text-sm text-skyblue-400 hover: text-skyblue-500" @click="showCreateContactModal">+ Новый контакт</button>
+                <div class="xxxxxx1">
+                  <div class="flex flex-col gap-4">
+                    <div v-for="cont in organization.contacts" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3 bg-gray-100" :key="cont.id">
+
+                      <div class="flex flex-col gap-0 mb-2">
+                        <div class="text-sm font-medium text-indigo-500">ID Контакта #{{ cont.id }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.first_name !== undefined || cont.last_name !== undefined">
+                        <div class="text-sm font-medium text-gray-500">Контактное лицо</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.last_name + ' ' + cont.first_name }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.phone != undefined">
+                        <div class="text-sm font-medium text-gray-500">Телефон</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.phone }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.email != undefined">
+                        <div class="text-sm font-medium text-gray-500">Email</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.email }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.address != undefined">
+                        <div class="text-sm font-medium text-gray-500">Адрес</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.address }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.city != undefined">
+                        <div class="text-sm font-medium text-gray-500">Город</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.city }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.region != undefined">
+                        <div class="text-sm font-medium text-gray-500">Регион</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.region }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.country != undefined">
+                        <div class="text-sm font-medium text-gray-500">Страна</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.country }}</div>
+                      </div>
+
+                      <div class="flex flex-row gap-3 justify-between" v-if="cont.postal_code != undefined">
+                        <div class="text-sm font-medium text-gray-500">Почтовый индекс</div>
+                        <div class="text-sm font-normal text-black text-right">{{ cont.postal_code }}</div>
+                      </div>
+                      
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+              <!--  -->
+            </div>
+            <div  v-show="tab == 2">
+            <!--  -->
+
+              <div class="xxxxx2">
+
+                <div class="flex flex-col gap-4">
+                  <div v-for="deal in organization.deals" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3 bg-gray-100" :key="deal.id">
+
+                    <div class="flex flex-row justify-between gap-0 mb-2">
+                      <div class="text-sm font-medium text-indigo-500">ID Сделки # {{ deal.id }}</div>
+                      <p class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'">  
+                        {{ dealStatuses[deal.status].name }}
+                      </p>
+                    </div>
+                    
+                    <person-card  :src="'/storage/' + deal.user.photo_path" :fullname="deal.user.last_name + ' ' + deal.user.first_name" :job="deal.user.position.name"></person-card>
+
+                    <div class="flex flex-row gap-3 justify-between" v-if="deal.name != undefined">
+                      <div class="text-sm font-medium text-gray-500">Название</div>
+                      <div class="text-sm font-normal text-black text-right">{{ deal.name }}</div>
+                    </div>
+
+                    <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
+                      <div class="text-sm font-medium text-gray-500">Сумма</div>
+                      <div class="text-sm font-normal text-black text-right">{{ deal.sum }}</div>
+                    </div>
+
+                    <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
+                      <div class="text-sm font-medium text-gray-500">Тип</div>
+                      <div class="text-sm font-normal text-black text-right">{{ deal.type }}</div>
+                    </div>
+
+                    <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
+                      <div class="text-sm font-medium text-gray-500">Примечания</div>
+                      <div class="text-sm font-normal text-black text-right">{{ deal.comment }}</div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+              </div>
+
+
               
+              <!--  -->
             </div>
+            <div  v-show="tab == 3">
+             <!--  -->
 
-            <div class="flex flex-col gap-4">
-              <div v-for="cont in organization.contacts" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
-
-                <div class="flex flex-col gap-0 mb-2">
-                  <div class="text-xs font-medium text-indigo-500">ID Контакта #{{ cont.id }}</div>
+              <div class="flex flex-1">
+                <div class="w-full bg-white overflow-y-auto rounded-2xl">
+              
+                  <div class="">
+                    <div v-if="!comments.length" class="text-xs">Пока ничего нет...</div>
+                    <!-- <div v-for="comment in comments" class="mt-3">
+                      <div>{{comment.user.first_name}}</div>
+                      <div>{{comment.comment}}</div>
+                    </div> -->
+                    <!-- <div class="">
+                      <form @submit.prevent="comment">
+                        <text-input id="message" class="pr-6 pb-8 lg:w-9/12" />
+                        <loading-button type="submit" class="btn-indigo rounded-full mt-3">Оставить комментарий</loading-button>
+                      </form>
+                    </div> -->
+                  </div>
                 </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="cont.first_name !== undefined || cont.last_name !== undefined">
-                  <div class="text-xs font-medium text-gray-500">Контактное лицо</div>
-                  <div class="text-xs font-normal text-black text-right">{{ cont.last_name + ' ' + cont.first_name }}</div>
-                </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="cont.phone != undefined">
-                  <div class="text-xs font-medium text-gray-500">Телефон</div>
-                  <div class="text-xs font-normal text-black text-right">{{ cont.phone }}</div>
-                </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="cont.address != undefined">
-                  <div class="text-xs font-medium text-gray-500">Адрес</div>
-                  <div class="text-xs font-normal text-black text-right">{{ cont.address }}</div>
-                </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="cont.email != undefined">
-                  <div class="text-xs font-medium text-gray-500">Email</div>
-                  <div class="text-xs font-normal text-black text-right">{{ cont.email }}</div>
-                </div>
-                
               </div>
 
+
+              
+              <!--  -->
             </div>
           </div>
-
-          <div class="w-6/12 bg-white overflow-y-auto rounded-2xl p-4">
-            <div class="flex justify-between items-center mb-8">
-              <h2 class=" font-medium text ">Сделки</h2>
-              <button class="text-sm text-skyblue-400 hover: text-skyblue-500" @click="showCreateDealModal">+ Новая сделка</button>
-            </div>
-
-            <div class="flex flex-col gap-4">
-              <div v-for="deal in organization.deals" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
-
-                <div class="flex flex-row justify-between gap-0 mb-2">
-                  <div class="text-xs font-medium text-indigo-500">ID Сделки # {{ deal.id }}</div>
-                  <p class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'">  
-                    {{ dealStatuses[deal.status].name }}
-                  </p>
-                </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="deal.name != undefined">
-                  <div class="text-xs font-medium text-gray-500">Название</div>
-                  <div class="text-xs font-normal text-black text-right">{{ deal.name }}</div>
-                </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
-                  <div class="text-xs font-medium text-gray-500">Сумма</div>
-                  <div class="text-xs font-normal text-black text-right">{{ deal.sum }}</div>
-                </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
-                  <div class="text-xs font-medium text-gray-500">Тип</div>
-                  <div class="text-xs font-normal text-black text-right">{{ deal.type }}</div>
-                </div>
-
-                <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
-                  <div class="text-xs font-medium text-gray-500">Примечания</div>
-                  <div class="text-xs font-normal text-black text-right">{{ deal.comment }}</div>
-                </div>
-
-
-              </div>
-
-            </div>
-          </div>
-
         </div>
 
 
-        <div class="flex flex-1">
-          <div class="w-full bg-white overflow-y-auto rounded-2xl p-4">
-            <div class="flex justify-between items-center mb-8">
-              <h2 class=" font-medium text ">История</h2>
-            </div>
-            <div class="">
-              <div v-if="!comments.length" class="text-xs">Пока ничего нет...</div>
-              <!-- <div v-for="comment in comments" class="mt-3">
-                <div>{{comment.user.first_name}}</div>
-                <div>{{comment.comment}}</div>
-              </div> -->
-              <!-- <div class="">
-                <form @submit.prevent="comment">
-                  <text-input id="message" class="pr-6 pb-8 lg:w-9/12" />
-                  <loading-button type="submit" class="btn-indigo rounded-full mt-3">Оставить комментарий</loading-button>
-                </form>
-              </div> -->
-            </div>
-          </div>
-        </div>
+
+        
         
 
 
@@ -221,29 +268,10 @@ export default {
     return {
       form: this.$inertia.form({
         name: this.organization.name,
-        email: this.organization.email,
-        phone: this.organization.phone,
-        address: this.organization.address,
-        city: this.organization.city,
-        region: this.organization.region,
-        country: this.organization.country,
+        ceo: this.organization.ceo,
         status: this.organization.status,
-        postal_code: this.organization.postal_code,
-        responsible: this.organization.responsible,
       }),
-      contact: {
-        'first_name': '',
-        'last_name': '',
-        'organization_id': '',
-        'account_id': '',
-        'email': '',
-        'phone': '',
-        'address': '',
-        'city': '',
-        'region' : '',
-        'country' : '',
-        'postal_code': '',
-      },
+      tab: 1,
       dealStatuses: {
 				0: {
 					name: 'Отменена',
@@ -296,11 +324,17 @@ export default {
     }
   },
   methods: {
+    showTab(i){
+      this.tab = i
+    },
     comment(){
       this.form.post(this.route('organizations.comment',{
         message: message.value.toString(),
         id:this.organization.id
       }))
+    },
+    addAction() {
+
     },
     update() {
       this.form.put(this.route('organizations.update', this.organization.id))
