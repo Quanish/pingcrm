@@ -225,7 +225,7 @@ Route::get('calendar', [CalendarController::class, 'calendar'])
     ->name('calendar')
     ->middleware('auth');
 
-Route::put('tasks/{task}',[TasksController::class, 'accept'])
+Route::put('tasks/',[TasksController::class, 'accept'])
 ->name('tasks.accept')
 ->middleware('auth');
 

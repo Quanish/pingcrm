@@ -245,7 +245,7 @@ export default {
       comment: '',
       coms: {},
       form: this.$inertia.form({
-        status: this.task.status,
+       
       }),
       statuses: {
         0: {
@@ -372,7 +372,12 @@ export default {
     },
 
     accept(status) {
-      this.form.put(this.route('tasks.accept', this.task.id))
+     
+      this.form.put(this.route('tasks.accept',
+        {
+        task: this.task.id,
+        status: status
+      }))
     },
 
     

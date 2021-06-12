@@ -238,7 +238,9 @@ export default {
     },
     computed: {
         orderedEvents: function () {
+            console.log(this.events);
             return _.orderBy(this.events, 'created_at','desc')
+
         },
     },
     methods: {

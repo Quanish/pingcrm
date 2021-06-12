@@ -33,14 +33,32 @@ class TasksController extends Controller
        
 	}
 
-    public function accept(Task $task){
-        if($task->status == 0) $status = 2;
-        if($task->status == 2) $status = 3;
-        if($task->status == 3) $status = 1;
+    public function accept(Request $request){
+
+        //dd($request->all());
+        $task = Task::find($request->task);
 
         $task->update([
-            'status' => $status,
+            'status' => $request->status,
         ]);
+
+        $text_warning = "";Auth::user()->first_name." принял задачу : ". $task->title;
+
+        if($request->status == 2){//принять
+             $text_warning = Auth::user()->first_name." принял задачу : ". $task->title;           
+        }
+        else if($request->status == 3){//на доработку
+             $text_warning = Auth::user()->first_name." отправил на доработку : ". $task->title;
+        }else{//выполнено
+             $text_warning = Auth::user()->first_name." завершил : ". $task->title;
+        }
+        
+         $event = new Event();
+            $event->user_id = Auth::user()->id;
+            $event->author_id = $task->auditor_id;
+            $event->text =  $text_warning;
+            $event->task_id = $task->id;
+            $event->save();
 
         return redirect('tasks/' . $task->id)->with('success', 'Задание принято.');
     }
