@@ -58,6 +58,10 @@ Route::post('groups',[GroupsController::class,'store'])
 ->name('groups.store')
 ->middleware('auth');
 
+Route::post('groups/upload',[GroupsController::class,'upload'])
+->name('upload')
+->middleware('auth');
+
 
 // Auth
 

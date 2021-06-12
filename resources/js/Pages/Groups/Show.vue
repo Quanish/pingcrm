@@ -4,7 +4,11 @@
         <div class="w-5/12 mb-5">
             <input type="text" disabled class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" value="Название группы">
         </div>
-
+        <div class="flex flex-row gap-8 w-2/12 justify-end">
+            <button @click="showAddUserDialog" class="text-sm leading-8 px-2 login_button rounded-full text-white h-8 w-full text-xs justify-center items-center font-light">
+                <span>Добавить участника</span>
+            </button>
+        </div>
         <div class="flex flex-row gap-8 w-7/12 justify-end">
 
             <div>
@@ -27,25 +31,24 @@
                 <hr class="mt-3 h-2 border-gray-200">
 
                 <div class="flex gap-4 mt-4 ">
-                    <div class="w-5/12">
-                        <div class="bg-gray-100 rounded-2xl relative w-full h-40"></div>
+                    <div class="w-12/12">
+                        <!--<div class="bg-gray-100 rounded-2xl relative w-full h-40"></div>
                         <div class="p-4 rounded-2xl border border-gray-200 my-3 h-28">
                             <p class="text-gray-200 text-xs">Описание группы</p>
-                        </div>
-                        <button @click="showAddUserDialog" class="text-sm leading-8 px-2 login_button rounded-full text-white h-8 w-full text-xs justify-center items-center font-light">
-                            <span>Добавить</span>
-                        </button>
-                        <button @click="tech" class="mt-3 text-sm leading-8 px-2 login_button rounded-full text-white h-8 w-full  text-xs flex justify-center items-center font-light">
+                        </div> -->
+                       
+                        <!--<button @click="tech" class="mt-3 text-sm leading-8 px-2 login_button rounded-full text-white h-8 w-full  text-xs flex justify-center items-center font-light">
                             <span>Администраторы</span>
-                        </button>
-                    </div>
-                    <div class="w-7/12 overflow-auto ">
+                        </button>-->
+                        <div class="w-12/12 overflow-auto ">
 
                         <div class="my-2" v-for="member in members">
                             <person-card :src="'/storage/' + member.photo_path" :fullname="member.name" :job="member.position.name"></person-card>
                         </div>
 
                     </div>
+                    </div>
+                    
                 </div>
 
             </div>
@@ -57,6 +60,15 @@
                     <p class="font-medium">Информация для группы</p>
                 </div>
                 <div class="flex-auto py-4">
+                    <div class="w-6/12 h-32 bg-gray-100 rounded-lg" v-on:mouseover="showLogoDialog" v-on:mouseleave="hideLogoDialog">
+                        <label v-if="upload" class="flex flex-col items-center px-4 py-6 bg-transparent text-blue rounded-lg tracking-wide uppercase">
+                            <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                            </svg>
+                            <span class="mt-2 text-base leading-normal">Select a file</span>
+                            <input id="#file" type='file' class="hidden" @change="handleFileUpload"/>
+                        </label>
+                    </div>
                     <div>
                         Описание группы
                     </div>
@@ -64,10 +76,10 @@
             </div>
         </form>
 
-        <div class="w-3/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
+        <!--<div class="w-3/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
             <div class="flex flex-row justify-between mb-1">
                 <p class="font-medium">Файлы</p>
-                <!-- <div class="flex flex-row gap-2">
+                 <div class="flex flex-row gap-2">
             <div class="relative inline-flex">
                 <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white"  viewBox="0 0 412 232">
                     <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" />
@@ -80,7 +92,7 @@
                 </select>
             </div>
             <p class="task-button rounded-full text-white w-6 h-6 flex pl-2 items-center text-xs">2</p>
-          </div> -->
+          </div> 
             </div>
             <hr class="mt-3">
             <div class="mt-3">
@@ -103,14 +115,14 @@
                 </div>
             </div>
 
-        </div>
+        </div>-->
     </div>
 
     <!--Модалки групп-->
     <modal name="addUser">
         <members :members="members" :group_id="group.id"></members>
     </modal>
-
+   
 </div>
 </template>
 
@@ -148,6 +160,8 @@ export default {
     remember: 'form',
     data() {
         return {
+            logo: null,
+            upload: false,
             message: "",
             form: this.$inertia.form({
                 status: 1,
@@ -242,6 +256,26 @@ export default {
         accept() {
             this.form.status = 'в работе';
             this.form.put(this.route('tasks.accept', this.task.id))
+        },
+        showLogoDialog(){
+            this.upload = true;
+        },
+        hideLogoDialog(){
+            this.upload = false;
+        },
+        handleFileUpload(event){
+            
+            
+            
+            this.logo = event.target.files[0];  
+            
+            const fd = new FormData();
+            fd.append('image', this.logo);
+            fd.append('group_id', this.group.id);
+            axios.post('upload',fd)
+            .then(res => {
+                console.log(res);
+            });
         },
     },
 }
