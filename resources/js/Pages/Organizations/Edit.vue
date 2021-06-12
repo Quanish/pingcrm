@@ -7,8 +7,19 @@
 
         <div class="flex gap-3 items-center">
           <p class="font-medium">Статус</p>
-          <p class="font-medium text-sm rounded-full px-3 text-white py-1 bg-green-400 text-green-600" :class="'bg-' + statuses[form.status].color + '-500'">{{ statuses[form.status].name }}</p>
+          <select class="font-medium text-sm rounded-full px-3  py-1 " :class="'bg-' + statuses[form.status].color + '-500 text-' + statuses[form.status].color +'-700'" @change="changeStatus" v-model="form.status">
+            <option value="0">Без статуса</option>
+            <option value="3">Вероятные</option>
+            <option value="2">Постоянные</option>
+            <option value="1">Новые</option>
+          </select>
         </div>
+
+        <div>
+          
+        </div> 
+
+
       <div>
         
         <button class="text-white hover:bg-indigo-400 mr-2 bg-indigo-500 rounded-lg p-2 flex gap-3" @click="update">
@@ -175,6 +186,7 @@ import PersonCard from '@/Shared/PersonCard'
 import TrashedMessage from '@/Shared/TrashedMessage'
 import CreateDeal from '../Deals/Create'
 import CreateContact from './CreateContact'
+import axios from 'axios'
 
 
 export default {
@@ -298,6 +310,20 @@ export default {
     },
     showCreateContactModal() {
       this.$modal.show('create-contact');
+    },
+    changeStatus() {
+      axios.post('client-status', {
+        status: this.form.status,
+        id:this.organization.id
+      }).then(response => {
+        // this.$notify({
+        //                 group: 'foo',
+        //                 title: 'Успешно',
+        //                 type: 'success',
+        //                 duration: 5000,
+        //                 text: this.$page.props.flash.success
+        //             });
+      })
     },
     restore() {
       if (confirm('Are you sure you want to restore this organization?')) {

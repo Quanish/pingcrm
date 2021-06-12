@@ -80,7 +80,7 @@ class OrganizationsController extends Controller
                 'status' => $organization->status,
                 'postal_code' => $organization->postal_code,
                 'deleted_at' => $organization->deleted_at,
-                'contacts' => $organization->contacts()->orderByName()->get()->map->only('id', 'name', 'city', 'phone'),
+                'contacts' => $organization->contacts()->get(),
                 'deals' => Deal::where('client_id', $organization->id)->get(),
             ],
             'responsible' => User::card($organization->responsible_id),

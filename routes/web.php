@@ -327,6 +327,7 @@ Route::get('get-users', [UsersController::class, 'getUsers']);
 Route::post('save-users-to-group', [GroupsController::class, 'saveUsers']);
 
 Route::post('add-contact', [OrganizationsController::class, 'addContact']);
+Route::post('client-status', [OrganizationsController::class, 'changeStatus']);
 
 
 // chat

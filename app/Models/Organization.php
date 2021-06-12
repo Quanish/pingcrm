@@ -38,6 +38,11 @@ class Organization extends Model
         return $this->hasMany(Contact::class);
     }
 
+    public function actions()
+    {
+        return $this->hasMany(Action::class, 'client_id', 'id');
+    }
+
     public function deals()
     {
         return $this->hasMany(Deal::class);
