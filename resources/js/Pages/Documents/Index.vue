@@ -8,6 +8,9 @@
 			<button @click="openCreateModal" class="ml-5  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</button>
 			<!--<a :href="route('documents.create')" class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</a>-->
 			<div class="w-64 flex justify-start"></div>
+			<div>
+				<input class="p-4 h-10 border border-gray-200 rounded-lg w-full" v-model="search_key" placeholder="Поиск"  @keyup="search"/>
+			</div>
     	<div ><img class="h-10" src="/img/message.png" @click="$page.props.auth.sidebar = true"></div>
 		</div>
     	
@@ -66,7 +69,7 @@
 	          
 	        </tr>
 
-	        <tr v-for="document in documents" class="text-center hover:bg-gray-100 focus-within:bg-gray-100 mb-3" :key="document.id">
+	        <tr v-for="document in my_documents" class="text-center hover:bg-gray-100 focus-within:bg-gray-100 mb-3" :key="document.id">
 	        	<td class="px-6 pt-3 pb-3 w-8">
 					<div class="flex">
 						<p class="text-sm">{{document.name}}</p>
@@ -123,6 +126,8 @@ export default {
 			color1: "#4A32E3",
 			angle: '50',
 			icon: "download",
+			search_key: "",
+			my_documents: this.documents,
 		}
   	},
   	computed:{
@@ -132,6 +137,11 @@ export default {
 		
 	},
 	methods: {
+		search(){
+			var key = this.search_key.toLowerCase();
+			this.my_documents = this.documents.filter((x) => x.name.toLowerCase().search(key) >= 0);
+
+		},
 		openCreateModal() {
 		this.$modal.show('create')
 		},
