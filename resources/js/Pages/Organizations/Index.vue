@@ -15,7 +15,7 @@
           <option value="1">Новые</option>
         </select>
       </div>
-      <img class="h-10 text-center" src="img/message.png" />
+      <img class="h-10 text-center" src="img/message.png" @click="$page.props.auth.sidebar = true" />
     </div>
 
     <div class="bg-white rounded-2xl  overflow-x-auto">

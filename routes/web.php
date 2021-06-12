@@ -18,6 +18,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\DocumentsController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\SubtasksController;
 
 use Illuminate\Support\Facades\Route;
@@ -324,3 +325,12 @@ Route::resource('categories',CategoryController::class);
 
 Route::get('get-users', [UsersController::class, 'getUsers']);
 Route::post('save-users-to-group', [GroupsController::class, 'saveUsers']);
+
+Route::post('add-contact', [OrganizationsController::class, 'addContact']);
+
+
+// chat
+
+Route::get('chat', [ChatController::class, 'index'])
+    ->name('chat')
+    ->middleware('auth');

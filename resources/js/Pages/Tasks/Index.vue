@@ -7,20 +7,20 @@
       </button>
       <div class="flex flex-row gap-2">
 
-        <select v-on:change="changeDate($event)" class="login_button rounded-full text-sm text-white h-8 w-auto pr-2 pl-2 flex justify-center items-center bg-indigo-500">
+        <!-- <select v-on:change="changeDate($event)" class="login_button rounded-full text-sm text-white h-8 w-auto pr-2 pl-2 flex justify-center items-center bg-indigo-500">
           <option>сегодня</option>
           <option>месяц</option>
           <option>год</option>
           <svg class="w-2 h-2 fill-white md:ml-2" viewBox="0 0 961.243 599.998">
             <path d="M239.998 239.999L0 0h961.243L721.246 240c-131.999 132-240.28 240-240.624 239.999-.345-.001-108.625-108.001-240.624-240z" />
           </svg>
-        </select>
+        </select> -->
 
 
         <p class="login_button rounded-full text-white w-8 h-8 flex justify-center items-center text-sm leading-6">{{ tasks.total }}</p>
       </div>
-      <checkbox label="срочно" v-model="checked" @change="check($event)" />
-      <img class="h-10" src="img/message.png" />
+      <!-- <checkbox label="срочно" v-model="checked" @change="check($event)" /> -->
+      <img class="h-10" src="img/message.png" @click="$page.props.auth.sidebar = true"/>
     </div>
 
 

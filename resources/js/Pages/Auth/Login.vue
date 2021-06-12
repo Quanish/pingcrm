@@ -42,10 +42,10 @@
           <div class="flex flex-col gap-4 mt-4 align-items-center">
             <button :loading="form.processing" class="login_button rounded-full text-white h-12 mb-2 hover:bg-indigo-600" type="submit">Войти</button>
 
-            <a class="hover:bg-gray-200 bg-gray-100 h-12 lh-12 rounded-full text-gray-500  flex justify-center inline-block items-center" tabindex="-1" @click="forget"><p>Забыли пароль?</p></a>
+            <!-- <a class="hover:bg-gray-200 bg-gray-100 h-12 lh-12 rounded-full text-gray-500  flex justify-center inline-block items-center" tabindex="-1" @click="forget"><p>Забыли пароль?</p></a>
 
             <center class="text-gray-500">или</center>
-            <a class="hover:bg-gray-600 rounded-full h-12 bg-gray-500 text-white flex justify-center items-center" tabindex="-1" @click="post"><p>Войти через почту</p></a>
+            <a class="hover:bg-gray-600 rounded-full h-12 bg-gray-500 text-white flex justify-center items-center" tabindex="-1" @click="post"><p>Войти через почту</p></a> -->
           </div>  
         </div>
       </form>

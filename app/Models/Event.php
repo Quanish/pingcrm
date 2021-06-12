@@ -11,6 +11,13 @@ class Event extends Model
 {
     // добавить таблицу event_types
     // добавить поля event_type_id, event_model_id
+
+    const ACCEPTED_TASK = 1;
+    const FINISHED_TASK = 2;
+
+
+
+
 	use SoftDeletes;
     protected $fillable = [
         'user_id',

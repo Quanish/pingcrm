@@ -3,7 +3,7 @@
     <div class="flex flex-row justify-between items-start">
         <h1 class="mb-8 font-bold text-2xl">Добрый день, <span>{{ $page.props.auth.user.first_name}}</span>
             <span class="hidden md:inline">{{ $page.props.auth.user.last_name }}</span>!</h1>
-        <button ><img class="h-10" src="img/message.png"></button>
+        <button ><img class="h-10" src="img/message.png" @click="$page.props.auth.sidebar = true"></button>
     </div>
 
 
@@ -76,19 +76,17 @@
             </div>
          
             <div class=" overflow-y-auto px-6 flex-auto pb-12 mb-2">
-                <div v-for="meeting in mymeet">
+                <div v-for="meeting in xmeetings">
                     <!-- <p class="notification">{{meeting.description}}</p> -->
                 </div>
             </div>
-            <div class="flex absolute px-4 w-full bottom-0 bg-gradient-to-b from-transparent to-white">
-                <button class="my-4  w-full block  text-black items-center rounded-full h-8 px-7 text-xs leading-7 bg-gray-200 hover:bg-gray-300" @click="showCreateTaskModal('встреча')">Добавить</button>
-            </div> 
         </div>
 
 
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 mr-0 overflow-y-hidden flex flex-col relative flex-auto shadow-sm">
-            <div class="flex justify-start px-6 py-4 border-b border-gray-100 ">
+            <div class="flex justify-between px-6 py-4 border-b border-gray-100 ">
                 <p class="font-medium text h-7 leading-loose">События</p>  
+                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{ orderedEvents.length }}</p>
             </div>
             <div class="flex-auto overflow-y-auto px-6 pb-4 flex-auto">
                 <transition-group name="fade" tag="p">
@@ -161,7 +159,7 @@ export default {
             sortTasksBy: 0,
             description: "",
             myworks: this.tasks.filter(x => x.subtask != ''),
-            mymeet: [],
+            xmeetings: [],
             taskCounter: 0,
             workCounter: 0,
             meetCounter: 0,
@@ -194,6 +192,7 @@ export default {
     },
     props: {
         tasks: Array,
+        meetings: Array,
         events: Array,
         subtasks: Array,
     },
@@ -206,9 +205,9 @@ export default {
             this.taskCounter++;
         } 
     
-        var meet = this.tasks.filter(x => x.type == 'встреча');
+        var meet = this.tasks.filter(x => x.type == 2);
         for (var i = meet.length - 1; i >= 0; i--) {
-            this.mymeet.push(meet[i]);
+            this.xmeetings.push(meet[i]);
             this.meetCounter++;
         }
     },
@@ -287,16 +286,16 @@ export default {
             var today = new Date(Date.now());
             switch (String(event.target.value)) {
                 case "сегодня":
-                    this.mymeet = this.tasks.filter(x => x.type == "встреча" && new Date(x.deadline) > today && new Date(x.created_at) < today);
+                    this.xmeetings = this.tasks.filter(x => x.type == "встреча" && new Date(x.deadline) > today && new Date(x.created_at) < today);
                     break;
                 case "месяц":
-                    this.mymeet = this.tasks.filter(x => x.type == "встреча" && new Date(x.deadline).getMonth() == today.getMonth() && new Date(x.created_at).getMonth() == today.getMonth());
+                    this.xmeetings = this.tasks.filter(x => x.type == "встреча" && new Date(x.deadline).getMonth() == today.getMonth() && new Date(x.created_at).getMonth() == today.getMonth());
                     break;
                 case "год":
-                    this.mymeet = this.tasks.filter(x => x.type == "встреча" && new Date(x.deadline).getFullYear() == today.getFullYear() && new Date(x.created_at).getFullYear() == today.getFullYear());
+                    this.xmeetings = this.tasks.filter(x => x.type == "встреча" && new Date(x.deadline).getFullYear() == today.getFullYear() && new Date(x.created_at).getFullYear() == today.getFullYear());
                     break;
                 default:
-                    this.mymeet = this.tasks.filter(x => x.type == 'встреча');
+                    this.xmeetings = this.tasks.filter(x => x.type == 'встреча');
                     break;
             }
         },

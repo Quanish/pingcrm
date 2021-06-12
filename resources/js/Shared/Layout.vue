@@ -87,14 +87,20 @@
             <div class="md:flex md:flex-grow md:overflow-hidden " >
 
                 <div class="md:flex-1 px-4 pt-6 pb-4 md:px-10 md:overflow-y-auto bg-cover bg-gray-100" scroll-region>
-                    
+                    <!-- style="background: #f9fafb" -->
                     <slot />
                 </div> 
 
             </div>
 
             <notifications group="foo" position="bottom right" />
-
+            <div class="sidebar fixed  w-screen h-screen overflow-hidden flex  bg-black bg-opacity-50"
+                :class="[$page.props.auth.sidebar ? 'left-0' : 'left-full']"
+                v-if="$page.props.auth.sidebar" >
+                <div class="w-1/5 cursor-pointer" @click="$page.props.auth.sidebar = false"></div>
+                <o-chat class="w-4/5 bg-white duration-300 duration-300 relative" :class="[$page.props.auth.sidebar ? 'left-0' : 'left-full']"/>
+            </div>
+            
         </div>
     </div>
 </div>
@@ -106,11 +112,17 @@
 <script>
 import Icon from '@/Shared/Icon'
 import Dropdown from '@/Shared/Dropdown'
+import OChat from '@/Shared/Chat'
 
 export default {
     components: {
         Dropdown,
         Icon,
+        OChat,
+        
+    },
+    created() {
+
     },
     watch: {
         '$page.props.flash': {

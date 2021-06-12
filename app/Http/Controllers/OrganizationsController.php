@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organization;
 use App\Models\Comment;
 use App\Models\User;
+use App\Models\Deal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -46,23 +47,21 @@ class OrganizationsController extends Controller
 
     public function store(ObjectRequest $request)
     {
-        
-        Auth::user()->account->organizations()->create(
-            Request::validate([
-                'name' => ['required', 'max:100'],
-                'email' => ['nullable', 'max:50'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'], 
-                'responsible' => ['nullable', 'max:25'],            
-            ])
+        $organization = Organization::create([
+            'name' => $request->name,
+            'email'  => ' ',
+            'phone'  => ' ',
+            'address'  => ' ',
+            'city' => $request->city,
+            'region'  => $request->region,
+            'country'  => ' ',
+            'status' => 1,
+            'account_id' => 1,
+            'postal_code' => ' ',
+            'responsible_id' => Auth::user()->id, 
+        ]);
 
-        );
-
-        return Redirect::route('organizations')->with('успешно', 'Клиент создан.');
+        return $this->edit($organization);
     }
 
     public function edit(Organization $organization)
@@ -81,7 +80,9 @@ class OrganizationsController extends Controller
                 'postal_code' => $organization->postal_code,
                 'deleted_at' => $organization->deleted_at,
                 'contacts' => $organization->contacts()->orderByName()->get()->map->only('id', 'name', 'city', 'phone'),
+                'deals' => Deal::where('client_id', $organization->id)->get(),
             ],
+            'responsible' => User::card($organization->responsible_id),
             'comments' => $organization->comments()
         ]);
     }
@@ -146,5 +147,26 @@ class OrganizationsController extends Controller
                         'responsible' => User::card($organization->responsible_id),
                     ];
                 });
+    }
+
+
+    public function addContact(ObjectRequest $request) {
+        $item = Organization::find($request->id);
+
+        if($item) {
+            Contact::create([
+                'first_name' => $request->contact['first_name'],
+                'last_name' => $request->contact['last_name'],
+                'organization_id' => $request->id,
+                'account_id ' => 1,
+                'email' => $request->contact['email'],
+                'phone' => $request->contact['phone'],
+                'address' => $request->contact['address'],
+                'city' => $request->contact['city'],
+                'region' => $request->contact['region'],
+                'country' => $request->contact['country'],
+                'postal_code' => $request->contact['postal_code'],
+            ]);
+        }
     }
 }

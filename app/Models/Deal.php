@@ -30,6 +30,7 @@ class Deal extends Model
         'type',
         'status',
         'client_id',
+        'responsible_id',
         'file_id',
 		'comment'
     ];
@@ -44,5 +45,10 @@ class Deal extends Model
 	public function client()
     {
     	return $this->belongsTo(Organization::class);
+    }
+
+    public function responsible()
+    {
+    	return $this->belongsTo(User::class);
     }
 }

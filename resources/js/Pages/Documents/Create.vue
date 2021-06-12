@@ -1,36 +1,25 @@
 <template>
-  <div class="py-6 px-6 bg-white rounded-lg overflow-y-auto overflow-x-hidden h-full">
-    <div class="mb-8">
+  <form class="py-6 px-6 bg-white rounded-lg overflow-y-auto overflow-x-hidden h-full">
+    <div class="mb-8 font-medium">
       Новый документ
     </div>
     <div class="space-y-4">
-      <div class="flex"><p class="w-1/6">Название<span class="text-red-400">*</span></p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
-      <div class="flex"><p class="w-1/6">Тип<span class="text-red-400">*</span></p>
-        <div class="flex w-full border-b-2 justify-between">
-          <select class="bg-gray-100 rounded-full p-1 ">
-            <option>
-              презентация
-            </option>
-
-            <option>
-              документ
-            </option>
-
-            <option>
-              архив
-            </option>
-          </select>
-          
-          <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" class="opacity-0 w-4/6 w-full pb-1">
-          <img src="/img/download.svg" />
+      <div class="flex">
+        <p class="w-1/6">Название<span class="text-red-400">*</span></p>
+        <input type="text" class="flex-auto border-b-2 w-full pb-1">
+        <div class="w-6 relative">
+            <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" class="opacity-0  w-full pb-1">
+            <img src="/img/download.svg" class="absolute right-0 top-0 w-6 h-6 pointer-events-none	" />
         </div>
+        
 
       </div>
-      <div class="flex"><p class="w-1/6">Дата<span class="text-red-400">*</span></p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
-      <div class="flex"><p class="w-1/6">Проект\Сделка<span class="text-red-400">*</span></p><input type="text" class="w-4/6 border-b-2 w-full pb-1"></div>
-      <div>
-        <div class="w-full flex">
-            <div class="lg:w-1/4">
+
+
+      </div>
+      <div class="mt-4">
+        <div class="w-full flex justify-between">
+            <div class="lg:w-1/4"> 
              <p class="font-medium leading-6">Заполните поле
                 <span class="text-red-400">*</span> 
               </p>  
@@ -42,8 +31,8 @@
           </div>
       </div>
     </div>
-    <div></div>
-  </div>
+      
+  </form>
 </template>
 
 <script>

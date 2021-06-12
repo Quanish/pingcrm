@@ -23,7 +23,7 @@
     		<p class="absolute top-16 left-12 w-24  bg-green-500 text-white text-xs rounded-full p-1">3 400 000</p>
     	</div>
     </div>
-    	<div ><img class="h-10" src="img/message.png"></div>
+    	<div ><img class="h-10" src="img/message.png" @click="$page.props.auth.sidebar = true"></div>
 	</div>
 	<!-- список сделок-->
 	<div class="bg-white rounded-md shadow overflow-x-auto">

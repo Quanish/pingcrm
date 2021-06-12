@@ -8,7 +8,7 @@
         <div class="flex flex-row gap-8 w-7/12 justify-end">
 
             <div>
-                <img class="h-10" src="/img/message.png" />
+                <img class="h-10" src="/img/message.png" @click="$page.props.auth.sidebar = true" />
             </div>
 
         </div>

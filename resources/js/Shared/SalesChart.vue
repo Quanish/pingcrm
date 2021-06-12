@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex-auto flex flex-col">
-   <canvas id="sales-chart" class="h-full flex-auto flex flex-col"></canvas>
+   <canvas id="sales-chart" class="flex-auto flex flex-col"></canvas>
   </div>
 </template>
 

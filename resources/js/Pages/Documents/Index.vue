@@ -8,7 +8,7 @@
 			<button @click="openCreateModal" class="ml-5  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</button>
 			<!--<a :href="route('documents.create')" class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</a>-->
 			<div class="w-64 flex justify-start"></div>
-    	<div ><img class="h-10" src="/img/message.png"></div>
+    	<div ><img class="h-10" src="/img/message.png" @click="$page.props.auth.sidebar = true"></div>
 		</div>
     	
     	
@@ -18,7 +18,7 @@
 
 	<!--панель офиса-->
 	<div class="flex gap-6 flex-auto">
-	<div class="w-2/12 bg-white rounded-2xl h-auto p-6">
+	<!-- <div class="w-2/12 bg-white rounded-2xl h-auto p-6">
 		<div class="relative">
 		  <input type="search" class="text-white  left-0 w-full shadow rounded-full border-0 p-1 pl-4 pr-8 text-sm font-normal" v-bind:style="{ backgroundColor: color1}" >
 		  <div class="absolute right-1 pin-r pin-t mt-2 mr-2 text-purple-lighter">
@@ -40,9 +40,9 @@
 			<div class="flex h-5 justify-start gap-4 mt-3 font-normal"><img class="y-3" src="/img/icons/Star.png" /><p class="pt-0 text-sm">Избранные</p></div>
 			<div class="flex h-5 justify-start gap-4 mt-3 font-normal text-sm">Все</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- список документов-->
-	<div class="w-10/12 bg-white rounded-2xl  h-auto p-6 overflow-y-auto pt-2">
+	<div class="w-full bg-white rounded-2xl  h-auto p-6 overflow-y-auto pt-2">
     	<table class="w-full whitespace-nowrap   ">
     		<tr class="text-left font-bold border-b border-gray-200">
 
@@ -50,7 +50,7 @@
 	            	<p class="font-bold text-center">Название</p>
 	            </th>
 	            <th class="px-6 pt-4 pb-4">
-	            	<p class="font-bold text-center">Проект или сделка</p>
+	            	<p class="font-bold text-center">Формат</p>
 	            </th>
 	             <th class="px-6 pt-4 pb-4">
 	            	<p class="font-bold text-center">Дата</p>

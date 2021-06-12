@@ -3,7 +3,7 @@
    
 
     <div class="flex flex-auto">
-      <div class="w-3/12 flex flex-col">
+      <!-- <div class="w-3/12 flex flex-col">
         <h1 class="mb-8 font-bold text-2xl">Календарь</h1>
         <div class="bg-white rounded-2xl shadow-sm w-full h-full overflow-y-auto p-6">
           <div class="mb-4 flex flex-col gap-3">
@@ -38,8 +38,8 @@
           </select>
         </div>
         </div>
-      </div>  
-      <div class="w-9/12 pl-3">
+      </div>   -->
+      <div class="w-full pl-3">
         <Fullcalendar :options="calendarOptions" />
       </div>  
     </div>

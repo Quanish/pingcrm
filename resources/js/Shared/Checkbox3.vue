@@ -59,7 +59,7 @@ export default {
   top: 0;
   left: 0;
   border-radius: 100%;
-  border: 1.5px solid #999999;
+  border: 2px solid #c1c4e6;
 }
 /* On mouse-over, add a grey background color */
 .wrapper:hover  .checkmark {

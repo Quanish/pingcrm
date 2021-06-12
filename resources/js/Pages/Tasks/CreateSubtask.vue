@@ -1,7 +1,7 @@
 <template>
   <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full">
     <h1 class="mb-8 font-medium text-xl">
-      <inertia-link class="text-black hover:text-indigo-600 " :href="route('tasks')">Новая подзадача</inertia-link>
+      <inertia-link class="text-black hover:text-indigo-600 font-medium" :href="route('tasks')">Новая подзадача</inertia-link>
     </h1>
     <div class="ma">
       <form @submit.prevent="store">
@@ -52,7 +52,8 @@
               </p>  
             </div>
             
-            <div class="lg:w-3/4 flex justify-end">
+            <div class="lg:w-3/4 flex justify-end gap-3 items-center">
+              <div class="text-red-500 font-medium">{{ err }}</div>
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">
                 <span>Создать</span>
               </button>
@@ -94,6 +95,7 @@ export default {
   remember: 'form',
   data() {
     return {
+      err: '',
       format: 'yyyy-MM-dd',
       disabledDates: {},
       date: null,
@@ -132,6 +134,15 @@ export default {
       }
     },
     store() {
+      this.err = ''
+      if(this.form.title == null) {
+        this.err = 'Заполните название!'
+        return null;
+      }
+      if(this.form.description == null) {
+        this.err = 'Заполните описание!'
+        return null;
+      }
      this.form.type = this.type
      this.form.deadline = moment(this.form.deadline).format('YYYY-MM-DD hh:mm:ss')
       this.form.post(this.route('subtasks.store'))

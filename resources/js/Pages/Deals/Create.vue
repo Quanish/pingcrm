@@ -17,10 +17,12 @@
 					<div class="w-9/12 space-y-4 pl-5 py-2">
 						<input type="text" class="border-b-2 w-full pb-1" v-model="title">		
 					</div>
-					<div class="w-3/12 space-y-6 mt-3 py-2">
+
+					
+					<div class="w-3/12 space-y-6 mt-3 py-2" v-if="client == 0">
 						<p>Клиент</p>
 					</div>
-					<div class="w-9/12 space-y-4 pl-5 py-2">
+					<div class="w-9/12 space-y-4 pl-5 py-2"  v-if="client == 0">
 						<v-select class="border-b-2 w-full pb-1" label="name" :options="clients" v-model="client_id"></v-select>
 					</div>
 					<div class="w-3/12 space-y-6 pt-3 py-2 pr-2">
@@ -71,7 +73,8 @@ import axios from "axios";
 
 export default {
 	metaInfo: { title: 'Сделки' },
-	layout: Layout,
+	
+	props: ['client', 'to'],
 	data() {
     return {
 		err: '',
@@ -87,6 +90,7 @@ export default {
         sum: 0,
         comment: null,
         type: 1,
+        to: 1,
       }),
     }
   },
@@ -111,13 +115,23 @@ export default {
 			return null;
 		}
 
+		if(this.client == 0) {
+			if(this.client_id === null) {
+			this.err ='Выберите клиента!'
+			return null;
+		}	
+		}
+		
+
 		this.form.title = this.title
-		this.form.client_id = this.client_id
+		this.form.client_id = this.client
 		this.form.sum = this.sum
 		this.form.comment = this.comment
 		this.form.type = this.type
 
-
+	
+			this.form.to = this.to
+		
       this.form.post(this.route('deals.store'))
     },
   },

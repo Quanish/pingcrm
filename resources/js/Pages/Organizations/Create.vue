@@ -9,7 +9,7 @@
 
           <div class="w-full flex mb-8">
             <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Организация
+             <p class="font-medium leading-6">Директор
                 <span class="text-red-400">*</span> 
               </p>  
             </div>
@@ -18,57 +18,32 @@
             </div> 
           </div>
           
-          <div class="w-full flex mb-8">
-          <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Email
-                <span class="text-red-400">*</span> 
-              </p>  
-            </div>
+
+
+            <div class="w-full flex mb-8">
+              <div class="lg:w-1/4">
+                <p class="font-medium leading-6">Компания
+                  <span class="text-red-400">*</span> 
+                </p>  
+              </div>
             <div class="lg:w-3/4">
-              <input type="text" v-model="form.email" :error="form.errors.email" class="border-b-2 w-full pb-1">
+              <input type="text"  v-model="form.region" :error="form.errors.region" class="border-b-2 w-full pb-1">
             </div> 
             </div>
+
             <div class="w-full flex mb-8">
-            <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Контакты
-                <span class="text-red-400">*</span> 
-              </p>  
-            </div>
-            <div class="lg:w-3/4">
-              <input type="text" v-model="form.phone" :error="form.errors.phone" class="border-b-2 w-full pb-1">
-            </div> 
-            </div>
-            <div class="w-full flex mb-8">
-            <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Адрес
-                <span class="text-red-400">*</span> 
-              </p>  
-            </div>
-            <div class="lg:w-3/4">
-              <input type="text" v-model="form.address" :error="form.errors.address" class="border-b-2 w-full pb-1">
-            </div>
-            </div> 
-            <div class="w-full flex mb-8">
-            <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Город
-                <span class="text-red-400">*</span> 
-              </p>  
-            </div>
+              <div class="lg:w-1/4">
+                <p class="font-medium leading-6">Город
+                  <span class="text-red-400">*</span> 
+                </p>  
+              </div>
             <div class="lg:w-3/4">
               <input type="text"  v-model="form.city" :error="form.errors.city" class="border-b-2 w-full pb-1">
             </div> 
             </div>
-            <div class="w-full flex mb-8">
-            <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Регион
-                <span class="text-red-400">*</span> 
-              </p>  
-            </div>
-            <div class="lg:w-3/4">
-              <input type="text" v-model="form.region" :error="form.errors.region" class="border-b-2 w-full pb-1">
-            </div> 
-        </div>
-            
+
+
+
         </div>
          <div class="w-full flex">
             <div class="lg:w-1/4">
@@ -76,7 +51,8 @@
                 <span class="text-red-400">*</span> 
               </p>  
             </div>
-            <div class="lg:w-3/4 flex justify-end">
+            <div class="lg:w-3/4 flex justify-end gap-3 items-center">
+              <div class="text-red-500 font-medium">{{ err }}</div>
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
           </div>
@@ -104,6 +80,7 @@ export default {
   remember: 'form',
   data() {
     return {
+      err: '',
       form: this.$inertia.form({
         name: null, 
         email: null,
@@ -119,7 +96,19 @@ export default {
   },
   methods: {
     store() {
-      this.form.responsible = 1
+      this.err = ''
+      if(this.form.name == null) {
+        this.err = 'Заполните директора!'
+        return null;
+      }
+      if(this.form.region == null) {
+        this.err = 'Заполните компанию!'
+        return null;
+      }
+      if(this.form.city == null) {
+        this.err = 'Заполните город!'
+        return null;
+      }
       this.form.post(this.route('organizations.store'))
     },
   },

@@ -46,7 +46,7 @@
         </div>
 
         <div>
-          <img class="h-10" src="/img/message.png" />
+          <img class="h-10" src="/img/message.png" @click="$page.props.auth.sidebar = true"/>
         </div>
       </div>
     </div>

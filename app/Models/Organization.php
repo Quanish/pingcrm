@@ -24,6 +24,7 @@ class Organization extends Model
         'postal_code', 
         'status',
         'stage',
+        'responsible_id',
         'agreement',
     ];
 
@@ -35,6 +36,11 @@ class Organization extends Model
     public function contacts()
     {
         return $this->hasMany(Contact::class);
+    }
+
+    public function deals()
+    {
+        return $this->hasMany(Deal::class);
     }
     
     public function comments()

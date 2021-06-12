@@ -29,14 +29,14 @@
           <form @submit.prevent="update">
             <div class="flex flex-wrap  text-sm">
 
-              <text-input v-model="form.name" :error="form.errors.name" :col="false" class="pr-6 pb-8 w-full " label="ФИО" />
-              <text-input v-model="form.region" :error="form.errors.region" :col="false" class="pr-6 pb-8 w-full " label="Организация" />
-
-              <text-input v-model="form.postal_code" :error="form.errors.postal_code" :col="false" class="pr-6 pb-8 w-full " label="Должность" />
-              <text-input v-model="form.email" :error="form.errors.email" :col="false" class="pr-6 pb-8 w-full " label="Почта" />
-              <text-input v-model="form.phone" :error="form.errors.phone" :col="false" class="pr-6 pb-8 w-full " label="Контакты" />
-              <text-input v-model="form.address" :error="form.errors.address" :col="false" class="pr-6 pb-8 w-full " label="Адрес" />
+              <text-input v-model="form.name" :error="form.errors.name" :col="false" class="pr-6 pb-8 w-full " label="Директор" />
+              <text-input v-model="form.region" :error="form.errors.region" :col="false" class="pr-6 pb-8 w-full " label="Компания" />
               <text-input v-model="form.city" :error="form.errors.city" :col="false" class="pr-6  w-full " label="Город" />
+
+              <div class="mt-3 flex flex-col gap-3" v-if="responsible">
+                <p class="text-black font-medium">Ответственный:</p>
+                <person-card  :src="'/storage/' + responsible.photo_path" :fullname="responsible.last_name + ' ' + responsible.first_name" :job="responsible.position.name"></person-card>
+              </div>
             </div>
           </form>
         </div>
@@ -49,13 +49,80 @@
             <div class="flex justify-between items-center mb-8">
               <h2 class=" font-medium text ">Контакты</h2>
               <button class="text-sm text-skyblue-400 hover: text-skyblue-500">+ Новый контакт</button>
+              
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <div v-for="cont in organization.contacts" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
+
+                <div class="flex flex-col gap-0 mb-2">
+                  <div class="text-xs font-medium text-indigo-500">ID Контакта #{{ cont.id }}</div>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="cont.first_name != undefined || cont.last_name != undefined">
+                  <div class="text-xs font-medium text-gray-500">Контактное лицо</div>
+                  <div class="text-xs font-normal text-black text-right">{{ cont.last_name + ' ' + cont.first_name }}</div>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="cont.phone != undefined">
+                  <div class="text-xs font-medium text-gray-500">Телефон</div>
+                  <div class="text-xs font-normal text-black text-right">{{ cont.phone }}</div>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="cont.address != undefined">
+                  <div class="text-xs font-medium text-gray-500">Адрес</div>
+                  <div class="text-xs font-normal text-black text-right">{{ cont.address }}</div>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="cont.email != undefined">
+                  <div class="text-xs font-medium text-gray-500">Email</div>
+                  <div class="text-xs font-normal text-black text-right">{{ cont.email }}</div>
+                </div>
+                
+              </div>
+
             </div>
           </div>
 
           <div class="w-6/12 bg-white overflow-y-auto rounded-2xl p-4">
             <div class="flex justify-between items-center mb-8">
               <h2 class=" font-medium text ">Сделки</h2>
-              <button class="text-sm text-skyblue-400 hover: text-skyblue-500">+ Новая сделка</button>
+              <button class="text-sm text-skyblue-400 hover: text-skyblue-500" @click="showCreateDealModal">+ Новая сделка</button>
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <div v-for="deal in organization.deals" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3">
+
+                <div class="flex flex-row justify-between gap-0 mb-2">
+                  <div class="text-xs font-medium text-indigo-500">ID Сделки # {{ deal.id }}</div>
+                  <p class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'">  
+                    {{ dealStatuses[deal.status].name }}
+                  </p>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="deal.name != undefined">
+                  <div class="text-xs font-medium text-gray-500">Название</div>
+                  <div class="text-xs font-normal text-black text-right">{{ deal.name }}</div>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
+                  <div class="text-xs font-medium text-gray-500">Сумма</div>
+                  <div class="text-xs font-normal text-black text-right">{{ deal.sum }}</div>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
+                  <div class="text-xs font-medium text-gray-500">Тип</div>
+                  <div class="text-xs font-normal text-black text-right">{{ deal.type }}</div>
+                </div>
+
+                <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
+                  <div class="text-xs font-medium text-gray-500">Примечания</div>
+                  <div class="text-xs font-normal text-black text-right">{{ deal.comment }}</div>
+                </div>
+
+
+              </div>
+
             </div>
           </div>
 
@@ -65,20 +132,20 @@
         <div class="flex flex-1">
           <div class="w-full bg-white overflow-y-auto rounded-2xl p-4">
             <div class="flex justify-between items-center mb-8">
-              <h2 class=" font-medium text ">Комментарии</h2>
+              <h2 class=" font-medium text ">История</h2>
             </div>
             <div class="">
-              <div v-if="!comments.length">Комментариев пока нет!</div>
-              <div v-for="comment in comments" class="mt-3">
+              <div v-if="!comments.length" class="text-xs">Пока ничего нет...</div>
+              <!-- <div v-for="comment in comments" class="mt-3">
                 <div>{{comment.user.first_name}}</div>
                 <div>{{comment.comment}}</div>
-              </div>
-              <div class="">
+              </div> -->
+              <!-- <div class="">
                 <form @submit.prevent="comment">
-                  <!-- <text-input id="message" class="pr-6 pb-8 lg:w-9/12" /> -->
+                  <text-input id="message" class="pr-6 pb-8 lg:w-9/12" />
                   <loading-button type="submit" class="btn-indigo rounded-full mt-3">Оставить комментарий</loading-button>
                 </form>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -89,7 +156,9 @@
     </div>
     
    
-    
+    <modal name="create-deal">
+      <create-deal :client="organization.id" to="client"></create-deal>
+    </modal>
 
   </div>
 </template>
@@ -100,8 +169,9 @@ import Layout from '@/Shared/Layout'
 import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
+import PersonCard from '@/Shared/PersonCard'
 import TrashedMessage from '@/Shared/TrashedMessage'
-
+import CreateDeal from '../Deals/Create'
 
 
 export default {
@@ -114,10 +184,13 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    PersonCard,
+    CreateDeal
   },
   layout: Layout,
   props: {
     organization: Object,
+    responsible: Object,
     comments: Array,
     users: Array,
   },
@@ -142,6 +215,50 @@ export default {
         postal_code: this.organization.postal_code,
         responsible: this.organization.responsible,
       }),
+      contact: {
+        'first_name': '',
+        'last_name': '',
+        'organization_id': '',
+        'account_id': '',
+        'email': '',
+        'phone': '',
+        'address': '',
+        'city': '',
+        'region' : '',
+        'country' : '',
+        'postal_code': '',
+      },
+      dealStatuses: {
+				0: {
+					name: 'Отменена',
+					color: 'indigo'
+				},
+				1: {
+					name: 'Закрыта',
+					color: 'green'
+				},
+				2: {
+					name: 'Открыта',
+					color: 'skyblue'
+				},
+				3: {
+					name: 'Договор',
+					color: 'orange'
+				},
+				4: {
+					name: 'Оплата',
+					color: 'orange'
+				},
+				5: {
+					name: 'Доставка',
+					color: 'orange'
+				},
+				6: {
+					name: 'Обслуживание',
+					color: 'orange'
+				},
+
+			} ,
       statuses: {
         0: {
               name: 'Без статуса',
@@ -177,11 +294,23 @@ export default {
         this.$inertia.delete(this.route('organizations.destroy', this.organization.id))
       }
     },
+    showCreateDealModal() {
+      this.$modal.show('create-deal');
+    },
     restore() {
       if (confirm('Are you sure you want to restore this organization?')) {
         this.$inertia.put(this.route('organizations.restore', this.organization.id))
       }
     },
+    addContact() {
+      axios.post('/add-contact', {
+        id: this.organization.id,
+        contact: this.contact
+      })
+      .then(response => {
+         
+      })
+    }
   },
 }
 </script>

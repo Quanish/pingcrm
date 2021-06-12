@@ -6,14 +6,14 @@
 		<button class="login_button rounded-full text-white h-8 w-1/5 flex justify-center items-center" @click="openCreateModal">
         <span>Новая&nbsp;сделка</span>
       </button>
-    	<select class="  rounded-full text-white h-8 px-6 text-sm " v-bind:style="{ backgroundColor: color}">
+    	<!-- <select class="  rounded-full text-white h-8 px-6 text-sm " v-bind:style="{ backgroundColor: color}">
     		<option>цель на квартал</option>
     		<option>цель на неделю</option>
     		<option>цель на месяц</option>
-    	</select>
+    	</select> -->
     	<div class="w-64 flex justify-start">
 
-    	<div class="absolute -top-6">
+    	<!-- <div class="absolute -top-6">
     		<div class="absolute top-7 left-0 bg-gray-300 w-64 h-8 rounded-full">
     			
     		</div>
@@ -23,9 +23,9 @@
     		</div>
     		<p class="absolute top-2 left-52 w-max   bg-gray-300 text-xs rounded-full px-1">5 000 000</p>
     		<p class="absolute top-16 left-0 w-max bg-green-500 text-white text-xs rounded-full px-1">0</p>
-    	</div>
+    	</div> -->
     </div>
-    	<div ><img class="h-10" src="img/message.png"></div>
+    	<div ><img class="h-10" src="img/message.png" @click="$page.props.auth.sidebar = true"></div>
 	</div>
 	<!-- список сделок-->
 	<div class="bg-white rounded-2xl  overflow-x-auto flex-auto">
@@ -66,7 +66,7 @@
                		<p class="text-sm">{{deal.client.name}}</p>
                </td> 
 			   <td class="px-6 pt-3 pb-3">
-               		<person-card></person-card>
+               		<person-card  v-if="deal.user != undefined" :src="'/storage/' + deal.user.photo_path" :fullname="deal.user.last_name + ' ' + deal.user.first_name" :job="deal.user.position.name"></person-card>
                </td> 
                <td class="px-6 pt-3 pb-3">
                	 <p class="text-sm rounded-full py-1  text-white text-center" :class="'bg-' + statuses[deal.status].color + '-500'">  
@@ -84,7 +84,7 @@
 
 
    <modal name="create">
-      <create-deal></create-deal>
+      <create-deal :client="0" to="deal"></create-deal>
     </modal>
 
 
