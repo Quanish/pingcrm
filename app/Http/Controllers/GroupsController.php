@@ -54,4 +54,17 @@ class GroupsController extends Controller
             ]);
         }
     }
+
+    public function upload(ObjectRequest $request){
+       
+        $logo = $request->image;
+        $image_name = $request->group_id. '_' . time() . '.' . $logo->getClientOriginalExtension();
+
+        $logo->storeAs('groups',$image_name);
+
+        $group = Group::find($request->group_id);
+        $group->logo_path = 'groups/'.$image_name;
+        $group->save();
+
+    }
 }

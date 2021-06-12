@@ -17,6 +17,7 @@ class Group extends Model
         'description',
         'account_id',
         'editors',
+        'logo_path',
     ];
 
     public function users(){
