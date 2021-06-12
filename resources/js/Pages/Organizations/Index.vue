@@ -29,7 +29,6 @@
 
           <th class="px-6 pb-4 pt-4 text-center">Ответственный</th>
 
-          <th class="px-6 pb-4 pt-4 text-center">Примечания</th>
         </tr>
 
 
@@ -42,7 +41,7 @@
           </td>
           <td class="border-t py-3 px-6 ">
             <inertia-link class=" py-1 flex text-sm font-normal items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              {{ organization.region }}
+              {{ organization.ceo }}
             </inertia-link>
           </td>
           <td class="border-t py-3  items-center"> 
@@ -67,11 +66,7 @@
 
           </td>
 
-          <td class="border-t py-3 px-6 w-px">
-            <inertia-link class="px-6 py-1 flex items-center text-sm font-normal" :href="route('organizations.edit', organization.id)" tabindex="-1">
-              <div>нет комментариев</div>
-            </inertia-link>
-          </td>
+      
         </tr>
         <tr v-if="clients.data.length === 0">
           <td class="border-t py-3 px-6 py-1 text-sm font-normal" colspan="4">Ничего не найдено</td>

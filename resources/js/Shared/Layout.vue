@@ -12,14 +12,14 @@
 
                 <div class="w-full  md:py-0 md:px-0 text-sm md:text-md flex justify-start items-center">
                     <div class="mt-1">
-                        <div class="relative">
+                        <!-- <div class="relative">
                             <input class="bg-indigo-500 w-64 rounded-full pl-3 pr-10 py-1 text-white text-sm leading-5" /> 
                             <div class="absolute inset-y-0 right-2 top-1 text-white">
                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="-4 -2 24 24" class="w-4 h-4">
                                     <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="ml-8 mt-1 flex justify-start">
 

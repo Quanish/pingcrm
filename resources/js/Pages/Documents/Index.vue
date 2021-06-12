@@ -9,7 +9,7 @@
 			<!--<a :href="route('documents.create')" class="  rounded-full pl-24 pr-24 text-white h-8" v-bind:style="{ backgroundImage: gradient}">новый документ</a>-->
 			<div class="w-64 flex justify-start"></div>
 			<div>
-				<input class="p-4 h-10 border border-gray-200 rounded-lg w-full" v-model="search_key" placeholder="Поиск"  @keyup="search"/>
+				<input class="p-1.5 px-5  border border-gray-200 rounded-full w-full" v-model="search_key" placeholder="Поиск"  @keyup="search"/>
 			</div>
     	<div ><img class="h-10" src="/img/message.png" @click="$page.props.auth.sidebar = true"></div>
 		</div>

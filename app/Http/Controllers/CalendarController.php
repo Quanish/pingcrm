@@ -15,12 +15,8 @@ class CalendarController extends Controller
 {
     public function calendar()
     {
-
-        
         return Inertia::render('Calendar/Index', [
             'event' => User::getTasks()
-        	/*'event' => [$array, $array],
-	        'task' => Task::first()->get(),*/
         ]);
     }
 }

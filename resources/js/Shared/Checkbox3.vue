@@ -55,11 +55,11 @@ export default {
 }
 /* Create a custom checkbox */
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 100%;
-  border: 2px solid #c1c4e6;
+position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 2px;
+    border: 1px solid #e0e0e0;
 }
 /* On mouse-over, add a grey background color */
 .wrapper:hover  .checkmark {
@@ -67,8 +67,8 @@ export default {
 }
 /* When the checkbox is checked, add a blue background */
 .wrapper .checkmark.checked  {
-  background-color:#33cc33;
-  border: 1.5px solid #33cc33;
+  background-color:#22c55e;
+  border: 1.5px solid #22c55e;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {

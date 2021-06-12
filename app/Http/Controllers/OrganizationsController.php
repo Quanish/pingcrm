@@ -28,12 +28,8 @@ class OrganizationsController extends Controller
                     return [
                         'id' => $organization->id,
                         'name' => $organization->name,
-                        'phone' => $organization->phone,
-                        'city' => $organization->city,
+                        'ceo' => $organization->ceo,
                         'status' => $organization->status,
-                        'deleted_at' => $organization->deleted_at,
-                        'status'=> $organization->status, 
-                        'agreement' => $organization->agreement,
                         'responsible' => User::card($organization->responsible_id),
                     ];
                 }),
@@ -49,15 +45,9 @@ class OrganizationsController extends Controller
     {
         $organization = Organization::create([
             'name' => $request->name,
-            'email'  => ' ',
-            'phone'  => ' ',
-            'address'  => ' ',
-            'city' => $request->city,
-            'region'  => $request->region,
-            'country'  => ' ',
+            'ceo' => $request->ceo,
             'status' => 1,
             'account_id' => 1,
-            'postal_code' => ' ',
             'responsible_id' => Auth::user()->id, 
         ]);
 
@@ -76,14 +66,8 @@ class OrganizationsController extends Controller
             'organization' => [
                 'id' => $organization->id,
                 'name' => $organization->name,
-                'email' => $organization->email,
-                'phone' => $organization->phone,
-                'address' => $organization->address,
-                'city' => $organization->city,
-                'region' => $organization->region,
-                'country' => $organization->country,
+                'ceo' => $organization->ceo,
                 'status' => $organization->status,
-                'postal_code' => $organization->postal_code,
                 'deleted_at' => $organization->deleted_at,
                 'contacts' => $organization->contacts()->get(),
                 'deals' => $deals,
@@ -95,19 +79,6 @@ class OrganizationsController extends Controller
 
     public function update(Organization $organization)
     {
-        $organization->update(
-            Request::validate([
-                'name' => ['required', 'max:100'],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
-            ])
-        );
-
         return Redirect::back()->with('успешно', 'Данные обновлены.');
     }
 

@@ -49,7 +49,7 @@
 
           
           <div class="w-full flex mb-8">
-           
+            
             <div class="lg:w-1/4">
               <p class="font-medium leading-6">Дедлайн
                 <span class="text-red-400">*</span> 
@@ -62,12 +62,6 @@
             </div>  
           </div>
 
-         
-
-          <!-- <select-input class="pr-6 pb-8 w-full lg:w-1/2" v-model="form.audition" :error="form.errors.user" label="Аудитор">
-            <option :value="null" />
-            <option v-for="data in select" :key="data.id" :value="data.id">{{ data.first_name }}</option> </select-input
-          > -->
           <div class="w-full flex">
             <div class="lg:w-1/4">
              <p class="font-medium leading-6">Заполните поле

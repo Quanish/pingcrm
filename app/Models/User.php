@@ -38,6 +38,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany(Events::class);
     }
 
+    public function plan(){
+        return $this->hasOne(Plan::class);
+    }
+
     public function organization(){
         return $this->hasMany(Organization::class);
     }
@@ -53,6 +57,33 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function account()
     {
         return $this->belongsTo(Account::class);
+    }
+
+    public static function plans(){
+        
+        return [
+            [
+                'id' => 1,
+                'name' => 'Кол-во звонков',
+                'plan' => '24 из 40',
+                'type' => 1,
+                'fact' => round(24 / 40 * 100),
+            ],
+            [
+                'id' => 2,
+                'name' => 'Кол-во встреч',
+                'plan' => '12 из 40',
+                'type' => 2,
+                'fact' => round(12 / 40 * 100),
+            ],
+            [
+                'id' => 3,
+                'name' => 'Кол-во сделок',
+                'plan' => '2 из 10',
+                'type' => 3,
+                'fact' => round(2 / 10 * 100),
+            ]
+        ];
     }
 
     public static function getTasks() {

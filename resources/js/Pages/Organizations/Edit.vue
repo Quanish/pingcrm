@@ -271,7 +271,7 @@ export default {
         ceo: this.organization.ceo,
         status: this.organization.status,
       }),
-      tab: 1,
+      tab: 2,
       dealStatuses: {
 				0: {
 					name: 'Отменена',

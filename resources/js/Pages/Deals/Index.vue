@@ -59,7 +59,7 @@
 	       	   		<p class="text-2xs"> номер/ детали/ </p><p class="text-2xs">спецификация</p>
                </td>      
                <td class="px-6 pt-3 pb-3">
-               		<p class="text-sm">{{deal.sum}} TG</p>
+               		<p class="text-sm">{{deal.sum}} тг</p>
                </td>   
                <td class="px-6 pt-3 pb-3">
                		<p class="text-sm">{{deal.client.name}}</p>

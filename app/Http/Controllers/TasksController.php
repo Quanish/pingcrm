@@ -42,23 +42,22 @@ class TasksController extends Controller
             'status' => $request->status,
         ]);
 
-        $text_warning = "";Auth::user()->first_name." принял задачу : ". $task->title;
+        $text_warning = Auth::user()->first_name." принял задачу : ". $task->title;
 
         if($request->status == 2){//принять
-             $text_warning = Auth::user()->first_name." принял задачу : ". $task->title;           
-        }
-        else if($request->status == 3){//на доработку
-             $text_warning = Auth::user()->first_name." отправил на доработку : ". $task->title;
-        }else{//выполнено
-             $text_warning = Auth::user()->first_name." завершил : ". $task->title;
+           $text_warning = Auth::user()->first_name." принял задачу : ". $task->title;           
+        } else if($request->status == 3){//на доработку
+            $text_warning = Auth::user()->first_name." отправил на доработку : ". $task->title;
+        } else {//выполнено
+            $text_warning = Auth::user()->first_name." завершил : ". $task->title;
         }
         
-         $event = new Event();
-            $event->user_id = Auth::user()->id;
-            $event->author_id = $task->auditor_id;
-            $event->text =  $text_warning;
-            $event->task_id = $task->id;
-            $event->save();
+        $event = new Event();
+        $event->user_id = Auth::user()->id;
+        $event->author_id = $task->auditor_id;
+        $event->text =  $text_warning;
+        $event->task_id = $task->id;
+        $event->save();
 
         return redirect('tasks/' . $task->id)->with('success', 'Задание принято.');
     }

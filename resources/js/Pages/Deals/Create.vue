@@ -7,7 +7,6 @@
 				<h1 class="mb-4 font-medium text-xl">
 					<inertia-link class="text-black hover:text-indigo-600 font-medium">Новая сделка</inertia-link>
 				</h1>
-					<!-- <div class="flex justify-end gap-3 rounded-full p-3 bg-gray-200 h-10"><p>№</p><p >MT-01234568</p></div> -->
 				</div> 
 				<div class="flex flex-wrap m8 mb-3 justify-start">
 
@@ -103,7 +102,6 @@ export default {
   methods: {
     store() {
 		
-		
 		this.err = '';
 		if(this.title === null) {
 			this.err = 'Заполните название!'
@@ -117,22 +115,27 @@ export default {
 
 		if(this.client == 0) {
 			if(this.client_id === null) {
-			this.err ='Выберите клиента!'
-			return null;
-		}	
+				this.err ='Выберите клиента!'
+				return null;
+			}	
+
+			this.form.client_id = this.client_id.id
+		} else {
+			this.form.client_id = this.client
 		}
-		
+
 
 		this.form.title = this.title
-		this.form.client_id = this.client
+
 		this.form.sum = this.sum
 		this.form.comment = this.comment
 		this.form.type = this.type
 
 	
-			this.form.to = this.to
-		
-      this.form.post(this.route('deals.store'))
+		this.form.to = this.to
+		this.$modal.hide('create-deal')
+		this.$modal.hide('create')
+      	this.form.post(this.route('deals.store'))
     },
   },
 }

@@ -65,14 +65,38 @@
 
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 overflow-y-hidden flex flex-col relative flex-auto shadow-sm">
             <div class="flex justify-between items-center px-6 gap-2 py-4 border-b border-gray-100">
-                <p class="font-medium text">Планы</p>
-                <p class="bg-blue-500  rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{xmeetings.length}}</p>
+                <p class="font-medium text">Планы на месяц</p>
             </div>
-         
-            <div class=" overflow-y-auto px-6 flex-auto pb-12 mb-2">
-                <div v-for="meeting in xmeetings">
-                    <!-- <p class="notification">{{meeting.description}}</p> -->
-                </div>
+
+            <div class="overflow-y-auto px-6 flex-auto pb-12 mb-2">
+                <template v-if="plans.length > 0">
+
+
+                    <div class="flex flex-col gap-6 w-full py-4">
+                        <div  v-for="plan in plans" :key="plan.id">
+                            
+                            
+                            <div class="flex gap-3 justify-between">
+                                <div class="font-medium mb-2">{{ plan.name }}</div>
+                                <div class="font-normal">{{ plan.plan }}</div>
+                            </div>
+                            <div class="shadow w-full bg-grey-light rounded-lg overflow-hidden">
+                                <div class="text-xs leading-none py-1 text-center text-white" :class="'bg-' + plantypes[plan.type] + '-500'" :style="'width: ' + plan.fact +'%'"> {{plan.fact}}%</div>
+                            </div>
+
+
+                        </div>
+                        
+                    </div>
+
+
+                </template>
+
+                <template v-else>
+                    <div class="flex flex-col gap-6 w-full py-4 text-sm">
+                        У вас нет установленных планов
+                    </div> 
+                </template>
             </div>
         </div>
 
@@ -80,7 +104,7 @@
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 mr-0 overflow-y-hidden flex flex-col relative flex-auto shadow-sm">
             <div class="flex justify-between px-6 py-4 border-b border-gray-100 ">
                 <p class="font-medium text h-7 leading-loose">События</p>  
-                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{ orderedEvents.length }}</p>
+                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs " v-if="orderedEvents.length > 0">{{ orderedEvents.length }}</p>
             </div>
             <div class="flex-auto overflow-y-auto px-6 pb-4 flex-auto">
                 <transition-group name="fade" tag="p">
@@ -94,7 +118,7 @@
                                 <svg class="h-2 w-2 fill-current text-black-600" viewBox="0 0 311 311.07733"><path d="m16.035156 311.078125c-4.097656 0-8.195312-1.558594-11.308594-4.695313-6.25-6.25-6.25-16.382812 0-22.632812l279.0625-279.0625c6.25-6.25 16.382813-6.25 22.632813 0s6.25 16.382812 0 22.636719l-279.058594 279.058593c-3.136719 3.117188-7.234375 4.695313-11.328125 4.695313zm0 0"/><path d="m295.117188 311.078125c-4.097657 0-8.191407-1.558594-11.308594-4.695313l-279.082032-279.058593c-6.25-6.253907-6.25-16.386719 0-22.636719s16.382813-6.25 22.636719 0l279.058594 279.0625c6.25 6.25 6.25 16.382812 0 22.632812-3.136719 3.117188-7.230469 4.695313-11.304687 4.695313zm0 0"/></svg>
                             </button>
                         </div>
-                        <p class="font text-2xs text-gray-300">{{event.created_at }}</p>
+                        <p class="font text-xs text-gray-300 mb-2">{{ datex(event.created_at) }} {{ hour(event.created_at) }}</p>
                         <p class="font text-sm">{{ event.text }}</p>
                         <div class="flex flex-row  mt-3">
                             <inertia-link href="#" class="hover:bg-gray-200 rounded-full  px-3  py-1  mr-2 bg-gray-100 text-gray-400 h-6 leading-4 text-xs">Связаться
@@ -181,6 +205,12 @@ export default {
                     name: 'На проверке',
                     color: 'orange'
                 },
+            },
+            plantypes: {
+                1: 'green',
+                2: 'skyblue',
+                3: 'orange',
+                4: 'indigo',
             }
         }
     },
@@ -189,6 +219,7 @@ export default {
         meetings: Array,
         events: Array,
         subtasks: Array,
+        plans: Array,
     },
     created() {
         var month = this.tasks;
@@ -298,6 +329,12 @@ export default {
         showCreateTaskModal(type) {
             this.type = type
             this.$modal.show('create_tasks')
+        },
+        datex(date) {
+            return moment(date).format('LL')
+        },
+        hour(date) {
+            return moment(date).format('LT')
         },
         closeEvent(event) {
             let index = this.events.indexOf(event);

@@ -41,6 +41,7 @@ class DashboardController extends Controller
             'tasks' => User::getTasks(),
             'events' => $events, 
             'subtasks' => $subtasks->toArray(), 
+            'plans' => User::plans(), 
         ]);
     }
 

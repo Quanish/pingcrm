@@ -8,7 +8,7 @@
 
     <div class="flex justify-between">
       <div class="flex flex-row gap-10">
-        <h1 class="mb-8 font-bold text-2xl">Группы</h1>
+        <h1 class="mb-8 font-bold text-2xl">Моя команда</h1>
         <button @click="openCreateModal" class="text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light">
           <span>Новая &nbsp;группа</span>
         </button>
