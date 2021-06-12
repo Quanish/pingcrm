@@ -1,7 +1,7 @@
 <template>
   <div class="py-6 px-6  overflow-y-auto overflow-x-hidden h-full w-full">
     <h1 class="mb-8 font-medium text-xl">
-      <inertia-link class="text-black hover:text-indigo-600 font-medium" :href="route('tasks')">Новый клиент</inertia-link>
+      <p class="text-black hover:text-indigo-600 font-medium">Новый клиент</p>
     </h1>
     <div class="bg-white rounded-xl overflow-hidden">
       <form @submit.prevent="store">

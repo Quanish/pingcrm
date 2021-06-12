@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organization;
 use App\Models\Comment;
+use App\Models\Contact;
 use App\Models\User;
 use App\Models\Deal;
 use Illuminate\Support\Facades\Auth;
@@ -151,22 +152,26 @@ class OrganizationsController extends Controller
 
 
     public function addContact(ObjectRequest $request) {
-        $item = Organization::find($request->id);
+        $item = Organization::find($request->organization_id);
 
         if($item) {
             Contact::create([
-                'first_name' => $request->contact['first_name'],
-                'last_name' => $request->contact['last_name'],
-                'organization_id' => $request->id,
-                'account_id ' => 1,
-                'email' => $request->contact['email'],
-                'phone' => $request->contact['phone'],
-                'address' => $request->contact['address'],
-                'city' => $request->contact['city'],
-                'region' => $request->contact['region'],
-                'country' => $request->contact['country'],
-                'postal_code' => $request->contact['postal_code'],
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'organization_id' => $request->organization_id,
+                'account_id' => 1,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'region' => $request->region,
+                'country' => $request->country,
+                'postal_code' => $request->postal_code,
             ]);
         }
+        
+        return redirect('/organizations/'. $request->organization_id.'/edit')->with([
+            'success' => 'Контакт добавлен!'
+        ]);
     }
 }

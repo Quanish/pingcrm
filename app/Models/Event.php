@@ -15,9 +15,6 @@ class Event extends Model
     const ACCEPTED_TASK = 1;
     const FINISHED_TASK = 2;
 
-
-
-
 	use SoftDeletes;
     protected $fillable = [
         'user_id',
