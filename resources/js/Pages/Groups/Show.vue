@@ -1,8 +1,9 @@
 <template>
 <div class="flex flex-col h-full">
     <div class="flex flex-row justify-between">
-        <div class="w-5/12 mb-5">
-            <input type="text" disabled class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" value="Название группы">
+        <div v-on:mouseover="showPencil" v-on:mouseleave="hidePencil" class="relative w-5/12 mb-5">
+            <input  type="text" disabled class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" value="Название группы">
+            <svg v-if="pencil" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="absolute top-0 right-10 w-8 h-8" ><path d="M9.6 40.4l2.5-9.9L27 15.6l7.4 7.4-14.9 14.9-9.9 2.5zm4.3-8.9l-1.5 6.1 6.1-1.5L31.6 23 27 18.4 13.9 31.5z"/><path d="M17.8 37.3c-.6-2.5-2.6-4.5-5.1-5.1l.5-1.9c3.2.8 5.7 3.3 6.5 6.5l-1.9.5z"/><path d="M29.298 19.287l1.414 1.414-13.01 13.02-1.414-1.412z"/><path d="M11 39l2.9-.7c-.3-1.1-1.1-1.9-2.2-2.2L11 39z"/><path d="M35 22.4L27.6 15l3-3 .5.1c3.6.5 6.4 3.3 6.9 6.9l.1.5-3.1 2.9zM30.4 15l4.6 4.6.9-.9c-.5-2.3-2.3-4.1-4.6-4.6l-.9.9z"/></svg>
         </div>
         <div class="flex flex-row gap-8 w-2/12 justify-end">
             <button @click="showAddUserDialog" class="text-sm leading-8 px-2 login_button rounded-full text-white h-8 w-full text-xs justify-center items-center font-light">
@@ -20,7 +21,36 @@
     </div>
     <div class="flex flex-row gap-5 flex-auto">
 
-        <div class="w-5/12 bg-white rounded-2xl p-5 mt-5 ">
+
+
+        <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
+            <div class="relative h-full flex flex-col justify-between">
+                <div class="flex flex-row justify-between border-b border-gray-200 pb-4">
+                    <p class="font-medium">Информация для группы</p>
+                </div>
+                <div class="flex-auto py-4">
+                    <label  class="bg-transparent text-blue rounded-lg tracking-wide uppercase">
+                    <div class="relative w-6/12 h-32 bg-gray-100 rounded-lg" v-on:mouseover="showLogoDialog" v-on:mouseleave="hideLogoDialog">
+                        <img v-if="group.logo_path" :src="logo_path" class="h-full">
+
+                        
+                            <svg v-if="upload" class="absolute bottom-0 right-0 w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                            </svg>
+                           
+                           
+                        
+                    </div>
+                     <input id="#file" type='file' class="hidden" @change="handleFileUpload"/>
+                        </label>
+                    <div>
+                        Описание группы
+                    </div>
+                </div>
+            </div>
+        </form>
+
+                <div class="w-5/12 bg-white rounded-2xl p-5 mt-5 ">
             <div>
                 <div class="flex gap-4 justify-start">
                     <div class="">
@@ -53,28 +83,6 @@
 
             </div>
         </div>
-
-        <form v-on:submit.prevent="addMessage" class="w-4/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
-            <div class="relative h-full flex flex-col justify-between">
-                <div class="flex flex-row justify-between border-b border-gray-200 pb-4">
-                    <p class="font-medium">Информация для группы</p>
-                </div>
-                <div class="flex-auto py-4">
-                    <div class="w-6/12 h-32 bg-gray-100 rounded-lg" v-on:mouseover="showLogoDialog" v-on:mouseleave="hideLogoDialog">
-                        <label v-if="upload" class="flex flex-col items-center px-4 py-6 bg-transparent text-blue rounded-lg tracking-wide uppercase">
-                            <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                            </svg>
-                            <span class="mt-2 text-base leading-normal">Select a file</span>
-                            <input id="#file" type='file' class="hidden" @change="handleFileUpload"/>
-                        </label>
-                    </div>
-                    <div>
-                        Описание группы
-                    </div>
-                </div>
-            </div>
-        </form>
 
         <!--<div class="w-3/12 bg-white rounded-2xl p-5 mt-5 mh-calc">
             <div class="flex flex-row justify-between mb-1">
@@ -160,8 +168,10 @@ export default {
     remember: 'form',
     data() {
         return {
+            logo_path: '/storage/'+this.group.logo_path,
             logo: null,
             upload: false,
+            pencil: false,
             message: "",
             form: this.$inertia.form({
                 status: 1,
@@ -274,9 +284,16 @@ export default {
             fd.append('group_id', this.group.id);
             axios.post('upload',fd)
             .then(res => {
-                console.log(res);
+                console.log(res.data);
+                this.logo_path = '/storage/'+res.data;
             });
         },
+        showPencil(){
+            this.pencil = true;
+        },
+        hidePencil(){
+            this.pencil = false;
+        }
     },
 }
 </script>
