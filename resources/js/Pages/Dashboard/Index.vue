@@ -15,7 +15,11 @@
 
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 ml-0  overflow-y-hidden flex flex-col relative flex-auto shadow-sm">
             <div class="flex justify-between items-center px-6 gap-2 py-4 border-b border-gray-100">
-                <p class="font-medium text">Задачи</p>
+                <div class="flex gap-2 items-center">
+                    <p class="font-medium text">Задачи</p>
+                    <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{ filteredTasks.length }}</p>    
+                </div>
+                
                 <div class="relative inline-flex">
                     <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white fill-current text-white" viewBox="0 0 412 232">
                         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" />
@@ -26,7 +30,7 @@
                         <option :value="0">все</option>
                     </select>
                 </div>
-                <p class="bg-blue-500 rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{ filteredTasks.length }}</p>
+                
             </div>
             
             <div class="overflow-y-auto px-6 flex-auto pb-12 mb-2">
@@ -61,18 +65,8 @@
 
         <div class="bg-white rounded-2xl  overflow-x-auto w-1/4 pb-0 overflow-y-hidden flex flex-col relative flex-auto shadow-sm">
             <div class="flex justify-between items-center px-6 gap-2 py-4 border-b border-gray-100">
-                <p class="font-medium text">Встречи</p>
-                <div class="relative inline-flex">
-                    <svg class="w-2 h-2 absolute  right-0 m-2  pointer-events-none fill-current text-white" viewBox="0 0 412 232">
-                        <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z"  fill-rule="nonzero" /></svg>
-                    <select v-on:change="changeItem2($event)" class="text-white bg-blue-500 rounded-full text-xs h-6 pl-5 pr-7 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                        <option>сегодня</option>
-                        <option>месяц</option>
-                        <option>год</option>
-                        <option selected>все время</option>
-                    </select>
-                </div>
-                <p class="bg-blue-500  rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{meetCounter}}</p>
+                <p class="font-medium text">Планы</p>
+                <p class="bg-blue-500  rounded-full text-white w-6 h-6 flex justify-center  items-center text-xs ">{{xmeetings.length}}</p>
             </div>
          
             <div class=" overflow-y-auto px-6 flex-auto pb-12 mb-2">
@@ -94,7 +88,7 @@
                     <div class="border rounded-2xl px-5 py-4 flex flex-col hover:border-indigo-300 hover:shadow-sm">
                         <div class="flex flex-row justify-between mb-3">
                             <div class="flex flex-row">
-                                <person-card :src="'/storage/' + event.user.photo_path" :fullname="event.user.last_name + ' ' + event.user.first_name" :job="event.user.position.name"></person-card>
+                                <person-card :id="event.user.id" :src="'/storage/' + event.user.photo_path" :fullname="event.user.last_name + ' ' + event.user.first_name" :job="event.user.position.name"></person-card>
                             </div>
                             <button class="rounded-full bg-gray-100 hover:bg-gray-200 flex justify-center items-center w-5 h-5" @click="closeEvent(event)">
                                 <svg class="h-2 w-2 fill-current text-black-600" viewBox="0 0 311 311.07733"><path d="m16.035156 311.078125c-4.097656 0-8.195312-1.558594-11.308594-4.695313-6.25-6.25-6.25-16.382812 0-22.632812l279.0625-279.0625c6.25-6.25 16.382813-6.25 22.632813 0s6.25 16.382812 0 22.636719l-279.058594 279.058593c-3.136719 3.117188-7.234375 4.695313-11.328125 4.695313zm0 0"/><path d="m295.117188 311.078125c-4.097657 0-8.191407-1.558594-11.308594-4.695313l-279.082032-279.058593c-6.25-6.253907-6.25-16.386719 0-22.636719s16.382813-6.25 22.636719 0l279.058594 279.0625c6.25 6.25 6.25 16.382812 0 22.632812-3.136719 3.117188-7.230469 4.695313-11.304687 4.695313zm0 0"/></svg>

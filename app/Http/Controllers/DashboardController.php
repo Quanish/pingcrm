@@ -40,7 +40,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Index', [
             'tasks' => User::getTasks(),
             'events' => $events, 
-            'subtasks' => $subtasks, 
+            'subtasks' => $subtasks->toArray(), 
         ]);
     }
 

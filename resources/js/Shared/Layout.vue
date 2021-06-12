@@ -78,7 +78,7 @@
 
                     </div>
                     <div slot="dropdown" class="mt-2 py-2 shadow-xl bg-white rounded text-sm">
-                        <div class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" @click="$page.props.auth.sidebar_profile = true">Профиль</div>
+                        <div class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" @click="showProfile">Профиль</div>
                         <inertia-link v-if="$page.props.auth.user.owner" class="block px-6 py-2 hover:bg-indigo-500 hover:text-white" :href="route('users')">Сообщения</inertia-link>
                         <inertia-link class="block px-6 py-2 hover:bg-indigo-500 hover:text-white w-full text-left" :href="route('logout')" method="post" as="button">Выйти</inertia-link>
                     </div>
@@ -162,6 +162,10 @@ export default {
         },
     },
     methods: {
+        showProfile() {
+            this.$page.props.auth.sidebar_profile = true
+            this.$page.props.actions.selected_user = this.$page.props.auth.user.id
+        },
         isUrl(...urls) {
             let currentUrl = this.$page.url.substr(1)
             if (urls[0] === '') {

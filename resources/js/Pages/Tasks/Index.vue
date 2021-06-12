@@ -90,10 +90,10 @@
           </td>
 
           <td>
-            <person-card class="relative" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="false"></person-card>
+            <person-card :id="task.auditor.id" class="relative" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="false"></person-card>
           </td>
           <td>
-            <person-card class="relative" :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name" :hide="false"></person-card>
+            <person-card :id="task.user.id" class="relative" :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name" :hide="false"></person-card>
           </td>
         </tr>
 

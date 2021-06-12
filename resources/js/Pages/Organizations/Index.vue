@@ -57,7 +57,7 @@
 
             <inertia-link class=" py-1 flex text-sm font-normal items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div v-if="organization.responsible !== null">
-                <person-card class="relative" :src="'/storage/' + organization.responsible.photo_path" :fullname="organization.responsible.name" :job="organization.responsible.position.name" :hide="false"></person-card>
+                <person-card :id="organization.responsible.id" class="relative" :src="'/storage/' + organization.responsible.photo_path" :fullname="organization.responsible.name" :job="organization.responsible.position.name" :hide="false"></person-card>
               </div>
               <div v-else class="w-10 h-10">
 

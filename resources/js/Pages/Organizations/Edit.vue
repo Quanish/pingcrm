@@ -44,7 +44,7 @@
 
               <div class="mt-3 flex flex-col gap-3" v-if="responsible">
                 <p class="text-black font-medium">Создал карточку:</p>
-                <person-card  :src="'/storage/' + responsible.photo_path" :fullname="responsible.last_name + ' ' + responsible.first_name" :job="responsible.position.name"></person-card>
+                <person-card  :id="responsible.id" :src="'/storage/' + responsible.photo_path" :fullname="responsible.last_name + ' ' + responsible.first_name" :job="responsible.position.name"></person-card>
               </div>
             </div>
           </form>
@@ -141,7 +141,7 @@
                       </p>
                     </div>
                     
-                    <person-card  :src="'/storage/' + deal.user.photo_path" :fullname="deal.user.last_name + ' ' + deal.user.first_name" :job="deal.user.position.name"></person-card>
+                    <person-card  :id="deal.user.id" :src="'/storage/' + deal.user.photo_path" :fullname="deal.user.last_name + ' ' + deal.user.first_name" :job="deal.user.position.name"></person-card>
 
                     <div class="flex flex-row gap-3 justify-between" v-if="deal.name != undefined">
                       <div class="text-sm font-medium text-gray-500">Название</div>

@@ -65,7 +65,7 @@
                		<p class="text-sm">{{deal.client.name}}</p>
                </td> 
 			   <td class="px-6 pt-3 pb-3">
-               		<person-card  v-if="deal.user != undefined" :src="'/storage/' + deal.user.photo_path" :fullname="deal.user.last_name + ' ' + deal.user.first_name" :job="deal.user.position.name"></person-card>
+               		<person-card  :id="deal.user.id" v-if="deal.user != undefined" :src="'/storage/' + deal.user.photo_path" :fullname="deal.user.last_name + ' ' + deal.user.first_name" :job="deal.user.position.name"></person-card>
                </td> 
                <td class="px-6 pt-3 pb-3">
                	 <p class="text-sm rounded-full py-1  text-white text-center" :class="'bg-' + statuses[deal.status].color + '-500'">  

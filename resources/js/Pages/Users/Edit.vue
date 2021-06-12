@@ -2,7 +2,7 @@
   <div class="overflow-y-auto">
     
     <div class="mb-8 flex justify-start w-full p-8 mr-2 items-center">
-      <img src="/storage/avatars/kenny.jpg" class="block w-10 h-10 rounded-full mr-4">
+      <img :src="'/storage/' + user.photo_path" class="block w-10 h-10 rounded-full mr-4">
       <h1 class="font-bold text-xl">
         <p class="text-black">{{ user.last_name + ' ' + user.first_name }}</p>
         <p class="text-sm">{{ user.position.name }}</p>

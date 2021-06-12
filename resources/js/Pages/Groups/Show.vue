@@ -43,7 +43,7 @@
                         <div class="w-12/12 overflow-auto ">
 
                         <div class="my-2" v-for="member in members">
-                            <person-card :src="'/storage/' + member.photo_path" :fullname="member.name" :job="member.position.name"></person-card>
+                            <person-card :id="member.id" :src="'/storage/' + member.photo_path" :fullname="member.name" :job="member.position.name"></person-card>
                         </div>
 
                     </div>

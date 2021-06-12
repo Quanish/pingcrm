@@ -66,10 +66,10 @@
 
             <div class="flex gap-4 mt-4">
               <div class="w-1/2">
-                <person-card :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name"></person-card>
+                <person-card :id="task.auditor.id" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name"></person-card>
               </div>
               <div class="w-1/2">
-                <person-card :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name"></person-card>
+                <person-card :id="task.user.id" :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name"></person-card>
               </div>
             </div> 
 
@@ -131,8 +131,8 @@
 
           <div class="mt-10 pb-3 flex flex-row leading-loose font-medium">
             <span class="mr-3">Участники</span>  
-            <person-card class="relative" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="true"></person-card>
-            <person-card class="relative -left-1" :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name" :hide="true"></person-card>
+            <person-card :id="task.auditor.id" class="relative" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="true"></person-card>
+            <person-card :id="task.user.id" class="relative -left-1" :src="'/storage/' + task.user.photo_path" :fullname="task.user.name" :job="task.user.position.name" :hide="true"></person-card>
           </div>
         </div>
       </div>
@@ -152,7 +152,7 @@
 
 
               <div v-if="$page.props.auth.user.id != com.user.id">
-                <person-card class="relative" :src="'/storage/' + com.user.photo_path" :fullname="com.user.name" :job="com.user.position.name" :hide="false"></person-card>
+                <person-card :id="com.user.id" class="relative" :src="'/storage/' + com.user.photo_path" :fullname="com.user.name" :job="com.user.position.name" :hide="false"></person-card>
                 
                 <div class="flex flex-col gap-2 border border-gray-200 rounded-xl p-2 mt-2 w-9/12">
                   <div class="text-2xs text-gray-300">
@@ -175,7 +175,7 @@
                       {{ com.text }}
                   </div>
                 </div>
-                <person-card class="relative" :src="'/storage/' + com.user.photo_path" :fullname="com.user.name" :job="com.user.position.name" :hide="true"></person-card>
+                <person-card :id="com.user.id" class="relative" :src="'/storage/' + com.user.photo_path" :fullname="com.user.name" :job="com.user.position.name" :hide="true"></person-card>
                 
               </div>
 
