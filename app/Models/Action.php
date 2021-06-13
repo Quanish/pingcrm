@@ -9,6 +9,9 @@ class Action extends Model
 {
     use HasFactory;
 
+    const CALL = 1;
+    const MEETING = 2;
+
     protected $fillable = [
         'user_id',
         'client_id',

@@ -29,8 +29,8 @@ class DealsController extends Controller
     
     public function store(Request $request)
     {
-
-    	Deal::create([
+        
+        Deal::create([
             'name' => $request->title,
             'sum'  => $request->sum,
             'type' => $request->type,
@@ -53,6 +53,20 @@ class DealsController extends Controller
         }
         
     }
+    
+    public function changeStatus(Request $request){
+        
+        $deal = Deal::find($request->id);
 
+        if($deal) {
+            $deal->status = $request->status;
+            $deal->save();
+            return 'Статус cделки #' . $request->id. ' успешно изменен!';
+        } else {
+            return 'Сделка не найдена!';
+        }
+
+        
+    }
     
 }

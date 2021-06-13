@@ -95,14 +95,14 @@
 
             <notifications group="foo" position="bottom right" />
 
-            <div class="sidebar fixed  w-screen h-screen overflow-hidden flex  bg-black bg-opacity-50"
+            <div class="sidebar fixed  w-screen h-screen overflow-hidden flex  bg-indigo-500 bg-opacity-40 left-0"
                 :class="[$page.props.auth.sidebar ? 'left-0' : 'left-full']"
                 v-if="$page.props.auth.sidebar" >
                 <div class="w-1/5 cursor-pointer" @click="$page.props.auth.sidebar = false"></div>
                 <o-chat class="w-4/5 bg-white duration-300  relative" :class="[$page.props.auth.sidebar ? 'left-0' : 'left-full']"/>
             </div>
 
-            <div class="sidebar fixed  w-screen h-screen overflow-hidden flex  bg-black bg-opacity-50"
+            <div class="sidebar fixed  w-screen h-screen overflow-hidden flex  bg-indigo-500 bg-opacity-40 left-0"
                 :class="[$page.props.auth.sidebar_profile ? 'left-0' : 'left-full']"
                 v-if="$page.props.auth.sidebar_profile" >
                 <div class="w-3/5 cursor-pointer" @click="$page.props.auth.sidebar_profile = false"></div>

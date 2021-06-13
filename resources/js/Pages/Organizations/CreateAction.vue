@@ -4,7 +4,7 @@
       <p class="text-black hover:text-indigo-600 font-medium">Новое действие</p>
     </h1>
     <div class="bg-white rounded-xl overflow-hidden">
-      <form @submit.prevent="store">
+     
         <div class="px-0 py-0  flex flex-wrap">
 
           <div class="w-full flex mb-8">
@@ -12,7 +12,7 @@
               <p class="font-medium leading-6">Дата</p>  
             </div>
             <div class="lg:w-3/4">
-              <datepicker v-model="form.date" :format="customFormatter" @selected="CallDateFunction" placeholder="27/05/2021"></datepicker>
+              <datepicker v-model="date"  @selected="CallDateFunction" placeholder="27/05/2021"></datepicker>
             </div>
           </div>
           <div class="w-full flex mb-8">
@@ -20,7 +20,7 @@
              <p class="font-medium leading-6">Время</p>  
             </div>
             <div class="lg:w-3/4">
-              <input type="time" v-model="form.time">
+              <input type="time" v-model="time">
             </div> 
           </div>
 
@@ -31,11 +31,10 @@
             </div>
             <div class="lg:w-3/4 flex justify-end gap-3 items-center">
               <div class="text-red-500 font-medium">{{ err }}</div>
-              <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
+              <button @click="store" class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
           </div>
-     
-      </form>
+
        </div>
     </div>
   </div>
@@ -60,12 +59,8 @@ export default {
   data() {
     return {
       err: '',
-      form2: this.$inertia.form({
-        type: null, 
-        date: null, 
-        time: null, 
-        organization_id: this.organization_id
-      }),
+      date: null,
+      time: null,
     }
   },
   methods: {
@@ -84,27 +79,20 @@ export default {
          
       // })
 
+      return null;
       this.err = ''
       let count = 0;
       
-      if(this.form2.first_name == null) count++
-      if(this.form2.last_name == null) count++
-      if(this.form2.email == null) count++
-      if(this.form2.phone == null) count++
-      if(this.form2.address == null) count++
-      if(this.form2.city == null) count++
-      if(this.form2.region == null) count++
-      if(this.form2.country == null) count++
-      if(this.form2.postal_code == null) count++
 
       if(count == 9) {
         this.err = 'Заполните одно из полей!'
         return null;
       }
       
+
+
       this.$modal.hide('create-contact')
 
-      this.$inertia.post('/add-contact', this.form2)
 
       
     },

@@ -92,7 +92,7 @@
    </div>
    </div>
 
-   <modal name="create" class="modal-20">
+   <modal name="create" class="modal-50">
       <create-document></create-document>
     </modal>
   </div>

@@ -42,7 +42,7 @@ class OrganizationsController extends Controller
     }
 
     public function store(ObjectRequest $request)
-    {
+    {   
         $organization = Organization::create([
             'name' => $request->name,
             'ceo' => $request->ceo,
@@ -77,9 +77,18 @@ class OrganizationsController extends Controller
         ]);
     }
 
-    public function update(Organization $organization)
+    public function editClient(ObjectRequest $request)
     {
-        return Redirect::back()->with('успешно', 'Данные обновлены.');
+        $client = Organization::find($request->id);
+
+        if($client) {
+            $client->name = $request->name;
+            $client->ceo = $request->ceo;
+            $client->status = $request->status;
+            $client->save();
+        }
+
+        return 'Данные о клиенте #' . $request->id. ' успешно изменены!';
     }
 
     public function destroy(Organization $organization)

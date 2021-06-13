@@ -15,7 +15,7 @@ class Organization extends Model
     protected $fillable = [
         'account_id',
         'name',
-        'seo',
+        'ceo',
         'status',
         'responsible_id',
     ];

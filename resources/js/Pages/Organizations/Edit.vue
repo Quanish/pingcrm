@@ -1,53 +1,64 @@
 <template>
   <div class="flex flex-col h-full">
     <div class="flex justify-between gap-3 flex-wrap items-start">
-        <h1 class="mb-8 font- text-2xl text-black font-medium ">
+        <h1 class="mb-8 font- text-2xl text-black font-medium w-3/12">
           Карточка клиента
         </h1>
 
-        <div class="flex gap-3 items-center">
-          <p class="font-medium">Статус</p>
-          <select class="font-medium text-sm rounded-full px-3  py-1.5 " :class="'bg-' + statuses[form.status].color + '-500 text-' + statuses[form.status].color +'-700'" @change="changeStatus" v-model="form.status">
-            <option value="0">Без статуса</option>
-            <option value="3">Вероятные</option>
-            <option value="2">Постоянные</option>
-            <option value="1">Новые</option>
-          </select>
-        </div>
+      
+        <div class="flex-auto justify-between flex gap-4 items-start">
+            
+          <div class="flex gap-4 items-center">
+            <div class="font-medium text-black">Добавить</div>
+            <button @click="showCreateActionModal(1)" class="text-white hover:text-black rounded-full px-4 p-1 text-sm flex justify-center items-center font-medium duration-300 bg-skyblue-600 hover:bg-skyblue-500">
+              <span>+ звонок</span>
+            </button>
 
-          <div>
-            <button class="login_button rounded-full text-white px-4 p-1 text-sm flex justify-center items-center" @click="addAction">
-              <span>+ Новое действие</span>
+            <button @click="showCreateActionModal(2)" class="text-white hover:text-black rounded-full px-4 p-1 text-sm flex justify-center items-center font-medium duration-300 bg-skyblue-600 hover:bg-skyblue-500">
+              <span>+ встреча</span>
             </button>
           </div>
+          
 
+          <img class="h-10" src="/img/message.png" @click="$page.props.auth.sidebar = true"/>
+        </div>
 
-      <div>
-        
-        <button class="text-white login_button mr-2  rounded-full px-4 p-1 flex gap-3" @click="update">
-          <span class="text-sm">Сохранить</span>
-          <svg class="fill-current w-4 h-4" viewBox="0 0 512.007 512.007"><g><path d="m511.927 126.537c-.279-2.828-1.38-5.666-3.315-8.027-.747-.913 6.893 6.786-114.006-114.113-2.882-2.882-6.794-4.395-10.612-4.394-9.096 0-329.933 0-338.995 0-24.813 0-45 20.187-45 45v422c0 24.813 20.187 45 45 45h422c24.813 0 45-20.187 45-45 .001-364.186.041-339.316-.072-340.466zm-166.927-96.534v98c0 8.271-6.729 15-15 15h-19v-113zm-64 0v113h-139c-8.271 0-15-6.729-15-15v-98zm64 291h-218v-19c0-8.271 6.729-15 15-15h188c8.271 0 15 6.729 15 15zm-218 161v-131h218v131zm355-15c0 8.271-6.729 15-15 15h-92c0-19.555 0-157.708 0-180 0-24.813-20.187-45-45-45h-188c-24.813 0-45 20.187-45 45v180h-52c-8.271 0-15-6.729-15-15v-422c0-8.271 6.729-15 15-15h52v98c0 24.813 20.187 45 45 45h188c24.813 0 45-20.187 45-45v-98h2.787l104.213 104.214z"/></g></svg>
-        </button>
-
-        
-      </div>
     </div>
     <div class="flex flex-auto overflow-hidden gap-4">
       <div class="w-3/12  bg-white overflow-y-auto rounded-2xl">
         <div class="bg-white rounded-2xl overflow-hidden p-4">
           <h2 class=" font-medium text mb-8 pb-4 border-b border-gray-300" >Основная информация</h2>
-          <form @submit.prevent="update">
+   
             <div class="flex flex-wrap  text-sm">
 
-              <text-input v-model="form.name" :error="form.errors.name" :col="false" class="w-full mb-5" label="Компания" />
-              <text-input v-model="form.ceo" :error="form.errors.ceo" :col="false" class="w-full " label="Директор" />
+              <text-input v-model="form.name" :col="false" class="w-full mb-5" label="Компания" />
+              <text-input v-model="form.ceo"  :col="false" class="w-full " label="Директор" />
+              
+              <div class="my-2 w-full">
+                <p class="font-medium mb-2">Статус</p>
+                <select class="font-medium text-sm rounded-full px-3  py-1.5 " :class="'bg-' + statuses[form.status].color + '-500 text-' + statuses[form.status].color +'-700'" @change="changeStatus" v-model="form.status">
+                  <option value="0">Без статуса</option>
+                  <option value="3">Отменена</option>
+                  <option value="2">Закрыта</option>
+                  <option value="1">Новые</option>
+                </select>
+              </div>
+               
 
               <div class="mt-3 flex flex-col gap-3" v-if="responsible">
                 <p class="text-black font-medium">Создал карточку:</p>
                 <person-card  :id="responsible.id" :src="'/storage/' + responsible.photo_path" :fullname="responsible.last_name + ' ' + responsible.first_name" :job="responsible.position.name"></person-card>
               </div>
+
+              <div class="w-full mt-4 flex justify-start">
+                <button class="text-white login_button mr-2  rounded-full px-4 p-1 flex gap-3 duration-300 hover:h-2 " @click="update">
+                <span class="text-sm">Сохранить</span>
+                <svg class="fill-current w-4 h-4" viewBox="0 0 512.007 512.007"><g><path d="m511.927 126.537c-.279-2.828-1.38-5.666-3.315-8.027-.747-.913 6.893 6.786-114.006-114.113-2.882-2.882-6.794-4.395-10.612-4.394-9.096 0-329.933 0-338.995 0-24.813 0-45 20.187-45 45v422c0 24.813 20.187 45 45 45h422c24.813 0 45-20.187 45-45 .001-364.186.041-339.316-.072-340.466zm-166.927-96.534v98c0 8.271-6.729 15-15 15h-19v-113zm-64 0v113h-139c-8.271 0-15-6.729-15-15v-98zm64 291h-218v-19c0-8.271 6.729-15 15-15h188c8.271 0 15 6.729 15 15zm-218 161v-131h218v131zm355-15c0 8.271-6.729 15-15 15h-92c0-19.555 0-157.708 0-180 0-24.813-20.187-45-45-45h-188c-24.813 0-45 20.187-45 45v180h-52c-8.271 0-15-6.729-15-15v-422c0-8.271 6.729-15 15-15h52v98c0 24.813 20.187 45 45 45h188c24.813 0 45-20.187 45-45v-98h2.787l104.213 104.214z"/></g></svg>
+              </button>
+              </div>
+               
             </div>
-          </form>
+          
         </div>
       </div>
       <div class="w-9/12 overflow-y-hidden flex flex-col gap-4">
@@ -71,7 +82,7 @@
 
                 <div class="xxxxxx1">
                   <div class="flex flex-col gap-4">
-                    <div v-for="cont in organization.contacts" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3 bg-gray-100" :key="cont.id">
+                    <div v-for="cont in organization.contacts" class="border border-skyblue-100 rounded-xl p-4 flex flex-col gap-3 bg-skyblue-100" :key="cont.id">
 
                       <div class="flex flex-col gap-0 mb-2">
                         <div class="text-sm font-medium text-indigo-500">ID Контакта #{{ cont.id }}</div>
@@ -132,13 +143,30 @@
               <div class="xxxxx2">
 
                 <div class="flex flex-col gap-4">
-                  <div v-for="deal in organization.deals" class="border border-gray-200 rounded-xl p-4 flex flex-col gap-3 bg-gray-100" :key="deal.id">
+                  <div v-for="deal in organization.deals" class="border border-skyblue-100 rounded-xl p-4 flex flex-col gap-3 bg-skyblue-100" :key="deal.id">
 
                     <div class="flex flex-row justify-between gap-0 mb-2">
                       <div class="text-sm font-medium text-indigo-500">ID Сделки # {{ deal.id }}</div>
-                      <p class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'">  
-                        {{ dealStatuses[deal.status].name }}
-                      </p>
+
+                      <div v-if="$page.props.auth.user.id == deal.user.id">
+                          <select v-model="deal.status" @change="changeDealStatus(deal)" class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'">
+                            <option value="0">Отменена</option>
+                            <option value="1">Закрыта</option>
+                            <option value="2">Открыта</option>
+                            <option value="3">Договор</option>
+                            <option value="4">Оплата</option>
+                            <option value="5">Доставка</option>
+                            <option value="6">Обслуживание</option>
+                          </select>
+
+                      </div>
+
+                      <div v-else>
+                        <p class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'" >  
+                          {{ dealStatuses[deal.status].name }}
+                        </p>
+                      </div>
+                      
                     </div>
                     
                     <person-card  :id="deal.user.id" :src="'/storage/' + deal.user.photo_path" :fullname="deal.user.last_name + ' ' + deal.user.first_name" :job="deal.user.position.name"></person-card>
@@ -179,19 +207,7 @@
               <div class="flex flex-1">
                 <div class="w-full bg-white overflow-y-auto rounded-2xl">
               
-                  <div class="">
-                    <div v-if="!comments.length" class="text-xs">Пока ничего нет...</div>
-                    <!-- <div v-for="comment in comments" class="mt-3">
-                      <div>{{comment.user.first_name}}</div>
-                      <div>{{comment.comment}}</div>
-                    </div> -->
-                    <!-- <div class="">
-                      <form @submit.prevent="comment">
-                        <text-input id="message" class="pr-6 pb-8 lg:w-9/12" />
-                        <loading-button type="submit" class="btn-indigo rounded-full mt-3">Оставить комментарий</loading-button>
-                      </form>
-                    </div> -->
-                  </div>
+                  
                 </div>
               </div>
 
@@ -220,6 +236,10 @@
       <create-contact :organization_id="organization.id"></create-contact>
     </modal>
 
+    <modal name="create-action">
+      <create-action :type="actionType" :organization_id="organization.id"></create-action>
+    </modal>
+
   </div>
 </template>
 
@@ -233,6 +253,7 @@ import PersonCard from '@/Shared/PersonCard'
 import TrashedMessage from '@/Shared/TrashedMessage'
 import CreateDeal from '../Deals/Create'
 import CreateContact from './CreateContact'
+import CreateAction from './CreateAction'
 import axios from 'axios'
 
 
@@ -248,6 +269,7 @@ export default {
     TrashedMessage,
     PersonCard,
     CreateContact,
+    CreateAction,
     CreateDeal
   },
   layout: Layout,
@@ -266,11 +288,13 @@ export default {
   },
   data() {
     return {
-      form: this.$inertia.form({
+      actionType: 1,
+      form: {
         name: this.organization.name,
         ceo: this.organization.ceo,
         status: this.organization.status,
-      }),
+        id: this.organization.id,
+      },
       tab: 2,
       dealStatuses: {
 				0: {
@@ -327,6 +351,20 @@ export default {
     showTab(i){
       this.tab = i
     },
+    changeDealStatus(deal) {
+      axios.post('/deal-status', { 
+        status: deal.status,
+        id:  deal.id
+      }).then(response => {
+        this.$notify({
+            group: 'foo',
+            title: 'Успешно',
+            type: 'success',
+            duration: 5000,
+            text: response.data
+        });
+      })
+    },
     comment(){
       this.form.post(this.route('organizations.comment',{
         message: message.value.toString(),
@@ -337,13 +375,30 @@ export default {
 
     },
     update() {
-      this.form.put(this.route('organizations.update', this.organization.id))
+      axios.post('/edit-client', { 
+        name: this.form.name,
+        ceo: this.form.ceo,
+        status: this.form.status,
+        id: this.organization.id
+      }).then(response => {
+        this.$notify({
+            group: 'foo',
+            title: 'Успешно',
+            type: 'success',
+            duration: 5000,
+            text: response.data
+        });
+      })
     },
     showCreateDealModal() {
       this.$modal.show('create-deal');
     },
+    showCreateActionModal(type) {
+      this.actionType = type
+      this.$modal.show('create-action');
+    },
     showCreateContactModal() {
-      this.$modal.show('create-contact');
+      this.$modal.show('create-contact'); 
     },
     changeStatus() {
       axios.post('client-status', {
@@ -358,11 +413,6 @@ export default {
         //                 text: this.$page.props.flash.success
         //             });
       })
-    },
-    restore() {
-      if (confirm('Are you sure you want to restore this organization?')) {
-        this.$inertia.put(this.route('organizations.restore', this.organization.id))
-      }
     },
   },
 }

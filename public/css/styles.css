@@ -145,19 +145,16 @@ select {
     max-height: 90vh;
     left: unset !important;
     top: unset !important;
+    min-width: 60vw;
     overflow-y: auto !important;
 }
 
-.modal-20 .vm--modal {
-    width: 20vw;
-}
-
-.modal-40 .vm--modal {
-    width: 20vw;
+.modal-50 .vm--modal {
+    min-width: 50vw;
 }
 
 .modal-60 .vm--modal {
-    width: 20vw;
+    min-width: 60vw;
 }
 
 .vm--container {

@@ -344,10 +344,10 @@ Route::post('save-users-to-group', [GroupsController::class, 'saveUsers']);
 Route::post('add-contact', [OrganizationsController::class, 'addContact']);
 Route::post('client-status', [OrganizationsController::class, 'changeStatus']);
 Route::get('get-profile/{id}', [UsersController::class, 'getProfile']);
-
+Route::post('deal-status', [DealsController::class, 'changeStatus']);
+Route::post('edit-client', [OrganizationsController::class, 'editClient']);
 
 // chat
-
 Route::get('chat', [ChatController::class, 'index'])
     ->name('chat')
     ->middleware('auth');

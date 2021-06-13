@@ -18,7 +18,7 @@
       <img class="h-10 text-center" src="/img/message.png" @click="$page.props.auth.sidebar = true" />
     </div>
 
-    <div class="bg-white rounded-2xl  overflow-x-auto">
+    <div class="bg-white rounded-2xl  overflow-x-auto flex-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
           <th class="pt-4 px-6 pb-4 pt-4">Клиент</th>
@@ -52,7 +52,7 @@
             </div>
             
           </td>
-          <td class="border-t py-3 px-6 w-px">
+          <td class="border-t py-0 px-6 w-px">
 
             <inertia-link class=" py-1 flex text-sm font-normal items-center" :href="route('organizations.edit', organization.id)" tabindex="-1">
               <div v-if="organization.responsible !== null">
