@@ -6,6 +6,7 @@ use App\Models\Organization;
 use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\User;
+use App\Models\Action;
 use App\Models\Deal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -62,6 +63,13 @@ class OrganizationsController extends Controller
             $deal->user = User::card($deal->responsible_id);
         }
 
+        $actions = $organization->actions()->orderBy('created_at', 'desc')->get();
+
+        foreach($actions as $action) {
+            $action->user = User::card($action->user_id);
+        }
+        
+
         return Inertia::render('Organizations/Edit', [
             'organization' => [
                 'id' => $organization->id,
@@ -73,8 +81,30 @@ class OrganizationsController extends Controller
                 'deals' => $deals,
             ],
             'responsible' => User::card($organization->responsible_id),
-            'comments' => $organization->comments()
+            'actions' => $actions->toArray()
         ]);
+    }
+
+    public function addAction(ObjectRequest $request) {
+        
+        $action = Action::create([
+            'client_id' => $request->id,
+            'type' => $request->type,
+            'date' => $request->date,
+            'user_id' => Auth::user()->id
+        ]);
+
+        if($request->type == 1) {
+            $text = 'Звонок успешно добавлен!';
+        }
+        if($request->type == 2) {
+            $text = 'Встреча успешно добавлена!';
+        }
+
+        return [
+            'msg' => $text,
+            'action' => $action
+        ];
     }
 
     public function editClient(ObjectRequest $request)

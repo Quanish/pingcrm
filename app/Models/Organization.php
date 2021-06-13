@@ -32,7 +32,7 @@ class Organization extends Model
 
     public function actions()
     {
-        return $this->hasMany(Action::class, 'id', 'client_id');
+        return $this->hasMany(Action::class, 'client_id', 'id');
     }
 
     public function deals()

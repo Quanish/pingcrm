@@ -346,6 +346,7 @@ Route::post('client-status', [OrganizationsController::class, 'changeStatus']);
 Route::get('get-profile/{id}', [UsersController::class, 'getProfile']);
 Route::post('deal-status', [DealsController::class, 'changeStatus']);
 Route::post('edit-client', [OrganizationsController::class, 'editClient']);
+Route::post('add-action', [OrganizationsController::class, 'addAction']);
 
 // chat
 Route::get('chat', [ChatController::class, 'index'])

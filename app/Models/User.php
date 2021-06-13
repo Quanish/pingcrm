@@ -61,6 +61,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public static function plans(){
         
+        $plans = Plan::where('user_id',  Auth::user()->id)->get();
+
+        // Action::where([
+        //     'user_id' => ;
+        // ])
+
+
         return [
             [
                 'id' => 1,
