@@ -128,7 +128,10 @@
               </div>
             </div>
           </div>
-
+          <div>
+            <div>Файлы</div>
+            <a v-if="task.file" :href="'/storage/'+task.file.path" download>{{task.file.name}}</a>
+          </div>
           <div class="mt-10 pb-3 flex flex-row leading-loose font-medium">
             <span class="mr-3">Участники</span>  
             <person-card :id="task.auditor.id" class="relative" :src="'/storage/' + task.auditor.photo_path" :fullname="task.auditor.name" :job="task.auditor.position.name" :hide="true"></person-card>
