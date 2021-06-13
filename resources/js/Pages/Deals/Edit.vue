@@ -14,7 +14,7 @@
 						<p>Название</p>
 					</div>
 					<div class="w-9/12 space-y-4 pl-5 py-2">
-						<input type="text" class="border-b-2 w-full pb-1" :value="deal.name">		
+						<input type="text" class="border-b-2 w-full pb-1"  v-model="deal.name">		
 					</div>
 
 					
@@ -130,11 +130,11 @@ export default {
 		}
 		*/
 
-		this.form.title = this.title
+		this.form.title = this.deal.name
 
-		this.form.sum = this.sum
-		this.form.comment = this.comment
-		this.form.type = this.type
+		this.form.sum = this.deal.sum
+		this.form.comment = this.deal.comment
+		this.form.type = this.deal.type
 
 
 	
