@@ -67,4 +67,18 @@ class GroupsController extends Controller
         $group->save();
         return 'groups/'.$image_name;
     }
+
+    public function rename(ObjectRequest $request){
+        $group = Group::find($request->group_id);
+        $group->name = $request->group_name;
+        $group->save();
+        return $request->group_name; 
+    }
+
+    public function description(ObjectRequest $request){
+        $group = Group::find($request->group_id);
+        $group->description = $request->description;
+        $group->save();
+        return $request->group_des; 
+    }
 }

@@ -66,6 +66,13 @@ Route::post('groups/upload',[GroupsController::class,'upload'])
 ->name('upload')
 ->middleware('auth');
 
+Route::post('groups/rename',[GroupsController::class,'rename'])
+->name('rename')
+->middleware('auth');
+
+Route::post('groups/description',[GroupsController::class,'description'])
+->name('description')
+->middleware('auth');
 
 // Auth
 
