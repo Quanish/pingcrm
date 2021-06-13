@@ -10,5 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Document extends Model
 {
 	use SoftDeletes;
-	protected $fillable = ['name','type','date','comment','file',];
+	protected $fillable = ['name','file_id','date'];
+
+
+	public function file()
+    {
+        return $this->hasOne(File::class,'id','file_id');
+    }
 }

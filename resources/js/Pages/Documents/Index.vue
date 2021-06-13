@@ -20,7 +20,7 @@
 	</div>
 
 	<!--панель офиса-->
-	<div class="flex gap-6 flex-auto">
+	<div class="flex gap-6 flex-auto overflow-hidden">
 	<!-- <div class="w-2/12 bg-white rounded-2xl h-auto p-6">
 		<div class="relative">
 		  <input type="search" class="text-white  left-0 w-full shadow rounded-full border-0 p-1 pl-4 pr-8 text-sm font-normal" v-bind:style="{ backgroundColor: color1}" >
@@ -46,7 +46,7 @@
 	</div> -->
 	<!-- список документов-->
 	<div class="w-full bg-white rounded-2xl  h-auto p-6 overflow-y-auto pt-2">
-    	<table class="w-full whitespace-nowrap   ">
+    	<table class="w-full whitespace-nowrap  ">
     		<tr class="text-left font-bold border-b border-gray-200">
 
 	            <th class="px-6 pt-4 pb-4 flex">
@@ -59,12 +59,9 @@
 	            	<p class="font-bold text-center">Дата</p>
 	            </th>
 	            <th class="px-6 pt-4 pb-4">
-	            	<p class="font-bold text-center">Примечания</p>
-	            </th>
-	            <th class="px-6 pt-4 pb-4">
 	            	<p class="font-bold text-center">
 						Действия
-					</p>
+					</p> 
 	            </th>
 	          
 	        </tr>
@@ -76,17 +73,13 @@
 					</div>
                </td>  
 	       	   <td class="px-6 pt-3 pb-3 w-8">
-	       	   		<p class="text-sm">{{document.type}}</p>
-	       	   		
+	       	   		<p class="text-sm">{{document.file.type}}</p>
                </td>      
                <td class="px-6 pt-3 pb-3 w-8">
                		<p class="text-sm">{{document.date}}</p>
                </td> 
                <td class="px-6 pt-3 pb-3 w-8">
-               		<p class="text-sm">{{document.comment}}</p>
-               </td> 
-               <td class="px-6 pt-3 pb-3 w-8">
-               		<a :href="document.file" class="rounded-full text-white py-1 pl-3 pr-3 flex m-auto text-center flex justify-center" v-bind:style="{ backgroundColor: color}">
+               		<a :href="document.file.path" download="" class="rounded-full text-white py-1 pl-3 pr-3 flex m-auto text-center flex justify-center bg-indigo-500 hover:bg-indigo-400">
                			<icon name="download" class="w-4 pt-1 relative -top-0.5" />
                			<p class="ml-1 mt-0.5 text-sm">скачать</p>
                		</a>
@@ -99,7 +92,7 @@
    </div>
    </div>
 
-   <modal name="create">
+   <modal name="create" class="modal-20">
       <create-document></create-document>
     </modal>
   </div>

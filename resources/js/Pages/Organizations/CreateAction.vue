@@ -9,7 +9,7 @@
 
           <div class="w-full flex mb-8">
             <div class="lg:w-1/4">
-              <p class="font-medium leading-6"></p>  
+              <p class="font-medium leading-6">Дата</p>  
             </div>
             <div class="lg:w-3/4">
               <datepicker v-model="form.date" :format="customFormatter" @selected="CallDateFunction" placeholder="27/05/2021"></datepicker>
@@ -17,21 +17,17 @@
           </div>
           <div class="w-full flex mb-8">
             <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Фамилия</p>  
+             <p class="font-medium leading-6">Время</p>  
             </div>
             <div class="lg:w-3/4">
               <input type="time" v-model="form.time">
             </div> 
           </div>
 
-       
-
         </div>
          <div class="w-full flex">
             <div class="lg:w-1/4">
-             <p class="font-medium leading-6">Заполните поле
-                <span class="text-red-400">*</span> 
-              </p>  
+           
             </div>
             <div class="lg:w-3/4 flex justify-end gap-3 items-center">
               <div class="text-red-500 font-medium">{{ err }}</div>

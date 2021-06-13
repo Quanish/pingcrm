@@ -58,7 +58,7 @@ class HandleInertiaRequests extends Middleware
             },
             'actions' => function() use ($request) {
                 return [
-                    'selected_user' => $request->user()->id
+                    'selected_user' => $request->user() ? $request->user()->id : null
                 ];
             },
             'flash' => function () use ($request) {

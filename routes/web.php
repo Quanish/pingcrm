@@ -43,6 +43,10 @@ Route::get('documents/create',[DocumentsController::class,'create'])
 ->name('documents.create')
 ->middleware('auth');
 
+Route::post('documents/store',[DocumentsController::class,'store'])
+->name('documents.store')
+->middleware('auth');
+
 //Groups
 
 Route::get('groups',[GroupsController::class,'index'])

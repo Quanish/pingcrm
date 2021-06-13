@@ -140,13 +140,24 @@ select {
 
 .vm--modal {
     border-radius: 20px !important;
-    min-width: 65vw;
     max-width: 90vw;
     height: unset !important;
     max-height: 90vh;
     left: unset !important;
     top: unset !important;
     overflow-y: auto !important;
+}
+
+.modal-20 .vm--modal {
+    width: 20vw;
+}
+
+.modal-40 .vm--modal {
+    width: 20vw;
+}
+
+.modal-60 .vm--modal {
+    width: 20vw;
 }
 
 .vm--container {
