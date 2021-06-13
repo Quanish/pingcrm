@@ -39,23 +39,45 @@ class TasksController extends Controller
         //dd($request->all());
         $task = Task::find($request->task);
 
-        $task->update([
-            'status' => $request->status,
-        ]);
+        $event = new Event();
+        
+        
+
+
+        
 
         $text_warning = Auth::user()->first_name." принял задачу : ". $task->title;
 
         if($request->status == 2){//принять
-           $text_warning = Auth::user()->first_name." принял задачу : ". $task->title;           
-        } else if($request->status == 3){//на доработку
-            $text_warning = Auth::user()->first_name." отправил на доработку : ". $task->title;
+
+            if($task->status == 3) {
+                $text_warning = Auth::user()->first_name." отправил на доработку задачу : ". $task->title;     
+            } else {
+                $text_warning = Auth::user()->first_name." принял задачу : ". $task->title; 
+            }
+  
+        } else if($request->status == 3){//на проверку
+            
+                $text_warning = Auth::user()->first_name." отправил на проверку задачу : ". $task->title;
+            
+
+           
         } else {//выполнено
-            $text_warning = Auth::user()->first_name." завершил : ". $task->title;
+            $text_warning = Auth::user()->first_name."принял и закрыл задачу: ". $task->title;
         }
         
-        $event = new Event();
-        $event->user_id = Auth::user()->id;
-        $event->author_id = $task->auditor_id;
+
+        $task->update([
+            'status' => $request->status,
+        ]);
+
+        if($task->user_id == Auth::user()->id) {
+            $event->user_id = $task->auditor_id;
+        } else {
+            $event->user_id = $task->user_id;
+        }
+
+        $event->author_id = Auth::user()->id;
         $event->text =  $text_warning;
         $event->task_id = $task->id;
         $event->save();
@@ -126,18 +148,20 @@ class TasksController extends Controller
 
 	public function store(Request $request)
     {
-        $file_name = Auth::user()->id. '_' . time() . '.' . $request->file->getClientOriginalExtension();
+        if(isset($request->file)) {
+            $file_name = Auth::user()->id. '_' . time() . '.' . $request->file->getClientOriginalExtension();
 
-        $request->file->storeAs('documents', $file_name);
+            $request->file->storeAs('documents', $file_name);
 
-        $file = File::create([
-            'name' => $file_name,
-            'path' => 'documents/'. $file_name,
-            'type' => $request->file->getClientOriginalExtension(),
-            'user_id' => Auth::user()->id,
-        ]);
-
-
+        
+            $file = File::create([
+                'name' => $file_name,
+                'path' => 'documents/'. $file_name,
+                'type' => $request->file->getClientOriginalExtension(),
+                'user_id' => Auth::user()->id,
+            ]);
+        }
+        
         $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -149,7 +173,7 @@ class TasksController extends Controller
             'status' => Task::NOT_STARTED, 
             'urgent' => $request->urgent ? 1 : 0, 
             'account_id' => Auth::user()->account_id,
-            'file_id' => $file ? $file->id : 0,
+            'file_id' => isset($file) ? $file->id : 0,
         ]);
 
         $task->start = $task->created_at;

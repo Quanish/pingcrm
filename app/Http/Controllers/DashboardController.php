@@ -33,7 +33,7 @@ class DashboardController extends Controller
         $events = Event::with('task')->where('user_id',Auth::user()->id)->where('seen', 0)->get();
 
         foreach($events as $event) {
-            $event->user = User::card($event->user_id);
+            $event->auditor = User::card($event->author_id);
         }
         	
         

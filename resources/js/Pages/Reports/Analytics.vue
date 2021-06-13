@@ -1,15 +1,14 @@
 <template>
-	<div>
-		  	Аналитика
+	<div>Аналитика
   	<div class="grid grid-cols-2 gap-4 bg-white rounded-lg mt-8 p-6">
 	  	<div class="border-2 rounded-lg  p-5">	
 	  		<div class="flex justify-between">Продажи<button class="border-2 w-24 border-black rounded-full p-1">неделя</button><button class="border-2 w-24 border-black rounded-full p-1">месяц</button><button class="border-2  w-24 border-black rounded-full p-1">квартал</button><button class="border-2  w-24 border-black rounded-full p-1">год</button></div>
 	  		<br>
 	  		<SalesChart />
-	  	</div>
+	  	</div>S
 	  	<div class="border-2 rounded-lg">
 	  		<div class="flex justify-between p-5">Клиенты<button class="border-2 w-24 border-black rounded-full p-1">неделя</button><button class="border-2 w-24 border-black rounded-full p-1">месяц</button><button class="border-2  w-24 border-black rounded-full p-1">квартал</button><button class="border-2  w-24 border-black rounded-full p-1">год</button></div>
-	  		<ClientChart />
+D
   		</div>
   		<div class="border-2 rounded-lg p-5">Распределение сделок по менеджерам
   			<div class="relative flex justify-end">

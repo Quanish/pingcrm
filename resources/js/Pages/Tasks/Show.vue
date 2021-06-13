@@ -24,12 +24,12 @@
             </div>
           </div>
           <div class="flex flex-col items-center">
-            <p class="mb-5 font-medium">Старт</p>
-            {{ date(task.start) }}
+            <p class="mb-5 font-medium">Создано</p>
+            <div class="text-gray-500 text-sm">{{ date(task.created_at) }} {{ hour(task.created_at) }}</div>
           </div>
           <div class="flex flex-col items-center">
             <p class="mb-5 font-medium">Дедлайн</p>
-            {{ date(task.deadline) }}
+            <div class="text-gray-500 text-sm">{{ date(task.deadline) }} {{ hour(task.deadline) }}</div>
           </div>
           <div class="items-center bg-red-500 p-4 py-0 rounded-xl text-white text-center flex flex-col justify-center relative -top-1" v-if="computeDays(task.deadline) < 0">
             <p class="mb-1 text">  {{ computeDays(task.deadline) }} день</p>
@@ -128,9 +128,9 @@
               </div>
             </div>
           </div>
-          <div>
-            <div>Файлы</div>
-            <a v-if="task.file" :href="'/storage/'+task.file.path" download>{{task.file.name}}</a>
+          <div v-if="task.file">
+            <div class="font-medium mb-3">Прикрепленные файлы</div>
+            <a  :href="'/storage/'+task.file.path" download class="rounded-full p-2 px-4 bg-indigo-400 hover:bg-indigo-500 text-sm text-white font-normal">{{task.file.name}}</a>
           </div>
           <div class="mt-10 pb-3 flex flex-row leading-loose font-medium">
             <span class="mr-3">Участники</span>  
