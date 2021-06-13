@@ -57,7 +57,8 @@
             </div>
             <div class="lg:w-3/4">
               <div class="border-b-2 w-full pb-1">
-                <datepicker v-model="form.deadline" :format="customFormatter" @selected="CallDateFunction" placeholder="27/05/2021"></datepicker>
+                
+                <datepicker style="width: 100%;" v-model="form.deadline" type="datetime" placeholder="27/05/2021"></datepicker>
               </div>
             </div>  
           </div>
@@ -89,7 +90,8 @@ import TextInput from '@/Shared/TextInput'
 import SelectInput from '@/Shared/SelectInput'
 import LoadingButton from '@/Shared/LoadingButton'
 import Checkbox from '@/Shared/Checkbox2'
-import Datepicker from 'vuejs-datepicker'
+import Datepicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
 import moment from 'moment'
 import axios from "axios";
 
