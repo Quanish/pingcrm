@@ -94,6 +94,7 @@ class TasksController extends Controller
                 'status' => $task->status,
                 'urgent' => $task->urgent,
                 'account_id' => 1,
+                'file' => File::find($task->file_id),
             ],
             
             'comments' => $task->comments(),
