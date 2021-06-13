@@ -1,8 +1,8 @@
 <template>
 <div class="flex flex-col h-full">
     <div class="flex flex-row justify-between">
-        <div v-on:mouseover="showPencil" v-on:mouseleave="hidePencil" class="relative w-5/12 mb-5">
-            <input  type="text" disabled class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" value="Название группы">
+        <div v-on:mouseover="showPencil" v-on:mouseleave="hidePencil" v-on:click="edit" class="relative w-5/12 mb-5">
+            <input @change="block" id="group_name" type="text" disabled class="border-b-2 border-gray-200 w-11/12 text-black font-medium bg-transparent text-lg" value="Название группы">
             <svg v-if="pencil" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="absolute top-0 right-10 w-8 h-8" ><path d="M9.6 40.4l2.5-9.9L27 15.6l7.4 7.4-14.9 14.9-9.9 2.5zm4.3-8.9l-1.5 6.1 6.1-1.5L31.6 23 27 18.4 13.9 31.5z"/><path d="M17.8 37.3c-.6-2.5-2.6-4.5-5.1-5.1l.5-1.9c3.2.8 5.7 3.3 6.5 6.5l-1.9.5z"/><path d="M29.298 19.287l1.414 1.414-13.01 13.02-1.414-1.412z"/><path d="M11 39l2.9-.7c-.3-1.1-1.1-1.9-2.2-2.2L11 39z"/><path d="M35 22.4L27.6 15l3-3 .5.1c3.6.5 6.4 3.3 6.9 6.9l.1.5-3.1 2.9zM30.4 15l4.6 4.6.9-.9c-.5-2.3-2.3-4.1-4.6-4.6l-.9.9z"/></svg>
         </div>
         <div class="flex flex-row gap-8 w-2/12 justify-end">
@@ -43,14 +43,17 @@
                     </div>
                      <input id="#file" type='file' class="hidden" @change="handleFileUpload"/>
                         </label>
-                    <div>
+                    <div class="mt-10">
                         Описание группы
+                        <div class="mt-3" @click="description">
+                            <textarea class="w-full" v-on:keyup.13="block_des" rows="4" disabled placeholder="Описание..." id="des" name="description">{{group.description}}</textarea>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
 
-                <div class="w-5/12 bg-white rounded-2xl p-5 mt-5 ">
+                <div class="w-8/12 bg-white rounded-2xl p-5 mt-5 ">
             <div>
                 <div class="flex gap-4 justify-start">
                     <div class="">
@@ -293,6 +296,36 @@ export default {
         },
         hidePencil(){
             this.pencil = false;
+        },
+        edit(){
+            document.getElementById("group_name").disabled = false;
+        },
+        block(){
+
+            var input = document.getElementById("group_name");
+            input.disabled = true;
+            const fd = new FormData();
+            fd.append('group_name', input.value);
+            fd.append('group_id', this.group.id);
+            axios.post('rename',fd)
+            .then(res => {
+                console.log(res.data);
+            });
+        },
+        description(){
+            document.getElementById("des").disabled = false;
+        },
+        block_des(){
+            var des = document.getElementById("des");
+
+            const fd = new FormData();
+            fd.append('description', des.value);
+            fd.append('group_id', this.group.id);
+             axios.post('description',fd)
+            .then(res => {
+                console.log(res.data);
+            });
+            des.disabled = true;
         }
     },
 }
