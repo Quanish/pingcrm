@@ -147,7 +147,9 @@
 
                     <div class="flex flex-row justify-between gap-0 mb-2">
                       <div class="text-sm font-medium text-indigo-500">ID Сделки # {{ deal.id }}</div>
-
+                       <div @click="showEditDealModal(deal)" class="text-sm rounded-full py-1  px-3 text-white text-center bg-green-500 cursor-pointer hover:text-skyblue-400">  
+                          редактировать
+                        </div>
                       <div v-if="$page.props.auth.user.id == deal.user.id">
                           <select v-model="deal.status" @change="changeDealStatus(deal)" class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'">
                             <option value="0">Отменена</option>
@@ -162,6 +164,7 @@
                       </div>
 
                       <div v-else>
+                        
                         <p class="text-sm rounded-full py-1  px-3 text-white text-center" :class="'bg-' + dealStatuses[deal.status].color + '-500'" >  
                           {{ dealStatuses[deal.status].name }}
                         </p>
@@ -373,6 +376,10 @@
       <create-action :type="actionType" :organization_id="organization.id"></create-action>
     </modal>
 
+     <modal name="edit-deal" class="modal-50">
+       <edit-deal :deal="deal"></edit-deal>
+    </modal>
+
   </div>
 </template>
 
@@ -385,6 +392,7 @@ import LoadingButton from '@/Shared/LoadingButton'
 import PersonCard from '@/Shared/PersonCard'
 import TrashedMessage from '@/Shared/TrashedMessage'
 import CreateDeal from '../Deals/Create'
+import EditDeal from '../Deals/Edit'
 import CreateContact from './CreateContact'
 import CreateAction from './CreateAction'
 import axios from 'axios'
@@ -403,7 +411,8 @@ export default {
     PersonCard,
     CreateContact,
     CreateAction,
-    CreateDeal
+    CreateDeal,
+    EditDeal
   },
   layout: Layout,
   props: {
@@ -414,7 +423,12 @@ export default {
     users: Array,
   },
   data:{
+    edit_comment: null,
+    edit_sum: null,
+    edit_type: null,
+    edit_name: 'test',
     message:"",
+    deal_edit: null,
   },
   remember: 'form',
   created() {
@@ -478,10 +492,15 @@ export default {
               name: 'Вероятный',
               color: 'orange'
           },
-      }
+      },
+      deal: {},
     }
   },
   methods: {
+    showEditDealModal(deal){
+      this.deal = deal;
+      this.$modal.show('edit-deal');
+    },
     date(date) {
       return moment(date).format('LL')
     },

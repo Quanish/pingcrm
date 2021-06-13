@@ -272,6 +272,9 @@ Route::post('deals/store', [DealsController::class,'store'])
 ->name('deals.store')
 ->middleware('auth');
 
+Route::post('deals/update', [DealsController::class,'update'])
+->name('deals.update')
+->middleware('auth');
 //Meetings
 
 Route::get('meetings', [MeetingsController::class, 'index'])

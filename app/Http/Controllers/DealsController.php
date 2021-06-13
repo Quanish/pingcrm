@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Deal;
 use App\Models\User;
+use App\Models\File;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 
@@ -51,6 +52,33 @@ class DealsController extends Controller
                 'success' => 'Сделка создана'
             ]);
         }
+        
+    }
+
+    public function update(Request $request)
+    {
+        $file_name = Auth::user()->id. '_' . time() . '.' . $request->file->getClientOriginalExtension();
+
+        $request->file->storeAs('documents', $file_name);
+
+        $file = File::create([
+            'name' => $file_name,
+            'path' => 'documents/'. $file_name,
+            'type' => $request->file->getClientOriginalExtension(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+
+        $deal = Deal::find($request->deal_id);
+
+        $deal->name = $request->title;
+        $deal->sum = $request->sum;
+        $deal->type = $request->type;
+        $deal->comment = $request->comment;
+        $deal->file_id = $file->id;
+        $deal->save();
+
+        return "success";   
         
     }
     
