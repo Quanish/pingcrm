@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Event;
 use App\Models\Comment;
 use App\Models\Subtask;
+use App\Models\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request as StaticRequest;
@@ -124,6 +125,18 @@ class TasksController extends Controller
 
 	public function store(Request $request)
     {
+        $file_name = Auth::user()->id. '_' . time() . '.' . $request->file->getClientOriginalExtension();
+
+        $request->file->storeAs('documents', $file_name);
+
+        $file = File::create([
+            'name' => $file_name,
+            'path' => 'documents/'. $file_name,
+            'type' => $request->file->getClientOriginalExtension(),
+            'user_id' => Auth::user()->id,
+        ]);
+
+
         $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -135,6 +148,7 @@ class TasksController extends Controller
             'status' => Task::NOT_STARTED, 
             'urgent' => $request->urgent ? 1 : 0, 
             'account_id' => Auth::user()->account_id,
+            'file_id' => $file ? $file->id : 0,
         ]);
 
         $task->start = $task->created_at;
@@ -200,5 +214,7 @@ class TasksController extends Controller
     public function dela(){
         return Inertia::render('Tasks/Dela');
     }
+
+
 
 }

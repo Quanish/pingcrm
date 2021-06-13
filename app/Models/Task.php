@@ -28,11 +28,18 @@ class Task extends Model
         'deadline',
         'type', 
         'urgent', 
-        'account_id'
+        'account_id',
+        'file_id'
     ];
 
     public $timestamps = true;
     
+    public function file()
+    {
+        return $this->belongsTo(Document::class,'file_id','id');
+    }
+
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');
