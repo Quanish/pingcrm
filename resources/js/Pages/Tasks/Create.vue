@@ -73,6 +73,15 @@
               <div class="text-red-500 font-medium mr-3">
                 {{ err }}
               </div>
+              <div>
+              <label  class="bg-transparent text-blue rounded-lg tracking-wide uppercase">
+               
+                  <div v-if="file">{{file.name}}</div>
+               
+                <img class="w-8" src="images/attach.svg">
+                <input type="file" id="file"  @input="form.file = $event.target.files[0]" class="opacity-0  w-full pb-1">
+              </label>
+              </div>
               <checkbox label="срочно" v-model="form.urgent" />
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>
             </div>  
@@ -115,6 +124,7 @@ export default {
   remember: 'form',
   data() {
     return {
+      file: null,
       format: 'yyyy-MM-dd',
       disabledDates: {},
       date: null,
@@ -135,6 +145,7 @@ export default {
         title: null,
         type: null,
         urgent: false,
+        file: null,
       }),
     }
   },
@@ -145,6 +156,10 @@ export default {
     })
   },
   methods: {
+     upload(event) {
+      this.file = event.target.files[0]; 
+      console.log(this.file.name);
+    },
     CallDateFunction(date) {
       if (date) {
         this.form.deadline = date.toISOString().substring(0, 10)
