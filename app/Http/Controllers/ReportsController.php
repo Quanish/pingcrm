@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Report;
 use App\Models\User;
+use App\Models\Deal;
+use App\Models\Organization;
 
 class ReportsController extends Controller
 {
     public function index()
-    {
+    {   
         return Inertia::render('Reports/Index',[
         	'reports' => Report::with('user')->get(),
+        	'deals' => Deal::whereMonth('created_at', date('m'))->get()->count(),
+        	'sum' => Deal::whereMonth('created_at', date('m'))->get()->sum('sum'),
+        	'organizations' => Organization::whereMonth('created_at', date('m'))->get()->count(),
         ]);
     }
 

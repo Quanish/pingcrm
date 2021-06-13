@@ -98,12 +98,12 @@ export default {
 	metaInfo: { title: 'Сделки' },
 	components: {
 		createDeal,
-PersonCard,
+		PersonCard,
 	},
 	layout: Layout,
-  props:{
-    test: Array,
-  },
+	props: {
+		test: Array,
+	},
 	data () {
     	return {      	
 			color: "#875FDA",

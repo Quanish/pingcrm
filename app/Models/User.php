@@ -61,36 +61,50 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public static function plans(){
         
-        $plans = Plan::where('user_id',  Auth::user()->id)->get();
+        
 
-        // Action::where([
-        //     'user_id' => ;
-        // ])
+        $calls = Action::where('type', 1)->where('user_id', Auth::user()->id)->whereMonth('date', date('m'))->get();
+        $meets = Action::where('type', 2)->where('user_id', Auth::user()->id)->whereMonth('date', date('m'))->get();
+        $deals = Deal::where('responsible_id', Auth::user()->id)->whereMonth('created_at', date('m'))->get();
 
 
-        return [
-            [
+        $plan1 = Plan::where('user_id',  Auth::user()->id)->where('type', 1)->first();
+        $plan2 = Plan::where('user_id',  Auth::user()->id)->where('type', 2)->first();
+        $plan3 = Plan::where('user_id',  Auth::user()->id)->where('type', 3)->first();
+
+        $plans = [];
+
+        if($plan1) {
+            $plans[] = [
                 'id' => 1,
                 'name' => 'Кол-во звонков',
-                'plan' => '24 из 40',
+                'plan' =>  $calls->count() . ' из ' . $plan1->value,
                 'type' => 1,
-                'fact' => round(24 / 40 * 100),
-            ],
-            [
+                'fact' => round($calls->count() / $plan1->value * 100),
+            ];
+        }
+        
+        if($plan2) {
+            $plans[] = [
                 'id' => 2,
                 'name' => 'Кол-во встреч',
-                'plan' => '12 из 40',
+                'plan' => $meets->count() . ' из ' . $plan2->value,
                 'type' => 2,
-                'fact' => round(12 / 40 * 100),
-            ],
-            [
+                'fact' => round($meets->count() / $plan2->value * 100),
+            ];
+        }
+
+        if($plan3) {
+            $plans[] = [
                 'id' => 3,
                 'name' => 'Кол-во сделок',
-                'plan' => '2 из 10',
+                'plan' => $deals->count() . ' из ' . $plan3->value,
                 'type' => 3,
-                'fact' => round(2 / 10 * 100),
-            ]
-        ];
+                'fact' => round($deals->count() / $plan3->value * 100),
+            ];
+        }
+
+        return $plans;
     }
 
     public static function getTasks() {

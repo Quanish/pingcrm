@@ -43,13 +43,16 @@
 								<div class="flex-shrink pr-4">
 									<div class="rounded p-3 bg-green-600"><i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
 								</div>
-								<div class="flex-1 text-right md:text-center">
+								<div>
 									<h5 class="font-bold uppercase text-gray-500">Сумма сделок</h5>
-									<h3 class="font-bold text-3xl">45 520 из 5 000 000</h3>
+								</div>
+								<div class="flex-1 text-right md:text-center">
+									
+									<h3 class="font-bold text-3xl">{{ this.sum }} из 5 000 000</h3>
 								</div>
 								<div>
 									<div class="text-3xl font-bold text-indigo-500">
-										80%
+										{{ parseFloat(this.sum / 5000000 * 100).toFixed(0) }}%
 									</div>
 								</div>
 							</div>
@@ -64,13 +67,16 @@
 								<div class="flex-shrink pr-4">
 									<div class="rounded p-3 bg-yellow-600"><i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i></div>
 								</div>
+								<div>
+									<h5 class="font-bold uppercase text-gray-500">Количество сделок</h5>	
+								</div>
 								<div class="flex-1 text-right md:text-center">
-									<h5 class="font-bold uppercase text-gray-500">Количество сделок</h5>
-									<h3 class="font-bold text-3xl">2 из 100 <span class="text-yellow-600"><i class="fas fa-caret-up"></i></span></h3>
+									
+									<h3 class="font-bold text-3xl">{{ this.deals }} из 100</h3>
 								</div>
 								<div>
 									<div class="text-3xl font-bold text-indigo-500">
-										2%
+										{{ parseFloat(this.deals / 100 * 100).toFixed(0) }}%
 									</div>
 								</div>
 							</div>
@@ -85,13 +91,16 @@
 								<div class="flex-shrink pr-4">
 									<div class="rounded p-3 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
 								</div>
-								<div class="flex-1 text-right md:text-center">
+								<div>
 									<h5 class="font-bold uppercase text-gray-500">Количество новых клиентов</h5>
-									<h3 class="font-bold text-3xl">5 из 30 </h3>
+								</div>
+								<div class="flex-1 text-right md:text-center">
+									
+									<h3 class="font-bold text-3xl">{{ this.organizations }} из 30 </h3>
 								</div>
 								<div>
 									<div class="text-3xl font-bold text-indigo-500">
-										16%
+										{{ parseFloat(this.organizations / 30 * 100).toFixed(0) }}%
 									</div>
 								</div>
 							</div>
@@ -212,6 +221,9 @@ export default {
 	  },
 	 props:{
 	 	reports: Array,
+	 	deals: Number,
+	 	sum: Number,
+	 	organizations: Number,
 	 },
 	data () {
     	return {    
