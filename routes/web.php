@@ -342,6 +342,8 @@ Route::get('500', function () {
 Route::resource('categories',CategoryController::class);
 
 Route::get('get-users', [UsersController::class, 'getUsers']);
+Route::get('plans', [UsersController::class, 'plans']);
+Route::post('plans/save', [UsersController::class, 'savePlan']);
 Route::post('save-users-to-group', [GroupsController::class, 'saveUsers']);
 
 Route::post('add-contact', [OrganizationsController::class, 'addContact']);

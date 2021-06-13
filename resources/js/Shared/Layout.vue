@@ -61,6 +61,12 @@
                                 <div :class="isUrl('reports') ? 'text-white font-bold' : 'text-white group-hover:text-white font-normal'">Отчеты</div>
                                 </inertia-link>
                             </div>
+
+                            <div class="ml-8" v-if="$page.props.auth.user.owner">
+                                <inertia-link class="flex items-center group py-3" :href="'plans'">
+                                <div :class="isUrl('plans') ? 'text-white font-bold' : 'text-white group-hover:text-white font-normal'">Планы</div>
+                                </inertia-link>
+                            </div>
                             <div class="ml-8">
                                 <inertia-link class="flex items-center group py-3" :href="route('calendar')">
                                 

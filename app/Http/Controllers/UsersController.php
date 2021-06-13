@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Plan;
 use App\Models\Position;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use Illuminate\Http\Request as Req;
+
 
 class UsersController extends Controller
 {
@@ -31,6 +34,31 @@ class UsersController extends Controller
                         'deleted_at' => $user->deleted_at,
                     ];
                 }),
+        ]);
+    }
+
+    public function savePlan(Req $request) {
+        Plan::create([
+            'type' => $request->type,
+            'value' => $request->value,
+            'user_id' => $request->user['code'],
+            'month' => date('m'),
+            'year' => date('Y'),
+        ]);
+    }
+
+    public function plans() {
+
+        if(Auth::user()->owner != 1) {
+            return redirect('/');
+        }
+        $plans = Plan::all();
+
+        foreach($plans as $plan) {
+            $plan->user = User::card($plan->user_id);
+        }
+        return Inertia::render('Reports/P', [
+            'plans' => $plans
         ]);
     }
 
