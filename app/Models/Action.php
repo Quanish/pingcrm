@@ -17,7 +17,6 @@ class Action extends Model
         'client_id',
         'type',
         'date',
-        'time',
     ];
 
     public $timestamps = true;
