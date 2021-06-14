@@ -31,7 +31,7 @@ class DocumentsController extends Controller
 
         $file_name = Auth::user()->id. '_' . time() . '.' . $request->file->getClientOriginalExtension();
 
-        $request->file->storeAs('documents', $file_name);
+        $request->file->storeAs('public/documents', $file_name);
 
         $file = File::create([
             'name' => $request->name,

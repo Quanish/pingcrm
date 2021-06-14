@@ -61,11 +61,11 @@ class DealsController extends Controller
         if($request->file){
             $file_name = Auth::user()->id. '_' . time() . '.' . $request->file->getClientOriginalExtension();
 
-            $request->file->storeAs('documents', $file_name);
+            $request->file->storeAs('public/deals', $file_name);
 
             $file = File::create([
                 'name' => $file_name,
-                'path' => 'documents/'. $file_name,
+                'path' => 'deals/'. $file_name,
                 'type' => $request->file->getClientOriginalExtension(),
                 'user_id' => Auth::user()->id,
             ]);
