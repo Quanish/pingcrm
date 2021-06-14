@@ -30,7 +30,8 @@ class UsersController extends Controller
                         'name' => $user->name,
                         'email' => $user->email,
                         'owner' => $user->owner,
-                        'photo' => $user->photoUrl(['w' => 40, 'h' => 40, 'fit' => 'crop']),
+                        'photo' => $user->photo_path,
+                        'position' => Position::find($user->position_id),
                         'deleted_at' => $user->deleted_at,
                     ];
                 }),

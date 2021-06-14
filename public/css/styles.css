@@ -253,3 +253,8 @@ body .fc-theme-standard td,
     margin-bottom: 1px !important;
     box-shadow: unset !important;
 }
+
+.vs__dropdown-menu {
+    position: fixed;
+    z-index: 2;
+}
