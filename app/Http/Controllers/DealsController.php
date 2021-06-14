@@ -82,7 +82,9 @@ class DealsController extends Controller
         $deal->file_id = isset($file) ? $file->id : 0;
         $deal->save();
 
-        return 'сделка отредактирована';
+        return redirect()->back()->with([
+            'success' => 'Сделка отредактирована'
+        ]);
         
     }
     

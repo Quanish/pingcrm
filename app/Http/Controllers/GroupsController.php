@@ -14,8 +14,15 @@ class GroupsController extends Controller
 {
     public function index()
     {
-        $groups = Group::with('users')->get();
-
+        //$groups = Group::with('users')->get();
+        
+        if(Auth::user()->owner == 1) {
+            $groups = Group::with('users')->get();
+        } else {
+            $group_ids = GroupUser::where('user_id', Auth::user()->id)->pluck('group_id')->toArray();
+            $groups = Group::whereIn('id', $group_ids)->with('users')->get();
+        }
+        
     	return Inertia::render('Groups/Index',[
     		'groups' => $groups,
     	]);

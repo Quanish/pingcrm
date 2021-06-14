@@ -41,7 +41,7 @@
             <div class="lg:w-3/4">
 
 
-              <v-select class="border-b-2 w-full pb-1" :options="users" v-model="selectedUser" ref="user_id"></v-select>
+              <v-select class="border-b-2 w-full pb-1"  :options="users" v-model="selectedUser" ref="user_id"></v-select>
 
 
             </div>  
@@ -63,6 +63,19 @@
             </div>  
           </div>
 
+          <div class="w-full flex mb-8 items-center">
+            <div class="lg:w-1/4">
+              <button class="rounded-full bg-indigo-400 py-1 px-4 hover:bg-indigo-500 duration-300 flex items-center  relative">
+                <img class="w-5" src="/images/attach.svg">
+                <input type="file" id="file"  @input="form.file = $event.target.files[0]" class="opacity-0  w-full pb-1 h-full opacity-0  w-full pb-1 h-full absolute left-0 top-0">
+                <p class="font-normal leading-6 text-black">Прикрепить файл</p>  
+              </button>
+            </div>  
+            <div class="lg:w-3/4">
+                <p v-if="form.file !== null">{{ form.file.name }}</p>
+            </div>  
+          </div>
+
           <div class="w-full flex">
             <div class="lg:w-1/4">
              <p class="font-medium leading-6">Заполните поле
@@ -72,15 +85,6 @@
             <div class="lg:w-3/4 flex justify-end items-center">
               <div class="text-red-500 font-medium mr-3">
                 {{ err }}
-              </div>
-              <div>
-              <label  class="bg-transparent text-blue rounded-lg tracking-wide uppercase">
-               
-                  <div v-if="file">{{file.name}}</div>
-               
-                <img class="w-8" src="images/attach.svg">
-                <input type="file" id="file"  @input="form.file = $event.target.files[0]" class="opacity-0  w-full pb-1">
-              </label>
               </div>
               <checkbox label="срочно" v-model="form.urgent" />
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Создать</span></button>

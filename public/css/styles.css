@@ -145,7 +145,7 @@ select {
     max-height: 90vh;
     left: unset !important;
     top: unset !important;
-    min-width: 60vw;
+    min-width: 70vw;
     overflow-y: auto !important;
 }
 

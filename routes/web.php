@@ -352,8 +352,14 @@ Route::get('get-profile/{id}', [UsersController::class, 'getProfile']);
 Route::post('deal-status', [DealsController::class, 'changeStatus']);
 Route::post('edit-client', [OrganizationsController::class, 'editClient']);
 Route::post('add-action', [OrganizationsController::class, 'addAction']);
+Route::post('get-plans', [OrganizationsController::class, 'getPlans']);
 
 // chat
 Route::get('chat', [ChatController::class, 'index'])
     ->name('chat')
     ->middleware('auth');
+
+Route::get('socket', [ChatController::class, 'chat'])
+    ->name('socket')
+    ->middleware('auth');
+

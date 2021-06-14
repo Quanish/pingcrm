@@ -55,7 +55,7 @@
                                 <div :class="isUrl('documents') ? 'text-white font-bold ' : 'text-white group-hover:text-white font-normal'">Документы</div>
                                 </inertia-link>
                             </div>
-                            <div class="ml-8">
+                            <div class="ml-8" v-if="$page.props.auth.user.owner">
                                 <inertia-link class="flex items-center group py-3" :href="route('reports')">
                                 
                                 <div :class="isUrl('reports') ? 'text-white font-bold' : 'text-white group-hover:text-white font-normal'">Отчеты</div>

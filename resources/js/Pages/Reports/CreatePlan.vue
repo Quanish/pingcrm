@@ -135,8 +135,8 @@ export default {
         user : this.selectedUser,
       })
       .then(response => {
-        this.$modal.hide('create-plan')
-    })
+          this.$modal.hide('create')
+      })
     },
     CallDateFunction(date) {
       if (date) {

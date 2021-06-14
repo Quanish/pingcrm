@@ -5,20 +5,18 @@
 			<div >
 				<div class="flex justify-between">
 				<h1 class="mb-4 font-medium text-xl">
-					<inertia-link class="text-black hover:text-indigo-600 font-medium">{{test}}</inertia-link>
+					<inertia-link class="text-black hover:text-indigo-600 font-medium">Редактировать сделку</inertia-link>
 				</h1>
 				</div> 
 				<div class="flex flex-wrap m8 mb-3 justify-start">
 
-					<div class="w-3/12 space-y-6 mt-3 py-2">
+					<div class="w-3/12 space-y-6 mt- py-2">
 						<p>Название</p>
 					</div>
 					<div class="w-9/12 space-y-4 pl-5 py-2">
 						<input type="text" class="border-b-2 w-full pb-1"  v-model="deal.name">		
 					</div>
 
-					
-					
 					<div class="w-3/12 space-y-6 pt-3 py-2 pr-2">
 						<p>Сумма</p>
 					</div>
@@ -34,7 +32,7 @@
 							<option value="2">Товар</option>
 						</select>
 					</div>
-					<div class="w-3/12 space-y-6 mt-3 py-2">
+					<div class="w-3/12 space-y-6 mt- py-2">
 						<p>Примечания</p>
 					</div>
 					<div class="w-9/12 space-y-4 pl-5 py-2">
@@ -45,13 +43,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="w-full flex mt-3 ">
+		<div class="w-full flex mt-3 items-center py-2">
             <div class="lg:w-1/4">
-             <!-- <p class="font-medium leading-6">Заполните поле
-                <span class="text-red-400">*</span> 
-              </p>   -->
+				<button class="rounded-full bg-indigo-400 py-1 px-4 hover:bg-indigo-500 duration-300 flex items-center  relative">
+					<img class="w-5" src="/images/attach.svg">
+					<input type="file" id="file"  @input="form.file = $event.target.files[0]" class="opacity-0  w-full pb-1 h-full opacity-0  w-full pb-1 h-full absolute left-0 top-0">
+					<p class="font-normal leading-6 text-black">Прикрепить файл</p>  
+				</button>
             </div>
-            <div class="lg:w-3/4 flex justify-end items-center">
+            <div class="lg:w-3/4 flex justify-between items-center">
+				<p v-if="form.file !== null">{{ form.file.name }}</p>
 				<div class="text-red-500 font-medium mr-3">
                 {{ err }}
               </div>
@@ -59,8 +60,9 @@
                
                   <div v-if="file">{{form.file}}</div>
                
-                <img class="w-8" src="/images/attach.svg">
-                <input type="file" id="file"  @input="form.file = $event.target.files[0]" class="opacity-0  w-full pb-1">
+                
+                
+				
               </label>
               <button class="ml-3 text-sm leading-8 px-20 login_button rounded-full text-white h-8 w-auto flex justify-center items-center font-light"><span>Обновить</span></button>
             </div>  
@@ -106,6 +108,8 @@ export default {
   },
   methods: {
     store() {
+
+		console.log(this.form.file);
 		/*
 		this.err = '';
 		if(this.title === null) {
@@ -131,13 +135,10 @@ export default {
 		*/
 
 		this.form.title = this.deal.name
-
 		this.form.sum = this.deal.sum
 		this.form.comment = this.deal.comment
 		this.form.type = this.deal.type
 
-
-	
 		this.$modal.hide('edit-deal')
 		this.$modal.hide('edit')
       	this.form.post(this.route('deals.update'))

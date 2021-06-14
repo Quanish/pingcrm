@@ -7,6 +7,7 @@ use App\Models\Report;
 use App\Models\User;
 use App\Models\Deal;
 use App\Models\Organization;
+use DB;
 
 class ReportsController extends Controller
 {
@@ -16,6 +17,7 @@ class ReportsController extends Controller
         	'reports' => Report::with('user')->get(),
         	'deals' => Deal::whereMonth('created_at', date('m'))->get()->count(),
         	'sum' => Deal::whereMonth('created_at', date('m'))->get()->sum('sum'),
+        	'users' => User::select(DB::raw("CONCAT(last_name, ' ', first_name)  AS label"), 'id as code')->where('account_id', 1)->get(),
         	'organizations' => Organization::whereMonth('created_at', date('m'))->get()->count(),
         ]);
     }

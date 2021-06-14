@@ -59,18 +59,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsTo(Account::class);
     }
 
-    public static function plans(){
+    public static function plans(int $id = 0){
         
+        if($id == 0) {
+            $user_id = Auth::user()->id;
+        } else {
+            $user_id = $id;
+        }
         
 
-        $calls = Action::where('type', 1)->where('user_id', Auth::user()->id)->whereMonth('date', date('m'))->get();
-        $meets = Action::where('type', 2)->where('user_id', Auth::user()->id)->whereMonth('date', date('m'))->get();
-        $deals = Deal::where('responsible_id', Auth::user()->id)->whereMonth('created_at', date('m'))->get();
+        $calls = Action::where('type', 1)->where('user_id', $user_id)->whereMonth('date', date('m'))->get();
+        $meets = Action::where('type', 2)->where('user_id', $user_id)->whereMonth('date', date('m'))->get();
+        $deals = Deal::where('responsible_id', $user_id)->where('status', 1)->whereMonth('created_at', date('m'))->get();
 
 
-        $plan1 = Plan::where('user_id',  Auth::user()->id)->where('type', 1)->first();
-        $plan2 = Plan::where('user_id',  Auth::user()->id)->where('type', 2)->first();
-        $plan3 = Plan::where('user_id',  Auth::user()->id)->where('type', 3)->first();
+        $plan1 = Plan::where('user_id',  $user_id)->where('type', 1)->latest()->first();
+        $plan2 = Plan::where('user_id',  $user_id)->where('type', 2)->latest()->first();
+        $plan3 = Plan::where('user_id',  $user_id)->where('type', 3)->latest()->first();
 
         $plans = [];
 

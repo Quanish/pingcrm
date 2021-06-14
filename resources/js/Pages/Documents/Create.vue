@@ -3,20 +3,30 @@
     <div class="mb-8 font-medium">
       Новый документ
     </div>
-    <div class="space-y-4">
+    <div class="space-y-4 mb-8">
       <div class="flex">
         <p class="w-1/6">Название<span class="text-red-400">*</span></p>
         <input type="text" class="flex-auto border-b-2 w-full pb-1" v-model="form.name">
-        <div class="w-6 relative">
-            <input type="file" id="file"  @input="form.file = $event.target.files[0]" class="opacity-0  w-full pb-1">
-            <img src="/img/download.svg" class="absolute right-0 top-0 w-6 h-6 pointer-events-none	" />
-        </div>
-        
-
       </div>
 
 
       </div>
+
+
+      <div class="w-full flex mb-8 items-center">
+            <div class="lg:w-4/12">
+              <button class="rounded-full bg-indigo-400 py-1 px-4 hover:bg-indigo-500 duration-300 flex items-center  relative">
+                <img class="w-5" src="/images/attach.svg">
+                <input type="file" id="file"  @input="form.file = $event.target.files[0]" class="opacity-0  w-full pb-1 h-full opacity-0  w-full pb-1 h-full absolute left-0 top-0">
+                <p class="font-normal leading-6 text-black">Прикрепить файл</p>  
+              </button>
+            </div>  
+            <div class="lg:w-8/12">
+                <p v-if="form.file !== null">{{ form.file.name }}</p>
+            </div>  
+          </div>
+
+
       <div class="mt-4">
         <div class="w-full flex justify-between">
             <div class="lg:w-1/4"> 

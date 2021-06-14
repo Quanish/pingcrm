@@ -7,6 +7,14 @@
     	
     	<div class="w-64 flex justify-start">
     </div>
+
+
+	<div class=" mr-4 ml-4 flex gap-4 items-center">
+		<div class="font-medium text-black">По сотрудникам</div>
+		<v-select placeholder="tets" class="border-b-2 w-80 pb-1 rounded-full text-white h-8 px-6 text-sm bg-gray-200 " :options="users" v-model="selectedUser" ref="user_id"></v-select>
+    </div>
+
+	  
     </div>
     	<div ><img class="h-10" src="img/message.png" @click="$page.props.auth.sidebar = true"></div>
 	</div>
@@ -25,7 +33,7 @@
 				<div class="flex flex-wrap">
 
 
-					<div class="w-6 md:w-1/2 xl:w-1/2 p-0 flex flex-col gap-4 mb-5 pr-3">
+					<div class="w-6 md:w-1/2 xl:w-full p-0 flex flex-col gap-4 mb-5 pr-3">
 						<div class="w-full md:w-1/2 xl:w-full p-0">
 						<!--Metric Card-->
 						<div class="bg-white border rounded shadow-ss p-4">
@@ -101,11 +109,44 @@
 					</div>
 					
 					<div class="w-6/12 pl-3 mb-5">
-						<AChart class="w-full" />
+						<!-- <AChart class="w-full" /> -->
 
 					</div>
 				</div>
 			</div>
+
+
+			<div class="px-6 flex-auto pb-12 mb-2" v-if="show == 2">
+                <template v-if="plans.length > 0">
+
+
+                    <div class="flex flex-col gap-6 w-full py-4">
+                        <div  v-for="plan in plans" :key="plan.id">
+                            
+                            
+                            <div class="flex gap-3 justify-between">
+                                <div class="font-medium mb-2">{{ plan.name }}</div>
+                                <div class="font-normal">{{ plan.plan }}</div>
+                            </div>
+                            <div class="shadow w-full bg-grey-light rounded-lg overflow-hidden">
+                                <div class="text-xs leading-none py-1 text-center text-white" :class="'bg-' + plantypes[plan.type] + '-500'" :style="'width: ' + plan.fact +'%'"> {{plan.fact}}%</div>
+                            </div>
+
+
+                        </div>
+                        
+                    </div>
+
+
+                </template>
+
+                <template v-else>
+                    <div class="flex flex-col gap-6 w-full py-4 text-sm">
+                        У сотрудника нет установленных планов
+                    </div> 
+                </template>
+            </div>
+			
 			<div class="border-1 rounded-lg pb-5 flex  flex-auto" v-if="show == 1">	
 				
 				<!-- <div class="flex justify-between">
@@ -121,8 +162,8 @@
 					
 				</div> -->
 			
-				<SalesChart class="flex-auto flex flex-col h-full w-6/12 pr-3"/>
-				<ClientChart class="w-6/12 pl-3"/>
+				<!-- <SalesChart class="flex-auto flex flex-col h-full w-6/12 pr-3"/>
+				<ClientChart class="w-6/12 pl-3"/> -->
 			</div>
 
 
@@ -152,6 +193,9 @@ import SalesChart from '@/Shared/SalesChart'
 import ClientChart from '@/Shared/ClientChart'
 import AChart from '@/Shared/AChart'
 import createReport from './Create.vue'
+import axios from 'axios'
+
+
 export default {
 	metaInfo: { title: 'Отчеты' },
 	layout: Layout,
@@ -166,17 +210,45 @@ export default {
 	 props:{
 	 	reports: Array,
 	 	deals: Number,
+	 	users: Array,
 	 	sum: Number,
 	 	organizations: Number,
 	 },
+	 watch: {
+        selectedUser: function (user) {
+            console.log(user)
+			if(user == null) {
+				this.show = 1
+			} else {
+				this.show = 2
+
+				axios.post('/get-plans', {
+					id: user.code
+				})
+				.then(response => {
+					this.plans = response.data
+				})
+			}
+			
+
+
+        }
+    },
 	data () {
     	return {    
+			selectedUser: {},
 			show: 1,  	
+			plans: [],  	
 			color: "#875FDA",
 			color1: "#4A32E3",
 			angle: '50',
 			icon: "download",
-
+			plantypes: {
+                1: 'green',
+                2: 'skyblue',
+                3: 'orange',
+                4: 'indigo',
+            }
 		}
   	},
   	created() {

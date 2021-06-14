@@ -37,11 +37,6 @@ class Deal extends Model
 
 	public $timestamps = true;
 
-	public function file()
-    {
-    	return $this->hasOne(Download::class);
-    }
-
 	public function client()
     {
     	return $this->belongsTo(Organization::class);

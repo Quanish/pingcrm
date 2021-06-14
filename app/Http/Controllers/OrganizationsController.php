@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\User;
 use App\Models\Action;
 use App\Models\Deal;
+use App\Models\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -37,6 +38,13 @@ class OrganizationsController extends Controller
         ]);
     }
 
+    public function getPlans(ObjectRequest $request) {
+
+        $plan = User::plans($request->id);
+
+        return $plan;
+    }
+
     public function create()
     {
         return Inertia::render('Organizations/Create');
@@ -61,7 +69,10 @@ class OrganizationsController extends Controller
 
         foreach($deals as $deal) {
             $deal->user = User::card($deal->responsible_id);
+            $deal->file = File::find($deal->file_id);
         }
+
+        
 
         $actions = $organization->actions()->orderBy('created_at', 'desc')->get();
 

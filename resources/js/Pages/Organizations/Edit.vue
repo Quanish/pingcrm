@@ -147,7 +147,7 @@
 
                     <div class="flex flex-row justify-between gap-0 mb-2">
                       <div class="text-sm font-medium text-indigo-500">ID Сделки # {{ deal.id }}</div>
-                       <div @click="showEditDealModal(deal)" class="text-sm rounded-full py-1  px-3 text-white text-center bg-green-500 cursor-pointer hover:text-skyblue-400">  
+                       <div @click="showEditDealModal(deal)" class="text-sm rounded-full py-1  px-3 text-white text-center bg-green-500 cursor-pointer hover:bg-green-400 duration-300">  
                           редактировать
                         </div>
                       <div v-if="$page.props.auth.user.id == deal.user.id">
@@ -192,6 +192,11 @@
                     <div class="flex flex-row gap-3 justify-between" v-if="deal.sum != undefined">
                       <div class="text-sm font-medium text-gray-500">Примечания</div>
                       <div class="text-sm font-normal text-black text-right">{{ deal.comment }}</div>
+                    </div>
+
+                    <div class="flex flex-row gap-3 justify-between" v-if="deal.file != undefined">
+                      <div class="text-sm font-medium text-gray-500">Документ</div>
+                      <a class="text-sm font-normal text-black text-right hover:text-skyblue-500" :href="'/storage/' + deal.file.path" download="">{{ deal.file.name }}</a>
                     </div>
 
 
@@ -376,7 +381,7 @@
       <create-action :type="actionType" :organization_id="organization.id"></create-action>
     </modal>
 
-     <modal name="edit-deal" class="modal-50">
+     <modal name="edit-deal" class="modal-60">
        <edit-deal :deal="deal"></edit-deal>
     </modal>
 

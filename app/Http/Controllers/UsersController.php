@@ -84,6 +84,7 @@ class UsersController extends Controller
             'email' => Request::get('email'),
             'password' => Request::get('password'),
             'owner' => Request::get('owner'),
+            'position_id' => 1,
             'photo_path' => Request::file('photo') ? Request::file('photo')->store('users', 'public') : null,
         ]);
 
@@ -164,4 +165,6 @@ class UsersController extends Controller
     public function getUsers(){
         return User::with('position')->get(); // @TODO SELECT IMPORTANT FIELDSs
     }
+
+    
 }
